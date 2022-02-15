@@ -149,6 +149,18 @@ class List extends StatelessWidget {
           ),
           title: 'Book4',
         ),
+         CustomListItem(
+          rating: '4.2',
+          pages: 230,
+          thumbnail: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('index2.jpg'),
+                  fit: BoxFit.cover),
+            ),
+          ),
+          title: 'Book6',
+        ),
         CustomListItem(
           rating: '3.8',
           pages: 142,
