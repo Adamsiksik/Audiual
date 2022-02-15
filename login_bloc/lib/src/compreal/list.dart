@@ -1,179 +1,90 @@
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unnecessary_null_comparison
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' as rootBundle;
+import '../data/books.dart';
 
-class CustomListItem extends StatelessWidget {
-  const CustomListItem({
-    Key? key,
-    required this.thumbnail,
-    required this.title,
-    required this.rating,
-    required this.pages,
-  }) : super(key: key);
-
-  final Widget thumbnail;
-  final String title;
-  final String rating;
-  final int pages;
-
+class ListV extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child:InkWell(
-          onTap: (){ print("Card Clicked"); },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,      
-        children: <Widget>[
-        Expanded(
-            
-            child: thumbnail,
-          ),
-         Expanded(
-            flex: 4,
-            child: _BookDescription(
-              title: title,
-              rating: rating,
-              pages: pages,
-            ),
-          ),
-        ],
-        
-      ),
-    ),
-    );
-  }
+  _list createState() => _list();
 }
 
-class _BookDescription extends StatelessWidget {
-  const _BookDescription({
-    Key? key,
-    required this.title,
-    required this.rating,
-    required this.pages,
-  }) : super(key: key);
-
-  final String title;
-  final String rating;
-  final int pages;
-
+class _list extends State<ListV> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14.0,
-            ),
-          ),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 2.0)),
-          Row(children: <Widget>[
-            Text(
-              rating,
-              style: const TextStyle(fontSize: 10.0),
-            ),
-            const Icon(
-              Icons.star,
-              size: 16.0,
-            ),
-          ]),
-          const Padding(padding: EdgeInsets.symmetric(vertical: 1.0)),
-          Text(
-            'Pages:$pages ',
-            style: const TextStyle(fontSize: 10.0),
-          ),
-        ],
-      ),
-    );
+    return Scaffold(
+        body: FutureBuilder(
+      future: ReadJsonData(),
+      builder: (context, data) {
+        if (data.hasError) {
+          return Center(child: Text("${data.error}"));
+        } else if (data.hasData) {
+          var items = data.data as List<books>;
+          return ListView.builder(
+              itemCount: items == null ? 0 : items.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  height: 150,
+                  child: Card(
+                    elevation: 5,
+                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 70,
+                            height: 100,
+                            child: Image(
+                              image: NetworkImage(
+                                  items[index].imageURL.toString()),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          Expanded(
+                              child: Container(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 8, right: 8),
+                                  child: Text(
+                                    items[index].name.toString(),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 8, top: 40),
+                                  child: Text(items[index].pages.toString()),
+                                )
+                              ],
+                            ),
+                          ))
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    ));
   }
-}
 
-class List extends StatelessWidget {
-  const List({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(8.0),
-      itemExtent: 150.0,
-      children: <CustomListItem>[
-        CustomListItem(
-          rating: '4.5',
-          pages: 200,
-          thumbnail: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('index5.jpg'),
-                  fit: BoxFit.cover),
-            ),
-          ),
-          title: 'Book1',
-        ),
-        CustomListItem(
-          rating: '4.1',
-          pages: 523,
-          thumbnail: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('index.jpeg'),
-                  fit: BoxFit.cover),
-            ),
-          ),
-          title: 'Book2',
-        ),
-        CustomListItem(
-          rating: '4.2',
-          pages: 423,
-          thumbnail: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('index1.jpeg'),
-                  fit: BoxFit.cover),
-            ),
-          ),
-          title: 'Book3',
-        ),
-        CustomListItem(
-          rating: '4.7',
-          pages: 230,
-          thumbnail: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('index2.jpg'),
-                  fit: BoxFit.cover),
-            ),
-          ),
-          title: 'Book4',
-        ),
-         CustomListItem(
-          rating: '4.2',
-          pages: 230,
-          thumbnail: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('index2.jpg'),
-                  fit: BoxFit.cover),
-            ),
-          ),
-          title: 'Book6',
-        ),
-        CustomListItem(
-          rating: '3.8',
-          pages: 142,
-          thumbnail: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('index3.jpeg'),
-                  fit: BoxFit.cover),
-            ),
-          ),
-          title: 'Book5',
-        ),
-      ],
-    );
+  Future<List<books>> ReadJsonData() async {
+    final jsondata = await rootBundle.rootBundle.loadString('json/books.json');
+    final list = json.decode(jsondata) as List<dynamic>;
+    return list.map((e) => books.fromJson(e)).toList();
   }
 }
