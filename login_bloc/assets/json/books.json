@@ -2,11 +2,15 @@
   {
     "id": 0,
     "name": "book1",
+    "rating": "3.1",
+
     "imageUrl": "https://i0.wp.com/www.casualoptimist.com/wp-content/uploads/2020/12/burning-design-philip-pascuzzo.jpg?resize=1000%2C1500",
     "pages": "799"
   },
   {
     "id": 1,
+    "rating": "4.4",
+
     "name": "book2",
     "imageUrl": "https://i0.wp.com/www.casualoptimist.com/wp-content/uploads/2020/12/black-girl-unlimited-design-carol-ly-illustration-noa-denmon.jpg?resize=971%2C1500",
     "pages": "719"
@@ -14,30 +18,39 @@
   {
     "id": 2,
     "name": "book3",
+    "rating": "4.1",
+
     "imageUrl": "https://i0.wp.com/www.casualoptimist.com/wp-content/uploads/2021/01/black-canary-breaking-silence-design-regina-flath-illustration-jen-bartel.jpg?resize=1000%2C1500",
     "pages": "944"
   },
   {
     "id": 3,
     "name": "book4",
+    "rating": "4.1",
+
     "imageUrl": "https://i0.wp.com/www.casualoptimist.com/wp-content/uploads/2021/01/before-the-ever-after-design-by-theresa-evangelista-illustration-stephanie-singleton.jpg?resize=998%2C1500",
     "pages": "469"
   },
   {
     "id": 4,
     "name": "book5",
+    "rating": "4.8",
+
     "imageUrl": "https://i0.wp.com/www.casualoptimist.com/wp-content/uploads/2020/12/agnes-at-the-end-of-the-world-design-marcie-lawrence-and-jenny-kimura-illus-tom-bagshaw.jpg?w=1000",
     "pages": "760"
   },
   {
     "id": 5,
     "name": "book6",
+    "rating": "4.6",
     "imageUrl": "https://i0.wp.com/www.casualoptimist.com/wp-content/uploads/2020/12/all-our-worst-ideas-design-katie-klimowicz-1.jpg?resize=971%2C1500",
     "pages": "449"
   },
   {
     "id": 6,
     "name": "book7",
+    "rating": "4.2",
+
     "imageUrl": "https://i0.wp.com/www.casualoptimist.com/wp-content/uploads/2021/01/cemetery-boys-design-liz-dresner-illustration-mars-lauderbaugh.jpg?resize=971%2C1500",
     "pages": "1196"
   }

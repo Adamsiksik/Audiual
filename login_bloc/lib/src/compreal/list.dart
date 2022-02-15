@@ -61,8 +61,12 @@ class _list extends State<ListV> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 8, top: 40),
-                                  child: Text(items[index].pages.toString()),
+                                  padding: EdgeInsets.only(left: 8, top: 20),
+                                  child: Text("Pages:"+items[index].pages.toString()),
+                                ),
+                                 Padding(
+                                  padding: EdgeInsets.only(left: 8, top: 20),
+                                  child: Text("Rating:"+items[index].rating.toString()),
                                 )
                               ],
                             ),

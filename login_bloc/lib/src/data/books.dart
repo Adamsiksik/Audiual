@@ -4,13 +4,15 @@ class books{
   String? name;
   String? imageURL;
   String? pages;
+  String ? rating;
 // constructor
   books(
       {
        this.id,
       this.name,
       this.imageURL,
-      this.pages
+      this.pages,
+       this.rating
       }
    );
   //method that assign values to respective datatype vairables
@@ -20,5 +22,6 @@ class books{
     name =json['name'];
     imageURL = json['imageUrl'];
     pages = json['pages'];
+    rating = json['rating'];
   }
 }
