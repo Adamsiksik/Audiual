@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-
+import 'screens/login.dart';
 import 'screens/first.dart';
 
 class App extends StatelessWidget {
@@ -13,12 +13,12 @@ class App extends StatelessWidget {
       initialRoute: '/',
   routes: {
   
-    '/home': (context) => First(),
+    '/home': (context) => LoginScreen(),
   },
       title: 'Log in screen',
       home: Scaffold(
 
-        body: Center(child: First()),
+        body: Center(child: LoginScreen()),
       ),
     );
   }

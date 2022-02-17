@@ -36,6 +36,8 @@ dependencies:
   rxdart: ^0.27.3
   http: ^0.13.4
   flutter_image_slideshow: ^0.1.2
+  email_validator: '^1.0.6'
+  form_field_validator: ^1.1.0
  
 
 
@@ -58,6 +60,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets\jpeg2000-home.jpg
+    - assets\gmail-logo.png
+    - assets\1024px-Facebook_icon_2013.jpg
+    - assets\10wmt-articleLarge-v4.jpg
     - assets\5562.png
     - assets\index.jpeg
     - assets\index1.jpeg
