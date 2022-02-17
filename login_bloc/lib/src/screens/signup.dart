@@ -4,19 +4,22 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'signup.dart';
 
 import 'first.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignupScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignupScreenState createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
+    final myController2 = TextEditingController();
+
   final PassController = TextEditingController();
+    final PassController2 = TextEditingController();
+
 
   String? validatePassword(String value) {
     if (value.isEmpty) {
@@ -50,6 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
               AutovalidateMode.always, //check for validation while typing
           key: formkey,
           child: Column(
+            
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 60.0),
@@ -61,7 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+
+                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
                 child: TextFormField(
                     controller: myController,
                     decoration: InputDecoration(
@@ -73,9 +78,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       EmailValidator(errorText: "Enter valid email "),
                     ])),
               ),
-              Padding(
+               Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+                child: TextFormField(
+                    controller: myController2,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Confirm Email',
+                        hintText: 'abc@mail.com'),
+                    validator: MultiValidator([
+                      RequiredValidator(errorText: "Enter valid email "),
+                      EmailValidator(errorText: "Enter valid email "),
+                    ])),
+              ),
+                Padding(
                 padding: const EdgeInsets.only(
-                    left: 15.0, right: 15.0, top: 15, bottom: 0),
+                    left: 15.0, right: 15.0, top: 15, bottom: 15),
                 child: TextFormField(
                     controller: PassController,
                     obscureText: true,
@@ -95,17 +113,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     //validatePassword,        //Function to check validation
                     ),
               ),
-              FlatButton(
-                onPressed: () {
-                  //TODO FORGOT PASSWORD SCREEN GOES HERE
-                },
-                child: Text(
-                  'Forgot Password',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
-                ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 15.0, top: 15, bottom: 20),
+                child: TextFormField(
+                    controller: PassController2,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Confirm Password',
+                        hintText: 'Enter secure password'),
+                    validator: MultiValidator([
+                      RequiredValidator(
+                          errorText: "Password should be atleast 6 characters"),
+                      MinLengthValidator(6,
+                          errorText: "Password should be atleast 6 characters"),
+                      MaxLengthValidator(15,
+                          errorText:
+                              "Password should not be greater than 15 characters")
+                    ])
+                    //validatePassword,        //Function to check validation
+                    ),
               ),
+             
               Container(
-                height: 50,
+                  height: 50,
                 width: 250,
                 decoration: BoxDecoration(
                     color: Colors.blue,
@@ -115,17 +147,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     content:
                     Text(myController.text);
                     if (formkey.currentState!.validate()) {
+                      if(myController==myController2){
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => First()));
+                      context, MaterialPageRoute(builder: (_) => First()));
                       print(myController.text);
                       print(PassController.text);
                       setState(() {
-                       
                       });
+                      }
+                      else{
+                        formkey.currentState!.validate();
+                      }
+                      
                     } else {}
                   },
                   child: Text(
-                    'Login',
+                    'SignUp',
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
@@ -133,80 +170,11 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 40,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                     InkWell(
-              child: Container(
-                width: 70.0,
-                height: 70.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(
-                      '10wmt-articleLarge-v4.jpg',
-                    ),
-                  ),
-                ),
-              ),
-              onTap: () {
-              
-              },
-            ),
-                        Padding(padding: EdgeInsets.only(left: 20)),
-
-                       InkWell(
-              child: Container(
-                width: 70.0,
-                height: 70.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'gmail-logo.png',
-                    ),
-                  ),
-                ),
-              ),
-              onTap: () {
-  
-              },
-            ),
-            Padding(padding: EdgeInsets.only(left: 20)),
-                   InkWell(
-              child: Container(
-                width: 50.0,
-                height: 50.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(
-                      '1024px-Facebook_icon_2013.jpg',
-                    ),
-                  ),
-                ),
-              ),
-              onTap: () {
-              },
-            ),
-                ],
-              ),
+           
               SizedBox(
                 height: 20,
               ),
-              
-               FlatButton(
-                onPressed: () {
-                  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  SignupScreen())
-                  );},
-                child: Text(
-                  'Make Account Using Email',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
-                ),
-              ),
+           
             ],
           ),
         ),
