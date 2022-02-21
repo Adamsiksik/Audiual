@@ -83,7 +83,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     icon: Icon(Icons.calendar_today),
                     padding: EdgeInsets.only(left: 5),
                     onPressed: () {
-                      print(groupValue.toString());
+                    
                       showDatePicker(
                               context: context,
                               initialDate: _dateTime == null
