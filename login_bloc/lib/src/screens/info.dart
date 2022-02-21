@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'login.dart';
 import 'first.dart';
+import '../compreal/gradText.dart';
 
 class InfoScreen extends StatefulWidget {
   @override
@@ -15,103 +16,100 @@ class InfoScreen extends StatefulWidget {
 class _InfoScreenState extends State<InfoScreen> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
-  final PassController = TextEditingController();
+  DateTime _dateTime = DateTime.now();
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     myController.dispose();
-    PassController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text("Personal Infromation")
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 60.0),
-                child: Center(
-                  child: SizedBox(
-                      width: 240,
-                      height: 80,
-                      child: GradientText(
-  'Welcome',
-  style: const TextStyle(fontSize: 50),
-  gradient: LinearGradient(colors: [
-    Colors.black,
-    Colors.red,
-  ]),)))),       
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                child: TextFormField(
-                    controller: myController,
-                    decoration: InputDecoration(
+        backgroundColor: Colors.white,
+        appBar: AppBar(title: Text("Personal Infromation")),
+        body: SingleChildScrollView(
+            child: Form(
+                autovalidateMode:
+                    AutovalidateMode.always, //check for validation while typing
+                key: formkey,
+                child: Column(children: <Widget>[
+                  Padding(
+                      padding: const EdgeInsets.only(top: 60.0),
+                      child: Center(
+                          child: SizedBox(
+                              width: 340,
+                              height: 80,
+                              child: GradientText(
+                                'Please Enter Your Data',
+                                style: const TextStyle(fontSize:30),
+                                gradient: LinearGradient(colors: [
+                                  Colors.black,
+                                  Colors.red,
+                                ]),
+                              )))),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                    child: TextFormField(
+                      controller: myController,
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Email',
-                        hintText: 'abc@mail.com'),
-                   validator: MultiValidator([
-                      RequiredValidator(errorText: "Enter valid email "),
-                      EmailValidator(errorText: "Enter valid email "),
-                    ])
-              ),),
-             
-                Padding(
-                padding: const EdgeInsets.only(
-                    left: 15.0, right: 15.0, top: 15, bottom: 15),
-                child: TextFormField(
-                    controller: PassController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        hintText: 'Enter secure password'),
-                     validator: (value){
-                      if(value==null||value.isEmpty){
-                      return 'Password Cant be Empty';
-                      }               
-                     }
-                                         ),
-              ),
-           
-           
-            ],
-          ),
-          
-        ),
-
-      ),
-    );
-  }
-}
-
-
-class GradientText extends StatelessWidget {
-  const GradientText(
-    this.text, {
-    required this.gradient,
-    this.style,
-  });
-
-  final String text;
-  final TextStyle? style;
-  final Gradient gradient;
-
-  @override
-  Widget build(BuildContext context) {
-    return ShaderMask(
-      blendMode: BlendMode.srcIn,
-      shaderCallback: (bounds) => gradient.createShader(
-        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-      ),
-      child: Text(text, style: style),
-    );
+                        labelText: 'Username',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Fill Up This Field';
+                        }
+                      },
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 22, vertical: 0),
+                    child: Row(children: <Widget>[
+                      GradientText(
+                        'Date Of Birth:',
+                        style: const TextStyle(fontSize: 20),
+                        gradient: LinearGradient(colors: [
+                          Colors.black,
+                          Colors.blueGrey,
+                        ]),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.calendar_today),
+                        padding: EdgeInsets.only(left: 5),
+                        onPressed: () {
+                          showDatePicker(
+                                  context: context,
+                                  initialDate: _dateTime == null
+                                      ? DateTime.now()
+                                      : _dateTime,
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime.now())
+                              .then((date) {
+                            setState(() {
+                              _dateTime = date!;
+                            });
+                          });
+                        },
+                      ),
+                    ]),
+                  ),
+                 Container(
+                    padding: EdgeInsets.symmetric(horizontal: 22, vertical: 20),
+                    child: Row(children: const <Widget>[
+                      GradientText(
+                        'Gender:',
+                        style: TextStyle(fontSize: 20),
+                        gradient: LinearGradient(colors: [
+                          Colors.black,
+                          Colors.blueGrey,
+                        ]),
+                      ),
+                     
+                    ]),
+                  ),
+                ]))));
   }
 }
