@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-
-import 'first.dart';
+import 'login.dart';
+import 'info.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -18,19 +18,10 @@ class _SignupScreenState extends State<SignupScreen> {
     final myController2 = TextEditingController();
 
   final PassController = TextEditingController();
-    final PassController2 = TextEditingController();
+  final PassController2 = TextEditingController();
 
 
-  String? validatePassword(String value) {
-    if (value.isEmpty) {
-      return "* Required";
-    } else if (value.length < 6) {
-      return "Password should be atleast 6 characters";
-    } else if (value.length > 15) {
-      return "Password should not be greater than 15 characters";
-    } else
-      return null;
-  }
+
 
   @override
   void dispose() {
@@ -45,20 +36,26 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Login Page"),
+        title: Text("Signup Page"),
+       leading: IconButton(icon: Icon(Icons.arrow_back),
+        onPressed: () {
+           Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) =>  LoginScreen())
+                  );
+       },)
       ),
       body: SingleChildScrollView(
         child: Form(
           autovalidateMode:
-              AutovalidateMode.always, //check for validation while typing
+              AutovalidateMode.always, 
           key: formkey,
           child: Column(
-            
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 60.0),
                 child: Center(
-                  child: Container(
+                  child: SizedBox(
                       width: 200,
                       height: 150,
                       child: Image.asset('jpeg2000-home.jpg')),
@@ -73,24 +70,12 @@ class _SignupScreenState extends State<SignupScreen> {
                         border: OutlineInputBorder(),
                         labelText: 'Email',
                         hintText: 'abc@mail.com'),
-                    validator: MultiValidator([
+                   validator: MultiValidator([
                       RequiredValidator(errorText: "Enter valid email "),
                       EmailValidator(errorText: "Enter valid email "),
-                    ])),
-              ),
-               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                child: TextFormField(
-                    controller: myController2,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Confirm Email',
-                        hintText: 'abc@mail.com'),
-                    validator: MultiValidator([
-                      RequiredValidator(errorText: "Enter valid email "),
-                      EmailValidator(errorText: "Enter valid email "),
-                    ])),
-              ),
+                    ])
+              ),),
+             
                 Padding(
                 padding: const EdgeInsets.only(
                     left: 15.0, right: 15.0, top: 15, bottom: 15),
@@ -101,17 +86,19 @@ class _SignupScreenState extends State<SignupScreen> {
                         border: OutlineInputBorder(),
                         labelText: 'Password',
                         hintText: 'Enter secure password'),
-                    validator: MultiValidator([
-                      RequiredValidator(
-                          errorText: "Password should be atleast 6 characters"),
-                      MinLengthValidator(6,
-                          errorText: "Password should be atleast 6 characters"),
-                      MaxLengthValidator(15,
-                          errorText:
-                              "Password should not be greater than 15 characters")
-                    ])
-                    //validatePassword,        //Function to check validation
-                    ),
+                     validator: (value){
+                      if(value==null||value.isEmpty){
+                      return 'Password Cant be Empty';
+                      }
+                      if(value != PassController2.text){
+                       return 'Password has to be the same';
+                     }
+                     if(value.length<6){
+                      return 'Password Cant be less than 6 Characters ';
+
+                       }
+                     }
+                                         ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -123,16 +110,18 @@ class _SignupScreenState extends State<SignupScreen> {
                         border: OutlineInputBorder(),
                         labelText: 'Confirm Password',
                         hintText: 'Enter secure password'),
-                    validator: MultiValidator([
-                      RequiredValidator(
-                          errorText: "Password should be atleast 6 characters"),
-                      MinLengthValidator(6,
-                          errorText: "Password should be atleast 6 characters"),
-                      MaxLengthValidator(15,
-                          errorText:
-                              "Password should not be greater than 15 characters")
-                    ])
-                    //validatePassword,        //Function to check validation
+                    validator: (value){
+                      if(value==null||value.isEmpty){
+                      return 'Password Cant be Empty';
+                      }
+                     if(value != PassController.text){
+                       return 'Password has to be the same';
+                     } 
+                     if(value.length<6){
+                      return 'Password Cant be less than 6 Characters ';
+
+                       }          
+                    }        
                     ),
               ),
              
@@ -147,9 +136,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     content:
                     Text(myController.text);
                     if (formkey.currentState!.validate()) {
-                      if(myController==myController2){
+                    
                       Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => First()));
+                      context, MaterialPageRoute(builder: (_) => InfoScreen()));
                       print(myController.text);
                       print(PassController.text);
                       setState(() {
@@ -157,10 +146,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       }
                       else{
                         formkey.currentState!.validate();
-                      }
-                      
-                    } else {}
-                  },
+                      } 
+                    } ,
                   child: Text(
                     'SignUp',
                     style: TextStyle(color: Colors.white, fontSize: 25),
@@ -177,7 +164,9 @@ class _SignupScreenState extends State<SignupScreen> {
            
             ],
           ),
+          
         ),
+
       ),
     );
   }

@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'screens/login.dart';
 import 'screens/first.dart';
+import 'screens/info.dart';
+
 
 class App extends StatelessWidget {
   @override
@@ -18,7 +20,7 @@ class App extends StatelessWidget {
       title: 'Log in screen',
       home: Scaffold(
 
-        body: Center(child: LoginScreen()),
+        body: Center(child: InfoScreen()),
       ),
     );
   }

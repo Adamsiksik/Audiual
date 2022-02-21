@@ -18,16 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final myController = TextEditingController();
   final PassController = TextEditingController();
 
-  String? validatePassword(String value) {
-    if (value.isEmpty) {
-      return "* Required";
-    } else if (value.length < 6) {
-      return "Password should be atleast 6 characters";
-    } else if (value.length > 15) {
-      return "Password should not be greater than 15 characters";
-    } else
-      return null;
-  }
 
   @override
   void dispose() {
@@ -43,6 +33,13 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Login Page"),
+         leading: IconButton(icon: Icon(Icons.arrow_back),
+        onPressed: () {
+           Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) =>  First())
+                  );
+       },)
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -83,16 +80,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         border: OutlineInputBorder(),
                         labelText: 'Password',
                         hintText: 'Enter secure password'),
-                    validator: MultiValidator([
-                      RequiredValidator(
-                          errorText: "Password should be atleast 6 characters"),
-                      MinLengthValidator(6,
-                          errorText: "Password should be atleast 6 characters"),
-                      MaxLengthValidator(15,
-                          errorText:
-                              "Password should not be greater than 15 characters")
-                    ])
-                    //validatePassword,        //Function to check validation
+                    validator: (value){
+                      if(value==null||value.isEmpty){
+                      return 'Password Cant be Empty';
+                      }    
+                       if(value.length<6){
+                      return 'Password Cant be less than 6 Characters ';
+
+                       }
+
+                    }
                     ),
               ),
               FlatButton(
