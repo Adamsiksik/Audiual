@@ -20,7 +20,7 @@ class App extends StatelessWidget {
       title: 'Log in screen',
       home: Scaffold(
 
-        body: Center(child: InfoScreen()),
+        body: Center(child: First()),
       ),
     );
   }
