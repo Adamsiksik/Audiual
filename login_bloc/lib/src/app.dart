@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:login_bloc/src/screens/signup.dart';
 import 'screens/login.dart';
 import 'screens/first.dart';
 import 'screens/info.dart';
@@ -15,7 +16,13 @@ class App extends StatelessWidget {
       initialRoute: '/',
   routes: {
   
-    '/home': (context) => LoginScreen(),
+    '/home': (context) => First(),
+     '/login': (context) => LoginScreen(),
+          '/signup': (context) => SignupScreen(),
+
+      '/info': (context) => InfoScreen(),
+
+
   },
       title: 'Log in screen',
       home: Scaffold(
