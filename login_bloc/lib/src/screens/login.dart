@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                       width: 200,
                       height: 150,
-                      child: Image.asset('jpeg2000-home.jpg')),
+                  )
                 ),
               ),
               Padding(
@@ -140,11 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 70.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(
-                      '10wmt-articleLarge-v4.jpg',
-                    ),
-                  ),
+                
                 ),
               ),
               onTap: () {
@@ -157,12 +154,14 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 width: 70.0,
                 height: 70.0,
+                // ignore: prefer_const_constructors
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
+                  // ignore: prefer_const_constructors
                   image: DecorationImage(
-                    image: AssetImage(
-                      'gmail-logo.png',
-                    ),
+                    image: NetworkImage(
+        "https://imgur.com/l38773G",
+      ),
                   ),
                 ),
               ),
@@ -177,11 +176,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(
-                      '1024px-Facebook_icon_2013.jpg',
-                    ),
-                  ),
+                 
+                  
                 ),
               ),
               onTap: () {

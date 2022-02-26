@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "116796422514",
+    "project_id": "flutter-b6f68",
+    "storage_bucket": "flutter-b6f68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116796422514:android:20b5d8a2d25112c04805eb",
+        "android_client_info": {
+          "package_name": "com.example.login_bloc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116796422514-krcbqgigu3bff6v4c2t8ug2m31sg401f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXn4zHI88Ej_FMrQWmk2KvNazS8j1LMTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "116796422514-krcbqgigu3bff6v4c2t8ug2m31sg401f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "116796422514-tru32j2ts4g5o1bitqa0c2ichutd5be0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.loginBloc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

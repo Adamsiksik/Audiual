@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -58,7 +57,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: SizedBox(
                       width: 200,
                       height: 150,
-                      child: Image.asset('jpeg2000-home.jpg')),
+                    ),
                 ),
               ),
               Padding(

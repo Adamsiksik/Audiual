@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../screens/login.dart';
+import '../screens/first.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
@@ -29,19 +30,17 @@ class NavigationDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  LoginScreen()),
-  );
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
               },
             ),
             const SizedBox(height: 20),
-            Text(
-              'Click on the image to login',
-              style: TextStyle(
-                color: Colors.lightBlueAccent,
-                fontWeight: FontWeight.bold,
-                 decorationStyle: TextDecorationStyle.wavy)
-            ),
+            Text('Click on the image to login',
+                style: TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontWeight: FontWeight.bold,
+                    decorationStyle: TextDecorationStyle.wavy)),
             Divider(color: Colors.white),
             const SizedBox(height: 20),
             MenuItem(
@@ -94,4 +93,3 @@ class NavigationDrawer extends StatelessWidget {
     );
   }
 }
-
