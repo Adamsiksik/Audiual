@@ -158,11 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   // ignore: prefer_const_constructors
-                  image: DecorationImage(
-                    image: NetworkImage(
-        "https://imgur.com/l38773G",
-      ),
-                  ),
+                  
                 ),
               ),
               onTap: () {
