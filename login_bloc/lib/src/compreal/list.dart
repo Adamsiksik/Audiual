@@ -8,41 +8,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
 import '../data/books.dart';
 
-List<Post> postFromJson(String str) =>
-    List<Post>.from(json.decode(str).map((x) => Post.fromMap(x)));
+List<Book> bookFromJson(String str) =>
+    List<Book>.from(json.decode(str).map((x) => Book.fromMap(x)));
 
-class Post {
-  Post({
-    required this.name,
-    required this.id,
-    required this.imageUrl,
-    required this.rating,
-    required this.pages,
+class Book {
+  Book({
+    required this.title,
+    required this.thumbnailUrl,
+    required this.pageCount,
   });
 
-  String name;
-  int id;
-  String imageUrl;
-  String rating;
-  String pages;
+  String title;
+  String thumbnailUrl;
+  String pageCount;
 
-  factory Post.fromMap(Map<String, dynamic> json) => Post(
-        name: json["name"],
-        id: json["id"],
-        imageUrl: json["imageUrl"],
-        rating: json["rating"],
-        pages: json["pages"],
+  factory Book.fromMap(Map<String, dynamic> json) => Book(
+        title: json["title"],
+        thumbnailUrl: json["thumbnailUrl"],
+        pageCount: json["pageCount"],
       );
 }
 
-Future<List<Post>> fetchPost() async {
+Future<List<Book>> fetchPost() async {
   final response =
-      await http.get(Uri.parse('http://localhost:3000/feed/posts'));
-
+      await http.get(Uri.parse('http://localhost:3000/books'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
-
-    return parsed.map<Post>((json) => Post.fromMap(json)).toList();
+    return parsed.map<Book>((json) => Book.fromMap(json)).toList();
   } else {
     throw Exception('Failed to load album');
   }
@@ -50,12 +42,12 @@ Future<List<Post>> fetchPost() async {
 
 class ListV extends StatefulWidget {
   @override
-  late Future<List<Post>> futurePost;
+  late Future<List<Book>> futurePost;
   _list createState() => _list();
 }
 
 class _list extends State<ListV> {
-  late Future<List<Post>> futurePost;
+  late Future<List<Book>> futurePost;
 
   @override
   void initState() {
@@ -66,10 +58,11 @@ class _list extends State<ListV> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<List<Post>>(
+        body: FutureBuilder<List<Book>>(
       future: futurePost,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        print(snapshot);
+        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data != null) {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (_, index) => Container(
@@ -89,7 +82,7 @@ class _list extends State<ListV> {
                           height: 100,
                           child: Image(
                             image: NetworkImage(
-                                "${snapshot.data![index].imageUrl}"),
+                                "${snapshot.data![index].thumbnailUrl}"),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -102,7 +95,7 @@ class _list extends State<ListV> {
                               Padding(
                                 padding: EdgeInsets.only(left: 8, right: 8),
                                 child: Text(
-                                  "${snapshot.data![index].name.toString()}",
+                                  "${snapshot.data![index].title.toString()}",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -111,13 +104,9 @@ class _list extends State<ListV> {
                               Padding(
                                 padding: EdgeInsets.only(left: 8, top: 20),
                                 child: Text("Rating:" +
-                                    "${snapshot.data![index].pages.toString()}"),
+                                    "${snapshot.data![index].pageCount.toString()}"),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 8, top: 20),
-                                child: Text("Rating:" +
-                                    "${snapshot.data![index].rating.toString()}"),
-                              )
+                              
                             ],
                           ),
                         ))

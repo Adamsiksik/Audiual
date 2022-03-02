@@ -125,19 +125,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     if (formkey.currentState!.validate()) {
                       await ApiService()
                           .createuser(User(
-                              email: myController.text,
-                              password: PassController.text))
-                          .then((data) {
-                        if (data.result == true) {
-                          setState(() {
-                            myController.clear();
-                            PassController.clear();
-                            Text("Succ");
-                          });
-                        } else {
-                          Text("error");
-                        }
-                      });
+                              Email: myController.text,
+                              Password: PassController.text));
+                    Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => InfoScreen()));
                     } else {
                       formkey.currentState!.validate();
                     }

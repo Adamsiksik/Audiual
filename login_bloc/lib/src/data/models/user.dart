@@ -1,21 +1,24 @@
+// ignore_for_file: prefer_collection_literals, non_constant_identifier_names
+
 class User {
-  late String email;
-  late String password;
+  late String Email;
+  late String Password;
 
   User({
-    required this.email,
-    required this.password,
+    required this.Email,
+    required this.Password,
   });
 
   User.fromJson(Map<String, dynamic> json) {
-    email = json['email'];
-    password = json['password'];
+    Email = json['Email'];
+    Password = json['Password'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['email'] = this.email;
-    data['password'] = this.password;
+
+    final Map<String, dynamic> data =  Map<String, dynamic>();
+    data['Email'] = Email;
+    data['Password'] =Password;
     return data;
   }
 }
