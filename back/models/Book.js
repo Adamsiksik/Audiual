@@ -5,11 +5,11 @@ const BookSchema=mongoose.Schema({
     type:String,
     require:true,
   },
-  id:{
+  SBN:{
     type:Number,
     require:true,
   },
-  imageUrl:{
+  cover:{
     type:String,
     require:true,
   },
@@ -17,10 +17,22 @@ const BookSchema=mongoose.Schema({
     type:String,
     require:true,
   },
-  pages:{
+  numberOfPages:{
+    type:String,
+    require:true,
+  },
+  description :{
     type:String,
     require:true,
   }
+  ,authors:{
+    type:String,
+    require:true,
+  },dateOfPublish:{
+    type:String,
+    require:true,
+  },
+
 })
 
 module.exports=mongoose.model('Book',BookSchema)
