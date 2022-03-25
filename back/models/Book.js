@@ -1,38 +1,25 @@
 var mongoose = require('mongoose');
 
 const BookSchema=mongoose.Schema({
-  name:{
+  ISBN:{
     type:String,
     require:true,
   },
-  SBN:{
-    type:Number,
-    require:true,
-  },
-  cover:{
+  Publisher:{
     type:String,
     require:true,
   },
-  rating:{
+  BookAuthor:{
     type:String,
     require:true,
   },
-  numberOfPages:{
+  YearOfPublication:{
     type:String,
     require:true,
   },
-  description :{
-    type:String,
-    require:true,
-  }
-  ,authors:{
-    type:String,
-    require:true,
-  },dateOfPublish:{
+  ImageURLS:{
     type:String,
     require:true,
   },
-
 })
-
 module.exports=mongoose.model('Book',BookSchema)

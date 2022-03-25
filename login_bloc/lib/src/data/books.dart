@@ -1,27 +1,35 @@
 class books{
   //data Type
-  int? id;
-  String? name;
-  String? imageURL;
-  String? pages;
-  String ? rating;
+
+  String? ISBN;
+  String? BookTitle;
+  String? BookAuthor;
+  String? YearOfPublication;
+  String ? ImageURLS;
 // constructor
   books(
       {
-       this.id,
-      this.name,
-      this.imageURL,
-      this.pages,
-       this.rating
+      this.BookTitle,
+       this.ISBN,
+      this.BookAuthor,
+      this.YearOfPublication,
+      this.ImageURLS,
       }
    );
   //method that assign values to respective datatype vairables
   books.fromJson(Map<String,dynamic> json)
   {
-    id = json['id'];
-    name =json['name'];
-    imageURL = json['imageUrl'];
-    pages = json['pages'];
-    rating = json['rating'];
+    ISBN = json['ISBN '];
+    BookTitle=json['Book-Title'];
+    BookAuthor =json['Book-Author'];
+    YearOfPublication = json['Year-Of-Publication'];
+    ImageURLS = json['Image-URL-S'];
   }
+   factory books.fromMap(Map<String, dynamic> json) => books(
+        ISBN: json["ISBN"],
+        BookTitle: json["Book-Title"],
+        BookAuthor: json["Book-Author"],
+        YearOfPublication : json['Year-Of-Publication'],
+    ImageURLS: json['Image-URL-S'],
+      );
 }

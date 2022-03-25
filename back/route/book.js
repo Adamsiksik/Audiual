@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 router.get('/',async(req,res)=>{
   try{
- const books=await book.find();
+ const books=await book.find().limit(100);
  res.json(books);
   }catch(err){
    res.json({message:err})

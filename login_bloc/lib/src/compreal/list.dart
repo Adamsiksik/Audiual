@@ -8,33 +8,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
 import '../data/books.dart';
 
-List<Book> bookFromJson(String str) =>
-    List<Book>.from(json.decode(str).map((x) => Book.fromMap(x)));
+List<books> bookFromJson(String str) =>
+    List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
 
-class Book {
-  Book({
-    required this.title,
-    required this.thumbnailUrl,
-    required this.pageCount,
-  });
 
-  String title;
-  String thumbnailUrl;
-  String pageCount;
-
-  factory Book.fromMap(Map<String, dynamic> json) => Book(
-        title: json["title"],
-        thumbnailUrl: json["thumbnailUrl"],
-        pageCount: json["pageCount"],
-      );
-}
-
-Future<List<Book>> fetchPost() async {
+Future<List<books>> fetchPost() async {
   final response =
       await http.get(Uri.parse('http://localhost:3000/books'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
-    return parsed.map<Book>((json) => Book.fromMap(json)).toList();
+    return parsed.map<books>((json) => books.fromMap(json)).toList();
   } else {
     throw Exception('Failed to load album');
   }
@@ -42,12 +25,12 @@ Future<List<Book>> fetchPost() async {
 
 class ListV extends StatefulWidget {
   @override
-  late Future<List<Book>> futurePost;
+  late Future<List<books>> futurePost;
   _list createState() => _list();
 }
 
 class _list extends State<ListV> {
-  late Future<List<Book>> futurePost;
+  late Future<List<books>> futurePost;
 
   @override
   void initState() {
@@ -58,7 +41,7 @@ class _list extends State<ListV> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<List<Book>>(
+        body: FutureBuilder<List<books>>(
       future: futurePost,
       builder: (context, snapshot) {
         print(snapshot);
@@ -82,7 +65,7 @@ class _list extends State<ListV> {
                           height: 100,
                           child: Image(
                             image: NetworkImage(
-                                "${snapshot.data![index].thumbnailUrl}"),
+                                "${snapshot.data![index].ImageURLS}"),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -95,7 +78,7 @@ class _list extends State<ListV> {
                               Padding(
                                 padding: EdgeInsets.only(left: 8, right: 8),
                                 child: Text(
-                                  "${snapshot.data![index].title.toString()}",
+                                  "${snapshot.data![index].BookTitle.toString()}",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -103,8 +86,8 @@ class _list extends State<ListV> {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(left: 8, top: 20),
-                                child: Text("Rating:" +
-                                    "${snapshot.data![index].pageCount.toString()}"),
+                                child: Text("year:" +
+                                    "${snapshot.data![index].YearOfPublication.toString()}"),
                               ),
                               
                             ],
