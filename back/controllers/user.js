@@ -1,10 +1,8 @@
 const express=require('express');
-//const session =require('express-session');
 const User=require('../models/User');
 const router=express.Router();
 const bcrypt = require('bcrypt');
 
-//app.use(session({secret: 'obadddda'})); 
 
 router.get('/',async(req,res)=>{
  try{

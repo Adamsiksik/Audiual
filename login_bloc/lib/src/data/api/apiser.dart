@@ -15,11 +15,8 @@ class ApiService {
 
   ApiService._init();
 
- 
   Future<Response> createuser(User user) async {
-     final url = Uri.parse(
-     "http://localhost:3000/users"
-    );
+    final url = Uri.parse("http://localhost:3000/users");
     final request = await http.post(
       url,
       body: jsonEncode(user.toJson()),
@@ -38,4 +35,3 @@ class ApiService {
     return response;
   }
 }
-
