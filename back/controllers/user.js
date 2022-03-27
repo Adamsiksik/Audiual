@@ -2,20 +2,13 @@ const express=require('express');
 const User=require('../models/User');
 const router=express.Router();
 const bcrypt = require('bcrypt');
-
-
-router.get('/',async(req,res)=>{
- try{
-const users=await User.find().limit(1);
-res.json(users);
- }catch(err){
-  res.json({message:err})
-
- }
+const session = require('express-session');
+const { redirect } = require('express/lib/response');
+exports.postAddUser =  async(req,res)=>{
+  sess = req.session;
+  if(sess.email) {
+    return res.redirect('/');
 }
-)
-router.post('/', async(req,res)=>{
-
   const myPlaintextPassword = "generic";
   const hash = bcrypt.hashSync(req.body.Password, 5);
   console.log(hash);
@@ -29,22 +22,51 @@ console.log(req.body.Email);
 try{
 const savedUser=await user.save();
 res.json(savedUser);
+sess.Email =req.body.Email;
 
-}catch(err){
   res.json({message:err})
+
+}catch(error){
+  console.log(error.message);
 }
+};
+exports.postlogin = (req, res, next) => {
 
-})
-router.get('/:id',async(req,res)=>{
-
- const id=req.params.id;
- try{
-   const user=await User.findOne({_id:id});
-   res.send(user);
- }catch(error){
-   console.log(error.message);
- }
+  sess = req.session;
+  if(sess.email) {
+    return res.redirect('/');
 }
- )
+  const email = req.query.email;
+  const password = req.query.password;
+  console.log(req);
+  User.findOne( {email : email})
+  .then(user1 => {
+  
+    if(!user1){
+      return res.redirect('login');
+    }else{
 
-module.exports=router;
+      console.log(user1.Password);
+      console.log(password);
+      bcrypt.compare(password ,user1.Password)
+      .then(doMatch => {
+  
+        if(doMatch){
+          sess.email =email;
+          console.log("done")
+          return res.redirect('/');
+        
+  
+        }
+         res.redirect('login');
+      })
+      .catch(err => {
+        console.log(err);
+        res.redirect('login');
+      })
+
+    }
+  })
+
+  
+};

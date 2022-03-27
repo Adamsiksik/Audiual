@@ -1,52 +1,13 @@
-const express=require('express');
-//const session =require('express-session');
-const User=require('../models/User');
-const router=express.Router();
-const bcrypt = require('bcrypt');
+const path = require('path');
 
-//app.use(session({secret: 'obadddda'})); 
+const express = require('express');
 
-router.get('/',async(req,res)=>{
- try{
-const users=await User.find().limit(1);
-res.json(users);
- }catch(err){
-  res.json({message:err})
+const userController = require('../controllers/user');
 
- }
-}
-)
-router.post('/', async(req,res)=>{
+const router = express.Router();
 
-  const myPlaintextPassword = "generic";
-  const hash = bcrypt.hashSync(req.body.Password, 5);
-  console.log(hash);
-    const user=new User({
-      Email:req.body.Email,
-      Password:hash,
-    })
-      
-console.log(req.body.Email);
+// // /admin/add-product => GET
 
-try{
-const savedUser=await user.save();
-res.json(savedUser);
-
-}catch(err){
-  res.json({message:err})
-}
-
-})
-router.get('/:id',async(req,res)=>{
-
- const id=req.params.id;
- try{
-   const user=await User.findOne({_id:id});
-   res.send(user);
- }catch(error){
-   console.log(error.message);
- }
-}
- )
-
-module.exports=router;
+ router.post('/signup', userController.postAddUser);
+ router.post('/login', userController.postlogin);
+ module.exports=router;

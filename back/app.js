@@ -1,4 +1,5 @@
 const express =require('express');
+const session =require('express-session');
 const res = require('express/lib/response');
 var mongoose = require('mongoose');
 const bodyParser=require('body-parser');
@@ -6,9 +7,13 @@ const app=express();
 const cors = require("cors");
 
 app.use(cors());
-
+app.use(session({
+  secret:'secretadamobada',
+  resave: false,
+  saveUninitialized: false,
+  
+}))
 app.use(bodyParser.json());
-//app.use(session({secret: 'obadddda'})); 
 const userRoute=require('./route/user');
 const bookRoute=require('./route/book');
 
