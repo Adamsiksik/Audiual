@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
-import 'package:flutter_bcrypt/flutter_bcrypt.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_bcrypt/flutter_bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart';
@@ -22,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final myController = TextEditingController();
   final PassController = TextEditingController();
 
-
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -36,15 +33,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Login Page"),
-         leading: IconButton(icon: Icon(Icons.arrow_back),
-        onPressed: () {
-           Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  First())
-                  );
-       },)
-      ),
+          title: Text("Login Page"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => First()));
+            },
+          )),
       body: SingleChildScrollView(
         child: Form(
           autovalidateMode:
@@ -55,11 +51,10 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 60.0),
                 child: Center(
-                  child: Container(
-                      width: 200,
-                      height: 150,
-                  )
-                ),
+                    child: Container(
+                  width: 200,
+                  height: 150,
+                )),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
@@ -84,17 +79,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         border: OutlineInputBorder(),
                         labelText: 'Password',
                         hintText: 'Enter secure password'),
-                    validator: (value){
-                      if(value==null||value.isEmpty){
-                      return 'Password Cant be Empty';
-                      }    
-                       if(value.length<6){
-                      return 'Password Cant be less than 6 Characters ';
-
-                       }
-
-                    }
-                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Password Cant be Empty';
+                      }
+                      if (value.length < 6) {
+                        return 'Password Cant be less than 6 Characters ';
+                      }
+                    }),
               ),
               FlatButton(
                 onPressed: () {
@@ -112,33 +104,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
                 child: FlatButton(
-                 onPressed: () async {
-                    if (formkey.currentState!.validate()) {             
-                      final result= await ApiService()
-                          .checkuser(User(
-                              Email: myController.text,
-                              Password: PassController.text));
-                              print(result.message.toString());
-                    if(result.message.toString()=="bad password"){
-                       print("bad");
-                    Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => LoginScreen()));
-                    }
-                     else if(result.message.toString()=="no user with such email"){
-                       print("no user");
-                    Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => LoginScreen()));
-                    }
-                     else if(result.message.toString()=="Succeful"){
+                  onPressed: () async {
+                    if (formkey.currentState!.validate()) {
+                      final result = await ApiService().checkuser(User(
+                          Email: myController.text,
+                          Password: PassController.text));
+                      print(result.message.toString());
+                      if (result.message.toString() == "bad password") {
+                        print("bad");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                      } else if (result.message.toString() ==
+                          "no user with such email") {
+                        print("no user");
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                      } else if (result.message.toString() == "Succeful") {
                         print("succ");
-                    Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => First()));
-                    }
-                    else{
-                        Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => LoginScreen()));
-                    }
-                      
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => First()));
+                      } else {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                      }
                     } else {
                       formkey.currentState!.validate();
                     }
@@ -156,62 +144,50 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                     InkWell(
-              child: Container(
-                width: 70.0,
-                height: 70.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                
-                ),
-              ),
-              onTap: () {
-              
-              },
-            ),
-                        Padding(padding: EdgeInsets.only(left: 20)),
-
-                       InkWell(
-              child: Container(
-                width: 70.0,
-                height: 70.0,
-                // ignore: prefer_const_constructors
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  // ignore: prefer_const_constructors
-                  
-                ),
-              ),
-              onTap: () {
-  
-              },
-            ),
-            Padding(padding: EdgeInsets.only(left: 20)),
-                   InkWell(
-              child: Container(
-                width: 50.0,
-                height: 50.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                 
-                  
-                ),
-              ),
-              onTap: () {
-              },
-            ),
+                  InkWell(
+                    child: Container(
+                      width: 70.0,
+                      height: 70.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  InkWell(
+                    child: Container(
+                      width: 70.0,
+                      height: 70.0,
+                      // ignore: prefer_const_constructors
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        // ignore: prefer_const_constructors
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                  Padding(padding: EdgeInsets.only(left: 20)),
+                  InkWell(
+                    child: Container(
+                      width: 50.0,
+                      height: 50.0,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
                 ],
               ),
               SizedBox(
                 height: 20,
               ),
-              
-               FlatButton(
+              FlatButton(
                 onPressed: () {
-                  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) =>  SignupScreen())
-                  );},
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignupScreen()));
+                },
                 child: Text(
                   'Make Account Using Email',
                   style: TextStyle(color: Colors.blue, fontSize: 15),

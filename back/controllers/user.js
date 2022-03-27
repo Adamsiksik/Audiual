@@ -30,15 +30,11 @@ sess.Email =req.body.Email;
 exports.postlogin = async (req, res, next) => {
   sess = req.session;
   if(sess.email) {
-    return res.redirect('/');
-}
-
+    return res.json({URL:"/main",
+    session:true});
+  }
+  const password = req.body.Password;
   const email = req.body.Email;
-  console.log(req.body.Password);
-  const hash2 = bcrypt.hashSync(req.body.Password, 5);
-  const password = hash2;
-  console.log(password);
-  console.log(email);
   await User.findOne( {Email : email})
   .then(user1 => {
 
