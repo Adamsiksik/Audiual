@@ -17,6 +17,10 @@ const BookSchema=mongoose.Schema({
     type:String,
     require:true,
   },
+  BookTitle:{
+    type:String,
+    require:true,
+  },
   ImageURLS:{
     type:String,
     require:true,

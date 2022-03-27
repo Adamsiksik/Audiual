@@ -9,16 +9,13 @@ exports.postAddUser =  async(req,res)=>{
   if(sess.email) {
     return res.redirect('/');
 }
-  const myPlaintextPassword = "generic";
+
   const hash = bcrypt.hashSync(req.body.Password, 5);
   console.log(hash);
     const user=new User({
       Email:req.body.Email,
       Password:hash,
     })
-      
-console.log(req.body.Email);
-
 try{
 const savedUser=await user.save();
 res.json(savedUser);
@@ -30,39 +27,42 @@ sess.Email =req.body.Email;
   console.log(error.message);
 }
 };
-exports.postlogin = (req, res, next) => {
-
+exports.postlogin = async (req, res, next) => {
   sess = req.session;
   if(sess.email) {
     return res.redirect('/');
 }
-  const email = req.query.email;
-  const password = req.query.password;
-  console.log(req);
-  User.findOne( {email : email})
-  .then(user1 => {
-  
-    if(!user1){
-      return res.redirect('login');
-    }else{
 
+  const email = req.body.Email;
+  console.log(req.body.Password);
+  const hash2 = bcrypt.hashSync(req.body.Password, 5);
+  const password = hash2;
+  console.log(password);
+  console.log(email);
+  await User.findOne( {Email : email})
+  .then(user1 => {
+
+    if(!user1){
+      return res.json({URL:"/login"
+    ,message:"no user with such email"});
+    }else{
       console.log(user1.Password);
-      console.log(password);
+      console.log(user1.Email);
       bcrypt.compare(password ,user1.Password)
       .then(doMatch => {
   
         if(doMatch){
-          sess.email =email;
-          console.log("done")
-          return res.redirect('/');
-        
-  
+        sess.email =email;
+        return res.json({URL:"/main"
+        ,message:"Succeful"});
         }
-         res.redirect('login');
+        return res.json({URL:"/login"
+        ,message:"bad password"});
       })
       .catch(err => {
         console.log(err);
-        res.redirect('login');
+        return res.json({URL:"/login"
+        ,message:"error22"});
       })
 
     }

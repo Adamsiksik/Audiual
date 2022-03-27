@@ -1,12 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:convert';
-
+import 'package:flutter_bcrypt/flutter_bcrypt.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_bcrypt/flutter_bcrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:http/http.dart';
 import 'signup.dart';
-
+import '../data/api/apiser.dart';
+import '../data/models/user.dart';
 import 'first.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -109,18 +112,36 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
                 child: FlatButton(
-                  onPressed: () {
-                    content:
-                    Text(myController.text);
-                    if (formkey.currentState!.validate()) {
-                      Navigator.push(
+                 onPressed: () async {
+                    if (formkey.currentState!.validate()) {             
+                      final result= await ApiService()
+                          .checkuser(User(
+                              Email: myController.text,
+                              Password: PassController.text));
+                              print(result.message.toString());
+                    if(result.message.toString()=="bad password"){
+                       print("bad");
+                    Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => LoginScreen()));
+                    }
+                     else if(result.message.toString()=="no user with such email"){
+                       print("no user");
+                    Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => LoginScreen()));
+                    }
+                     else if(result.message.toString()=="Succeful"){
+                        print("succ");
+                    Navigator.push(
                           context, MaterialPageRoute(builder: (_) => First()));
-                      print(myController.text);
-                      print(PassController.text);
-                      setState(() {
-                       
-                      });
-                    } else {}
+                    }
+                    else{
+                        Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => LoginScreen()));
+                    }
+                      
+                    } else {
+                      formkey.currentState!.validate();
+                    }
                   },
                   child: Text(
                     'Login',
