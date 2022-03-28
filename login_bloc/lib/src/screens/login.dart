@@ -5,7 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'signup.dart';
+import 'package:flutter_session/flutter_session.dart';
 import '../data/api/apiser.dart';
 import '../data/models/user.dart';
 import 'first.dart';
@@ -120,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (_) => LoginScreen()));
                       } else if (result.message.toString() == "Succeful") {
-                        print("succ");
+                        await FlutterSession().set('token',myController.text);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (_) => First()));
                       } else {

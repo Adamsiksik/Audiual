@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import '../compreal/nav.dart';
 import '../compreal/list.dart';
 
@@ -13,6 +14,7 @@ class First extends StatefulWidget {
 class _Firststate extends State<First> {
  
     final padding = EdgeInsets.symmetric(horizontal: 8);
+  String user="Click on the image to login";
 
   @override
     Widget build(BuildContext context) {    
@@ -22,7 +24,9 @@ class _Firststate extends State<First> {
         titleSpacing: 20,
             backgroundColor: Colors.blueGrey,
         title: const Text('Recommendation'),
+        
       actions: <Widget>[
+       
               IconButton(
                 icon: Icon(
                   (Icons.search),

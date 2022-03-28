@@ -1,20 +1,33 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import '../screens/login.dart';
 import '../screens/first.dart';
 
 class NavigationDrawer extends StatelessWidget {
   final padding = EdgeInsets.symmetric(horizontal: 20);
   @override
+  String user="Click on the image to login";
   Widget build(BuildContext context) {
-    return Drawer(
+      
+      return Drawer(
       child: Material(
         color: Color.fromRGBO(50, 75, 205, 1),
         child: ListView(
           padding: padding,
           children: <Widget>[
             const SizedBox(height: 28),
+              FutureBuilder<dynamic>(
+              future: FlutterSession().get('token'),
+              builder: (BuildContext context,AsyncSnapshot<dynamic> snapshot){
+                if(snapshot.hasData){
+                 user=snapshot.data.toString();
+                 print(user);
+                }
+                return Text("");
+              }
+            ),
             InkWell(
               child: Container(
                 width: 100.0,
@@ -29,14 +42,20 @@ class NavigationDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                if(user=="Click on the image to login"){
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
-              },
+              }
+               else{
+                FlutterSession().set("token", 'Click on the image to login');
+              }
+              }
+             
             ),
             const SizedBox(height: 20),
-            Text('Click on the image to login',
+            Text(user,
                 style: TextStyle(
                     color: Colors.lightBlueAccent,
                     fontWeight: FontWeight.bold,

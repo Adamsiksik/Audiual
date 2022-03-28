@@ -49,9 +49,13 @@ class _list extends State<ListV> {
         if (snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data != null) {
           return ListView.builder(
             itemCount: snapshot.data!.length,
-            itemBuilder: (_, index) => Container(
-              child: Container(
+            itemBuilder: (_, index) =>
+             Container(
                 height: 150,
+               child: GestureDetector(
+                onTap: () => {
+                  print(snapshot.data![index].BookTitle.toString())
+                },
                 child: Card(
                   elevation: 5,
                   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -60,7 +64,7 @@ class _list extends State<ListV> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                      children:[    
                         Container(
                           width: 70,
                           height: 100,
@@ -90,16 +94,15 @@ class _list extends State<ListV> {
                                 child: Text("year:" +
                                     "${snapshot.data![index].YearOfPublication.toString()}"),
                               ),
-                              
                             ],
                           ),
                         ))
                       ],
                     ),
+                    ),
                   ),
                 ),
-              ),
-            ),
+             ),
           );
         } else {
           return Center(
