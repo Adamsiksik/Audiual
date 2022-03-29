@@ -3,6 +3,7 @@ import 'package:login_bloc/src/screens/signup.dart';
 import 'screens/login.dart';
 import 'screens/first.dart';
 import 'screens/info.dart';
+import 'screens/profile.dart';
 
 class App extends StatelessWidget {
   @override

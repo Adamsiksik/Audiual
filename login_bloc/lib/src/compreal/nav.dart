@@ -4,30 +4,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import '../screens/login.dart';
 import '../screens/first.dart';
+import '../screens/profile.dart';
 
-class NavigationDrawer extends StatelessWidget {
-  final padding = EdgeInsets.symmetric(horizontal: 20);
+class NavigationDrawer extends StatefulWidget {
   @override
+  _NavigationDrawerState createState() => _NavigationDrawerState();
+}
+
+class _NavigationDrawerState extends State<NavigationDrawer> {
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+  final padding = EdgeInsets.symmetric(horizontal: 20);
   String user="Click on the image to login";
+  @override
   Widget build(BuildContext context) {
-      
+      return FutureBuilder<dynamic>(
+      future: FlutterSession().get('token'), // function where you call your api
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        user=snapshot.data.toString();
       return Drawer(
       child: Material(
         color: Color.fromRGBO(50, 75, 205, 1),
         child: ListView(
           padding: padding,
           children: <Widget>[
-            const SizedBox(height: 28),
-              FutureBuilder<dynamic>(
-              future: FlutterSession().get('token'),
-              builder: (BuildContext context,AsyncSnapshot<dynamic> snapshot){
-                if(snapshot.hasData){
-                 user=snapshot.data.toString();
-                 print(user);
-                }
-                return Text("");
-              }
-            ),
+            const SizedBox(height: 28), 
             InkWell(
               child: Container(
                 width: 100.0,
@@ -49,7 +53,10 @@ class NavigationDrawer extends StatelessWidget {
                 );
               }
                else{
-                FlutterSession().set("token", 'Click on the image to login');
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                );
               }
               }
              
@@ -94,6 +101,8 @@ class NavigationDrawer extends StatelessWidget {
           ],
         ),
       ),
+      );
+      }
     );
   }
 
@@ -110,5 +119,6 @@ class NavigationDrawer extends StatelessWidget {
       hoverColor: hovorcolor,
       onTap: () {},
     );
+
   }
 }
