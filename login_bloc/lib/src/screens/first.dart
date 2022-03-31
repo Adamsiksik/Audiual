@@ -23,7 +23,7 @@ class _Firststate extends State<First> {
       appBar: AppBar(
         titleSpacing: 20,
             backgroundColor: Colors.blueGrey,
-        title: const Text('Recommendation'),
+        title: const Text('Newest Books'),
         
       actions: <Widget>[
        

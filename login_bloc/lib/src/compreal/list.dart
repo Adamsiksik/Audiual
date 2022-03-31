@@ -8,6 +8,7 @@ import 'dart:convert' show json, utf8;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
 import '../data/books.dart';
+import '../screens/bookpage.dart';
 
 List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
@@ -54,7 +55,8 @@ class _list extends State<ListV> {
                 height: 150,
                child: GestureDetector(
                 onTap: () => {
-                  print(snapshot.data![index].BookTitle.toString())
+                   Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => BookPage(snapshot.data![index].BookTitle.toString())))
                 },
                 child: Card(
                   elevation: 5,

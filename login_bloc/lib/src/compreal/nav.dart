@@ -18,13 +18,23 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     super.dispose();
   }
   final padding = EdgeInsets.symmetric(horizontal: 20);
-  String user="Click on the image to login";
+   String user="";
   @override
   Widget build(BuildContext context) {
       return FutureBuilder<dynamic>(
       future: FlutterSession().get('token'), // function where you call your api
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if(snapshot.hasData){
+        if(user!=""){
         user=snapshot.data.toString();
+        }
+        else{
+          user="Click on the image to login";
+        }
+        }
+        else{
+           user="Click on the image to login";
+        }
       return Drawer(
       child: Material(
         color: Color.fromRGBO(50, 75, 205, 1),
@@ -69,35 +79,113 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     decorationStyle: TextDecorationStyle.wavy)),
             Divider(color: Colors.white),
             const SizedBox(height: 20),
-            MenuItem(
+            InkWell(       
+               onTap: () {
+               if(user=="Click on the image to login"){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+               }
+            },   
+          child: IgnorePointer(
+            child:MenuItem(
               text: 'Recommended',
               icon: Icons.thumb_up_alt_sharp,
+            ),    
             ),
+            ),  
+
             const SizedBox(height: 16),
-            MenuItem(
-              text: 'List of books',
-              icon: Icons.view_list_sharp,
+            InkWell(       
+               onTap: () {
+               if(user=="Click on the image to login"){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+               }
+            },   
+          child: IgnorePointer(
+            child:MenuItem(
+              text: 'List of Books',
+              icon: Icons.menu,
+            ),    
             ),
+            ),  
             const SizedBox(height: 16),
-            MenuItem(
+           InkWell(       
+               onTap: () {
+               if(user=="Click on the image to login"){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+               }
+            },   
+          child: IgnorePointer(
+            child:MenuItem(
               text: 'Popular',
-              icon: Icons.local_fire_department,
+              icon: Icons.local_fire_department_sharp
+            ),    
             ),
+            ),  
             const SizedBox(height: 16),
-            MenuItem(
+          InkWell(       
+               onTap: () {
+               if(user=="Click on the image to login"){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+               }
+            },   
+          child: IgnorePointer(
+            child:MenuItem(
               text: 'Best',
-              icon: Icons.favorite,
+              icon: Icons.favorite
+            ),    
             ),
+            ),  
             const SizedBox(height: 24),
             Divider(color: Colors.white),
-            const SizedBox(height: 24),
-            const SizedBox(height: 16),
-            MenuItem(text: 'History', icon: Icons.alarm),
-            const SizedBox(height: 16),
-            MenuItem(
-              text: 'Listen to Later',
-              icon: Icons.watch_later,
+
+            const SizedBox(height:20),
+           
+            InkWell(       
+               onTap: () {
+               if(user=="Click on the image to login"){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+               }
+            },   
+          child: IgnorePointer(
+            child:MenuItem(
+              text: 'History',
+              icon: Icons.alarm
+            ),    
             ),
+            ),  
+
+            const SizedBox(height: 16),
+           InkWell(       
+               onTap: () {
+               if(user=="Click on the image to login"){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+               }
+            },   
+          child: IgnorePointer(
+            child:MenuItem(
+              text: 'Listen to later ',
+              icon: Icons.watch_later
+            ),    
+            ),
+            ),  
           ],
         ),
       ),
