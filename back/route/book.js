@@ -1,15 +1,13 @@
-const express=require('express');
-const book=require('../models/Book');
-const router=express.Router();
-const bcrypt = require('bcrypt');
+const path = require('path');
 
-router.get('/',async(req,res)=>{
-  try{
- const books=await book.find().limit(100);
- res.json(books);
-  }catch(err){
-   res.json({message:err})
-  }
- }
- )
+const express = require('express');
+
+const bookController = require('../controllers/book');
+
+const router = express.Router();
+
+// // /admin/add-product => GET
+
+ router.post('/', bookController.getAll);
+ router.post('/book', bookController.getOne);
  module.exports=router;

@@ -27,6 +27,33 @@ sess.Email =req.body.Email;
   console.log(error.message);
 }
 };
+
+exports.postlike = async (req, res) => {
+    sess = req.body.Email;
+    
+
+}
+
+exports.postsignup2 = async (req, res) => {
+  const  DoBReq = req.query.DoB;
+  const genreReq= req.query.genre;
+  const ageReq= req.query.age;
+  const email = req.query.Email;
+  const genderReq = req.query.gender;
+  const userNameReq = req.query.username;
+  const update = { DoB :  DoBReq ,genre :genreReq  , age:ageReq , gender:genderReq ,userName :userNameReq}
+  console.log(update)
+  const updated = User.findOneAndUpdate( {Email : email} ,update ,(err, doc) => {
+    if (err) console.log(err);
+    console.log("jkhjhkj");
+})
+// console.log(updated)
+res.json("dsasd")
+  
+  
+  
+
+}
 exports.postlogin = async (req, res, next) => {
   sess = req.session;
   if(sess.email) {
