@@ -51,13 +51,13 @@ exports.postlike = async (req, res) => {
 }
 
 exports.postsignup2 = async (req, res) => {
-  const DoBReq = req.query.DoB;
-  const genreReq = req.query.genre;
-  const ageReq = req.query.age;
-  const email = req.query.Email;
-  const genderReq = req.query.gender;
-  const userNameReq = req.query.username;
-  const update = { DoB: DoBReq, genre: genreReq, age: ageReq, gender: genderReq, userName: userNameReq }
+  console.log(req.body);
+  console.log(req.json);
+  const  DoBReq = req.body.DOB;
+  const email = req.body.Email;
+  const genderReq = req.body.Gender;
+  const userNameReq = req.body.Username;
+  const update = {userName :userNameReq, DoB :  DoBReq , gender:genderReq ,}
   console.log(update)
   const updated = User.findOneAndUpdate({ Email: email }, update, (err, doc) => {
     if (err) console.log(err);

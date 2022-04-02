@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -123,12 +125,11 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: FlatButton(
                   onPressed: () async {
                     if (formkey.currentState!.validate()) {
-                      await ApiService()
-                          .createuser(User(
-                              Email: myController.text,
-                              Password: PassController.text));
-                    Navigator.push(
-                          context, MaterialPageRoute(builder: (_) => InfoScreen()));
+                      await ApiService().createuser(User(
+                          Email: myController.text,
+                          Password: PassController.text));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => InfoScreen( myController.text)));
                     } else {
                       formkey.currentState!.validate();
                     }

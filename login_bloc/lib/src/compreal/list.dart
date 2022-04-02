@@ -16,7 +16,7 @@ List<books> bookFromJson(String str) =>
 
 Future<List<books>> fetchPost() async {
   final response =
-      await http.get(Uri.parse('http://localhost:3000/books'));
+      await http.get(Uri.parse('http://localhost:3000/books/all'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -43,7 +43,7 @@ class _list extends State<ListV> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<List<books>>(
+      body: FutureBuilder<List<books>>(
       future: futurePost,
       builder: (context, snapshot) {
         print(snapshot);
@@ -56,7 +56,7 @@ class _list extends State<ListV> {
                child: GestureDetector(
                 onTap: () => {
                    Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => BookPage(snapshot.data![index].BookTitle.toString())))
+                            MaterialPageRoute(builder: (_) => BookPage(snapshot.data![index].ISBN.toString())))
                 },
                 child: Card(
                   elevation: 5,

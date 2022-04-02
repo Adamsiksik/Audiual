@@ -18,13 +18,20 @@ const UserSchema=mongoose.Schema({
 
   ,DoB :{
     type : Date
-     
+  }
+ , userName:{
+    type:String,
+    require:true,
+  },
+  DoB :{
+    type : String,
+    require:true,
   }
   ,genre:{
     type : String
   }
   ,gender:{
-    type: Boolean
+    type: String
 
   }
 })
