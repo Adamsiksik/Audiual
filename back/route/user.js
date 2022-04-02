@@ -12,4 +12,9 @@ const router = express.Router();
  router.post('/login', userController.postlogin);
  router.post('/like', userController.postlike);
  router.post('/signup2', userController.postsignup2);
+ router.post('/reset', userController.postreset1);
+ router.get('/reset', userController.getreset);
+ router.get('/profile', userController.getuser);
+
+
  module.exports=router;

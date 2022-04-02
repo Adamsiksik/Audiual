@@ -11,7 +11,10 @@ const UserSchema=mongoose.Schema({
     require:true,
   },
   age:     { type: Number, min: 18, max: 65 },
-  likeBooks :[Number]
+  likeBooks :[{
+    type: Number,
+    unique: true
+  }]
 
   ,DoB :{
     type : Date
