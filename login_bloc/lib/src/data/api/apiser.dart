@@ -65,7 +65,6 @@ final request =  await http.post(Uri.parse("http://localhost:3000/books/book?isb
     try {
       if (request.statusCode == 200) {
         final parsed=json.decode(request.body).cast<Map<String, dynamic>>();
-        
         book =parsed.map<books>((json) => books.fromMap(json)).toList();
         print(book);
       } else {

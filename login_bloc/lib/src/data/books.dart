@@ -23,14 +23,14 @@ class books{
     BookTitle=json['Book-Title'];
     BookAuthor =json['Book-Author'];
     YearOfPublication = json['Year-Of-Publication'];
-    ImageURLS = json['Image-URL-S'];
+    ImageURLS = json['Image-URL-L'];
   }
    factory books.fromMap(Map<String, dynamic> json) => books(
         ISBN: json["ISBN"],
         BookTitle: json["Book-Title"],
         BookAuthor: json["Book-Author"],
         YearOfPublication : json['Year-Of-Publication'],
-    ImageURLS: json['Image-URL-S'],
+      ImageURLS: json['Image-URL-L'],
       );
 }
 
