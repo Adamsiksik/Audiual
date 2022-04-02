@@ -14,9 +14,10 @@ exports.getAll  =async(req,res)=>{
  
 
  exports.getOne =async(req,res)=>{
-    try{
-        isbnreq =req.body.isbn
-   const books=await book.findOne(  {isbn:isbnreq} );
+  try{
+  isbnreq =req.query.isbn;
+  const books=await book.findOne({ISBN:isbnreq} );
+ 
    res.json(books);
     }catch(err){
      res.json({message:err})

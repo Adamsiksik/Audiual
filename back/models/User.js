@@ -10,18 +10,19 @@ const UserSchema=mongoose.Schema({
     type:String,
     require:true,
   },
-  age:     { type: Number, min: 18, max: 65 },
-  likeBooks :[Number]
-
-  ,DoB :{
-    type : Date
-     
+  userName:{
+    type:String,
+    require:true,
+  },
+  DoB :{
+    type : String,
+    require:true,
   }
   ,genre:{
     type : String
   }
   ,gender:{
-    type: Boolean
+    type: String
 
   }
 })
