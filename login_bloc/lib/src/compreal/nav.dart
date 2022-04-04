@@ -65,7 +65,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                else{
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                  MaterialPageRoute(builder: (context) => ProfileScreen(user)),
                 );
               }
               }

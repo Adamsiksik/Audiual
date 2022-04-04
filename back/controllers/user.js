@@ -65,11 +65,24 @@ exports.postsignup2 = async (req, res) => {
   })
   // console.log(updated)
   res.json("dsasd")
-
-
-
-
 }
+
+exports.updateData = async (req, res) => {
+  console.log(req.query);
+
+  const email = req.query.email;
+  const userNameReq = req.query.userName;
+  const update = {userName :userNameReq,}
+  console.log(update)
+  const updated = User.findOneAndUpdate({ Email: email }, update, (err, doc) => {
+    if (err) console.log(err);
+    console.log("jkhjhkj");
+  })
+  // console.log(updated)
+  res.json("dsasd")
+}
+
+
 exports.postlogin = async (req, res, next) => {
   sess = req.session;
   if (sess.email) {
@@ -198,7 +211,8 @@ exports.getreset = async (req, res, next) => {
 }
 
 exports.getuser = async (req, res, next) => {
-  const email = req.query.Email;
+  const email = req.query.email;
+  console.log(req.query.email);
   await User.findOne({ Email: email })
     .then(user1 => {
         res.json(user1);

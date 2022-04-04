@@ -6,6 +6,8 @@ import '../const/url.dart';
 import '../const/route.dart';
 import '../models/respond.dart';
 import '../models/user.dart';
+import '../models/UF.dart';
+
 import '../models/info.dart';
 
 
@@ -37,6 +39,42 @@ class ApiService {
     }
     return response;
   }
+
+
+Future<List<UserFull>> getuser(String s) async {
+  final response = await http
+      .get(Uri.parse('http://localhost:3000/users/profile?email=${s}'));
+          print("http://localhost:3000/users/profile?email=${s}");
+
+   if (response.statusCode == 200) {
+    final parsed = json.decode("[" + response.body + "]") as List<dynamic>;
+    return parsed.map<UserFull>((json) => UserFull.fromMap(json)).toList();
+  } else {
+    throw Exception('Failed to load album');
+  }
+}
+
+Future<Response> changeD(String s,String c) async {
+ final url = Uri.parse("http://localhost:3000/users/update?email=${s}&userName=${c}");
+
+print("localhost:3000/users/update?email=${s}&userName=${c}");
+final request = await http.post(
+      url,
+      headers: AppConstants.HEADERS,
+    );
+    Response response = Response();
+    try {
+      if (request.statusCode == 200) {
+        response = responseFromJson(request.body);
+      } else {
+        print(request.statusCode);
+      }
+    } catch (e) {
+      return Response();
+    }
+    return response;
+  }
+
 
     Future<Response> Userinfo(Info info) async {
     final url = Uri.parse("http://localhost:3000/users/signup2");

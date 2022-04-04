@@ -15,6 +15,8 @@ const router = express.Router();
  router.post('/reset', userController.postreset1);
  router.get('/reset', userController.getreset);
  router.get('/profile', userController.getuser);
+ router.post('/update', userController.updateData);
+
 
 
  module.exports=router;
