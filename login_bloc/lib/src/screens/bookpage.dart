@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unnecessary_null_comparison
 
+import 'package:flutter_session/flutter_session.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
 import 'dart:convert' show json, utf8;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
+import '../data/api/apiser.dart';
 import '../data/books.dart';
 import '../screens/bookpage.dart';
 
@@ -32,8 +34,11 @@ class BookPage extends StatefulWidget {
 }
 
 class _BookPageState extends State<BookPage> {
+  late bool ispressed = false;
+
   late Future<List<books>> futurePost;
   late String something;
+
   _BookPageState(this.something);
   final padding = EdgeInsets.symmetric(horizontal: 8);
 
@@ -50,13 +55,13 @@ class _BookPageState extends State<BookPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("1" + futurePost.toString());
     return Scaffold(
       body: FutureBuilder<List<books>>(
         future: fetchPost(something),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           print("2" + snapshot.toString());
           if (snapshot.hasData) {
+
             return Scaffold(
               appBar: AppBar(
                 titleSpacing: 20,
@@ -65,11 +70,26 @@ class _BookPageState extends State<BookPage> {
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(
-                      (Icons.favorite_border),
+                      (Icons.favorite),
                       size: 30.0,
-                      color: Colors.brown[900],
+                      color:
+                          (ispressed) ? Color(0xff007397) : Color(0xff9A9A9A),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                       if (!ispressed) {
+                        setState(() {
+                          ispressed = true;
+                        });
+                      } else {
+                        setState(() {
+                          ispressed = false;
+                        });
+                      }
+                      String s = await FlutterSession().get('token');
+                      await ApiService().like(
+                          s.toString(), snapshot.data![0].BookTitle.toString());
+                     
+                    },
                   ),
                   Padding(padding: padding)
                 ],
@@ -149,17 +169,16 @@ class _BookPageState extends State<BookPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                   
-                                    margin:EdgeInsets.only(left: 30, top: 20),
-                                    
-                                    child:IconButton(
-                                      icon: Icon(
-                                        (Icons.watch_later),
-                                        size: 40.0,
-                                        color: Colors.blue[900],
+                                      margin:
+                                          EdgeInsets.only(left: 30, top: 20),
+                                      child: IconButton(
+                                        icon: Icon(
+                                          (Icons.watch_later),
+                                          size: 40.0,
+                                          color: Colors.blue[900],
+                                        ),
+                                        onPressed: () {},
                                       ),
-                                      onPressed: () {},
-                                    ),
                                     ),
                                   ],
                                 ),

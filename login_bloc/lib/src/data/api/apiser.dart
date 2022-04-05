@@ -54,9 +54,20 @@ Future<List<UserFull>> getuser(String s) async {
   }
 }
 
+Future<String> ispress(String s,String c) async {
+  final response = await http
+      .get(Uri.parse('localhost:3000/users/ispress?Email=${s}&likedbook=${c}'));
+
+   if (response.statusCode == 200) {
+    return response.body;
+  } else {
+    throw Exception('Failed to load book');
+  }
+}
+
+
 Future<Response> changeD(String s,String c) async {
  final url = Uri.parse("http://localhost:3000/users/update?email=${s}&userName=${c}");
-
 print("localhost:3000/users/update?email=${s}&userName=${c}");
 final request = await http.post(
       url,
@@ -75,6 +86,26 @@ final request = await http.post(
     return response;
   }
 
+Future<Response> like(String s,String c) async {
+  print("http://localhost:3000/users/like?Email=${s}&likedbook=${c}");
+
+ final url = Uri.parse("http://localhost:3000/users/like?Email=${s}&likedbook=${c}");
+final request = await http.post(
+      url,
+      headers: AppConstants.HEADERS,
+    );
+    Response response = Response();
+    try {
+      if (request.statusCode == 200) {
+        response = responseFromJson(request.body);
+      } else {
+        print(request.statusCode);
+      }
+    } catch (e) {
+      return Response();
+    }
+    return response;
+  }
 
     Future<Response> Userinfo(Info info) async {
     final url = Uri.parse("http://localhost:3000/users/signup2");

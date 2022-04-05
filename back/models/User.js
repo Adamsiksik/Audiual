@@ -10,16 +10,7 @@ const UserSchema=mongoose.Schema({
     type:String,
     require:true,
   },
-  age:     { type: Number, min: 18, max: 65 },
-  likeBooks :[{
-    type: Number,
-    unique: true
-  }]
-
-  ,DoB :{
-    type : Date
-  }
- , userName:{
+  userName:{
     type:String,
     require:true,
   },
@@ -33,7 +24,10 @@ const UserSchema=mongoose.Schema({
   ,gender:{
     type: String
 
-  }
+  },
+  liked : [{
+    type : String,
+     }]
 })
 
 module.exports=mongoose.model('User',UserSchema)

@@ -16,6 +16,8 @@ const router = express.Router();
  router.get('/reset', userController.getreset);
  router.get('/profile', userController.getuser);
  router.post('/update', userController.updateData);
+ router.get('/ispress', userController.ispress);
+
 
 
 

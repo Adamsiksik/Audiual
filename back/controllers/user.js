@@ -32,22 +32,43 @@ exports.postAddUser = async (req, res) => {
 };
 
 exports.postlike = async (req, res) => {
+  console.log("1"+req.query.Email)
+  console.log("2"+req.query.likedbook)
   email = req.query.Email;
   const likedbook = req.query.likedbook;
-  const user = User.findOne({ Email: email }).select('likeBooks');
-  console.log(user[1])
-  if (user.includes(likedbook)) {
-    res.json("this book is add befor")
+  user = await User.findOne({ Email: email }).select('liked');
+
+  if ( Array.from(user.liked).includes(likedbook)) {
+    const update = { $pull: { liked: likedbook } }
+    const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
+      if (err) console.log(err);
+      else
+        console.log("Successfully removed");
+    })
   }
-  const update = { $push: { likeBooks: likedbook } }
+  else{
+  const update = { $push: { liked: likedbook } }
   const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
     if (err) console.log(err);
     else
       console.log("Successfully added");
   })
+}
+}
 
-  res.json("dsasdddsa")
+exports.ispress = async (req, res) => {
+  console.log("1"+req.query.Email)
+  console.log("2"+req.query.likedbook)
+  email = req.query.Email;
+  const likedbook = req.query.likedbook;
+  user = await User.findOne({ Email: email }).select('liked');
 
+  if ( Array.from(user.liked).includes(likedbook)) {
+    res.json("1")
+  }
+  else{  
+  console.log("2");
+}
 }
 
 exports.postsignup2 = async (req, res) => {
@@ -57,7 +78,7 @@ exports.postsignup2 = async (req, res) => {
   const email = req.body.Email;
   const genderReq = req.body.Gender;
   const userNameReq = req.body.Username;
-  const update = {userName :userNameReq, DoB :  DoBReq , gender:genderReq ,}
+  const update = {userName :userNameReq, DoB :  DoBReq , gender:genderReq ,liked:""};
   console.log(update)
   const updated = User.findOneAndUpdate({ Email: email }, update, (err, doc) => {
     if (err) console.log(err);
@@ -81,6 +102,7 @@ exports.updateData = async (req, res) => {
   // console.log(updated)
   res.json("dsasd")
 }
+
 
 
 exports.postlogin = async (req, res, next) => {

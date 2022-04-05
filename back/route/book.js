@@ -10,4 +10,5 @@ const router = express.Router();
 
  router.get('/all', bookController.getAll);
  router.get('/book', bookController.getOne);
+
  module.exports=router;
