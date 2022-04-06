@@ -9,19 +9,19 @@ const BookSchema=mongoose.Schema({
     type:String,
     require:true,
   },
-  BookAuthor:{
+  "Book-Author":{
     type:String,
     require:true,
   },
-  YearOfPublication:{
+  "Year-Of-Publication":{
     type:String,
     require:true,
   },
-  BookTitle:{
+  "Book-Title":{
     type:String,
     require:true,
   },
-  ImageURLS:{
+  "Image-URL-L":{
     type:String,
     require:true,
   },

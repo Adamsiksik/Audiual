@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
+import 'package:login_bloc/src/screens/likeb.dart';
 import '../screens/login.dart';
 import '../screens/first.dart';
 import '../screens/profile.dart';
+import 'list.dart';
 
 class NavigationDrawer extends StatefulWidget {
   @override
@@ -12,186 +14,187 @@ class NavigationDrawer extends StatefulWidget {
 }
 
 class _NavigationDrawerState extends State<NavigationDrawer> {
-
   @override
   void dispose() {
     super.dispose();
   }
+
   final padding = EdgeInsets.symmetric(horizontal: 20);
-   String user="";
+  String user = "";
   @override
   Widget build(BuildContext context) {
-      return FutureBuilder<dynamic>(
-      future: FlutterSession().get('token'), // function where you call your api
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if(snapshot.hasData){
-        if(user!=""){
-        user=snapshot.data.toString();
-        }
-        else{
-          user="Click on the image to login";
-        }
-        }
-        else{
-           user="Click on the image to login";
-        }
-      return Drawer(
-      child: Material(
-        color: Color.fromRGBO(50, 75, 205, 1),
-        child: ListView(
-          padding: padding,
-          children: <Widget>[
-            const SizedBox(height: 28), 
-            InkWell(
-              child: Container(
-                width: 100.0,
-                height: 100.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(
-                      '5562.png',
+    return FutureBuilder<dynamic>(
+        future:
+            FlutterSession().get('token'), // function where you call your api
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            if (user != "") {
+              user = snapshot.data.toString();
+            } else {
+              user = "Click on the image to login";
+            }
+          } else {
+            user = "Click on the image to login";
+          }
+          return Drawer(
+            child: Material(
+              color: Color.fromRGBO(50, 75, 205, 1),
+              child: ListView(
+                padding: padding,
+                children: <Widget>[
+                  const SizedBox(height: 28),
+                  InkWell(
+                      child: Container(
+                        width: 100.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage(
+                              '5562.png',
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        if (user == "Click on the image to login") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfileScreen(user)),
+                          );
+                        }
+                      }),
+                  const SizedBox(height: 20),
+                  Text(user,
+                      style: TextStyle(
+                          color: Colors.lightBlueAccent,
+                          fontWeight: FontWeight.bold,
+                          decorationStyle: TextDecorationStyle.wavy)),
+                  Divider(color: Colors.white),
+                  const SizedBox(height: 20),
+                  InkWell(
+                    onTap: () {
+                      if (user == "Click on the image to login") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LikedB(user)),
+                        );
+                      }
+                    },
+                    child: IgnorePointer(
+                      child: MenuItem(
+                        text: 'Liked',
+                        icon: Icons.thumb_up_alt_sharp,
+                      ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 16),
+                  InkWell(
+                    onTap: () {
+                      if (user == "Click on the image to login") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      }
+                      else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => First()),
+                        );
+                      }
+                    },
+                    child: IgnorePointer(
+                      child: MenuItem(
+                        text: 'List of Books',
+                        icon: Icons.menu,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  InkWell(
+                   onTap: () {
+                      if (user == "Click on the image to login") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      } 
+                    },
+                    child: IgnorePointer(
+                      child: MenuItem(
+                          text: 'Popular',
+                          icon: Icons.local_fire_department_sharp),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  InkWell(
+                    onTap: () {
+                      if (user == "Click on the image to login") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      }
+                    },
+                    child: IgnorePointer(
+                      child: MenuItem(text: 'Best', icon: Icons.favorite),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Divider(color: Colors.white),
+                  const SizedBox(height: 20),
+                  InkWell(
+                    onTap: () {
+                      if (user == "Click on the image to login") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      }
+                    },
+                    child: IgnorePointer(
+                      child: MenuItem(text: 'History', icon: Icons.alarm),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  InkWell(
+                    onTap: () {
+                      if (user == "Click on the image to login") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      }
+                    },
+                    child: IgnorePointer(
+                      child: MenuItem(
+                          text: 'Listen to later ', icon: Icons.watch_later),
+                    ),
+                  ),
+                ],
               ),
-              onTap: () {
-                if(user=="Click on the image to login"){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              }
-               else{
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen(user)),
-                );
-              }
-              }
-             
             ),
-            const SizedBox(height: 20),
-            Text(user,
-                style: TextStyle(
-                    color: Colors.lightBlueAccent,
-                    fontWeight: FontWeight.bold,
-                    decorationStyle: TextDecorationStyle.wavy)),
-            Divider(color: Colors.white),
-            const SizedBox(height: 20),
-            InkWell(       
-               onTap: () {
-               if(user=="Click on the image to login"){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-               }
-            },   
-          child: IgnorePointer(
-            child:MenuItem(
-              text: 'Recommended',
-              icon: Icons.thumb_up_alt_sharp,
-            ),    
-            ),
-            ),  
-
-            const SizedBox(height: 16),
-            InkWell(       
-               onTap: () {
-               if(user=="Click on the image to login"){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-               }
-            },   
-          child: IgnorePointer(
-            child:MenuItem(
-              text: 'List of Books',
-              icon: Icons.menu,
-            ),    
-            ),
-            ),  
-            const SizedBox(height: 16),
-           InkWell(       
-               onTap: () {
-               if(user=="Click on the image to login"){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-               }
-            },   
-          child: IgnorePointer(
-            child:MenuItem(
-              text: 'Popular',
-              icon: Icons.local_fire_department_sharp
-            ),    
-            ),
-            ),  
-            const SizedBox(height: 16),
-          InkWell(       
-               onTap: () {
-               if(user=="Click on the image to login"){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-               }
-            },   
-          child: IgnorePointer(
-            child:MenuItem(
-              text: 'Best',
-              icon: Icons.favorite
-            ),    
-            ),
-            ),  
-            const SizedBox(height: 24),
-            Divider(color: Colors.white),
-
-            const SizedBox(height:20),
-           
-            InkWell(       
-               onTap: () {
-               if(user=="Click on the image to login"){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-               }
-            },   
-          child: IgnorePointer(
-            child:MenuItem(
-              text: 'History',
-              icon: Icons.alarm
-            ),    
-            ),
-            ),  
-
-            const SizedBox(height: 16),
-           InkWell(       
-               onTap: () {
-               if(user=="Click on the image to login"){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-               }
-            },   
-          child: IgnorePointer(
-            child:MenuItem(
-              text: 'Listen to later ',
-              icon: Icons.watch_later
-            ),    
-            ),
-            ),  
-          ],
-        ),
-      ),
-      );
-      }
-    );
+          );
+        });
   }
 
   Widget MenuItem({
@@ -207,6 +210,5 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
       hoverColor: hovorcolor,
       onTap: () {},
     );
-
   }
 }

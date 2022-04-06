@@ -78,7 +78,7 @@ exports.postsignup2 = async (req, res) => {
   const email = req.body.Email;
   const genderReq = req.body.Gender;
   const userNameReq = req.body.Username;
-  const update = {userName :userNameReq, DoB :  DoBReq , gender:genderReq ,liked:""};
+  const update = {userName :userNameReq, DoB :  DoBReq , gender:genderReq ,liked:[]};
   console.log(update)
   const updated = User.findOneAndUpdate({ Email: email }, update, (err, doc) => {
     if (err) console.log(err);
