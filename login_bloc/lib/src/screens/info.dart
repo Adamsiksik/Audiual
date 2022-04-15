@@ -33,7 +33,7 @@ class _InfoScreenState extends State<InfoScreen> {
   bool pressAttention4 = true;
   bool pressAttention5 = true;
   bool pressAttention6 = true;
-
+  List gen = [];
   int? groupValue;
 
   @override
@@ -231,7 +231,7 @@ class _InfoScreenState extends State<InfoScreen> {
                               ),
                               Expanded(
                                 child: RaisedButton(
-                                  child: new Text('Mystery '),
+                                  child: new Text('Mystery'),
                                   textColor: Colors.white,
                                   shape: new RoundedRectangleBorder(
                                     borderRadius:
@@ -331,24 +331,40 @@ class _InfoScreenState extends State<InfoScreen> {
                       child: RaisedButton(
                         onPressed: () async {
                           if (formkey.currentState!.validate()) {
+                            if(!pressAttention){
+                              gen.insert(0, "Action");
+                            }
+                            if(!pressAttention1){
+                              gen.insert(0, "Adventure");
+                            }
+                            if(!pressAttention2){
+                              gen.insert(0, "Mystery");
+                            }
+                            if(!pressAttention3){
+                              gen.insert(0, "Crime");
+                            }
+                            if(!pressAttention4){
+                              gen.insert(0, "Romance");
+                            }
+                            if(!pressAttention5){
+                              gen.insert(0, "History");
+                            }
+                            if(!pressAttention6){
+                              gen.insert(0, "Sports");
+                            }
                             await ApiService().Userinfo(Info(
                                 Email: something,
                                 Username: myController.text,
                                 Gender:gender,
                                 DOB:_dateTime.toString(),
+                                Genre:gen
                                 ));
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (_) => First()));
                             print(myController.text);
                             print(_dateTime.toString());
                             print(gender);
-                            print(pressAttention);
-                            print(pressAttention1);
-                            print(pressAttention2);
-                            print(pressAttention3);
-                            print(pressAttention4);
-                            print(pressAttention5);
-                            print(pressAttention6);
+                            print(gen);
                           }
                         },
                         shape: RoundedRectangleBorder(
