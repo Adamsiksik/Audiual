@@ -126,8 +126,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   onPressed: () async {
                     if (formkey.currentState!.validate()) {
                       await ApiService().createuser(User(
-                          Email: myController.text,
-                          Password: PassController.text));
+                          Email: myController.text.toLowerCase(),
+                          Password: PassController.text.toLowerCase()));
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => InfoScreen( myController.text)));
                     } else {
