@@ -51,3 +51,25 @@ exports.getliked = async (req, res) => {
     res.json({ message: err })
   }
 }
+
+exports.getrec = async (req, res) => {
+  try {
+    let books;
+    booksArray = [];
+
+    const email = req.query.email;
+    let user1;
+
+    console.log(req.query.email);
+    user1=await User.findOne({ Email: email })
+ 
+ 
+    for (var i = 0; i < user1.genre.length; i++) {
+    books = await book.find({ "catogery": user1.genre[i] });
+    Array.prototype.push.apply(booksArray, books);
+    }
+    res.json(booksArray);
+  } catch (err) {
+    res.json({ message: err })
+  }
+}

@@ -11,6 +11,8 @@ const router = express.Router();
  router.get('/all', bookController.getAll);
  router.get('/book', bookController.getOne);
  router.get('/liked', bookController.getliked);
+ router.get('/rec', bookController.getrec);
+
 
 
  module.exports=router;

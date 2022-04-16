@@ -9,6 +9,10 @@ const BookSchema=mongoose.Schema({
     type:String,
     require:true,
   },
+  catogery:{
+    type:String,
+    require:true,
+  },
   "Book-Author":{
     type:String,
     require:true,

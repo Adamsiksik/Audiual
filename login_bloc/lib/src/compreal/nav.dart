@@ -6,6 +6,7 @@ import 'package:login_bloc/src/screens/likeb.dart';
 import '../screens/login.dart';
 import '../screens/first.dart';
 import '../screens/profile.dart';
+import '../screens/rec.dart';
 import 'list.dart';
 
 class NavigationDrawer extends StatefulWidget {
@@ -29,7 +30,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             if (user != "") {
-              user = snapshot.data.toString();
+              user = snapshot.data.toString().toLowerCase();
             } else {
               user = "Click on the image to login";
             }
@@ -135,10 +136,16 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                               builder: (context) => LoginScreen()),
                         );
                       } 
+                        else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RecB(user)),
+                        );
+                      }
                     },
                     child: IgnorePointer(
                       child: MenuItem(
-                          text: 'Popular',
+                          text: 'Recommended',
                           icon: Icons.local_fire_department_sharp),
                     ),
                   ),

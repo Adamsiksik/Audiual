@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     if (formkey.currentState!.validate()) {
                       final result = await ApiService().checkuser(User(
-                          Email: myController.text,
+                          Email: myController.text.toLowerCase(),
                           Password: PassController.text));
                       print(result.message.toString());
                       if (result.message.toString() == "bad password") {
