@@ -11,8 +11,13 @@ const router = express.Router();
  router.get('/all', bookController.getAll);
  router.get('/book', bookController.getOne);
  router.get('/liked', bookController.getliked);
+<<<<<<< Updated upstream
  router.get('/rec', bookController.getrec);
 
+=======
+ router.get('/loadBook', bookController.getloadBook )
+ router.get( '/someroute', bookController.sendpdf )
+>>>>>>> Stashed changes
 
 
  module.exports=router;

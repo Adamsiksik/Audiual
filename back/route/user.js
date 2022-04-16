@@ -18,7 +18,4 @@ const router = express.Router();
  router.post('/update', userController.updateData);
  router.get('/ispress', userController.ispress);
 
-
-
-
  module.exports=router;
