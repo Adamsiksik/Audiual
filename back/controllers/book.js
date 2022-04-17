@@ -1,6 +1,8 @@
 const express = require('express');
 const book = require('../models/Book');
 const User = require('../models/User');
+const fs = require('fs');
+const path = require('path');
 
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -28,6 +30,18 @@ exports.getOne = async (req, res) => {
   }
 }
 
+exports.sendpdf = (req, res) => {
+
+  console.log("Getting PDF file from the server! (streaming version)");
+
+  const filePath = './example.pdf';
+  const stream = fs.createReadStream(filePath);
+  res.writeHead(200, {
+      'Content-disposition': 'attachment; filename="' + encodeURIComponent(path.basename(filePath))  + '"',
+      'Content-type': 'application/pdf',
+  });
+  stream.pipe(res);
+}
 exports.getliked = async (req, res) => {
   try {
     let books;
@@ -52,6 +66,7 @@ exports.getliked = async (req, res) => {
   }
 }
 
+<<<<<<< Updated upstream
 exports.getrec = async (req, res) => {
   try {
     let books;
@@ -72,4 +87,18 @@ exports.getrec = async (req, res) => {
   } catch (err) {
     res.json({ message: err })
   }
+=======
+exports.getloadBook =  (req,res) => {
+
+  var fs = require('fs');
+
+require.extensions['.txt'] = function (module, filename) {
+    module.exports = fs.readFileSync(filename, 'utf8');
+};
+
+var words = require("../../../books1/epubtxt/1st-chance.epub.txt");
+
+console.log(typeof words);
+  
+>>>>>>> Stashed changes
 }
