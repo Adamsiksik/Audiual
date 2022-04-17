@@ -36,14 +36,13 @@ dependencies:
   intl: ^0.17.0
   provider: ^5.0.0
   cupertino_icons: ^1.0.2
-  rxdart: ^0.27.3
-  http: ^0.13.4
+  rxdart: ^0.21.0
+  http: ^0.12.0
   flutter_image_slideshow: ^0.1.2
   email_validator: '^1.0.6'
   form_field_validator: ^1.1.0
-  flutter_bcrypt: ^1.0.7
   flutter_session: ^0.1.1
- 
+  flutter_plugin_pdf_viewer: ^1.0.7
 
 
 dev_dependencies:
@@ -64,6 +63,7 @@ dev_dependencies:
 flutter:   
   uses-material-design: true
   assets:
+    - assets/
     - assets\jpeg2000-home.jpg
     - assets\gmail-logo.png
     - assets\1024px-Facebook_icon_2013.jpg

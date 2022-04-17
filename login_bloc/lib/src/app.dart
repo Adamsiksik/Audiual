@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_bloc/src/screens/pdf.dart';
 import 'package:login_bloc/src/screens/signup.dart';
 import 'screens/login.dart';
 import 'screens/first.dart';
@@ -19,7 +20,7 @@ class App extends StatelessWidget {
       },
       title: 'Log in screen',
       home: Scaffold(
-        body: Center(child: First()),
+        body: Center(child: PDF()),
       ),
     );
   }
