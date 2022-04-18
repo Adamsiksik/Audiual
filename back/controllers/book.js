@@ -3,6 +3,7 @@ const book = require('../models/Book');
 const User = require('../models/User');
 const fs = require('fs');
 const path = require('path');
+const textToSpeech = require('@google-cloud/text-to-speech');
 
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -33,8 +34,8 @@ exports.getOne = async (req, res) => {
 exports.sendpdf = (req, res) => {
 
   console.log("Getting PDF file from the server! (streaming version)");
-
-  const filePath = './example.pdf';
+    const isbn = req.query.isbn;
+  const filePath = '../../books1/books/'+isbn+'.pdf';
   const stream = fs.createReadStream(filePath);
   res.writeHead(200, {
       'Content-disposition': 'attachment; filename="' + encodeURIComponent(path.basename(filePath))  + '"',
@@ -66,7 +67,6 @@ exports.getliked = async (req, res) => {
   }
 }
 
-<<<<<<< Updated upstream
 exports.getrec = async (req, res) => {
   try {
     let books;
@@ -87,7 +87,7 @@ exports.getrec = async (req, res) => {
   } catch (err) {
     res.json({ message: err })
   }
-=======
+}
 exports.getloadBook =  (req,res) => {
 
   var fs = require('fs');
@@ -100,5 +100,11 @@ var words = require("../../../books1/epubtxt/1st-chance.epub.txt");
 
 console.log(typeof words);
   
->>>>>>> Stashed changes
+}
+exports.getaudiobook =  (req,res) => {
+
+let audio = document.querySelector('audio');
+audio.src = base64str;
+audio.play();
+
 }

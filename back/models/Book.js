@@ -10,13 +10,9 @@ const BookSchema=mongoose.Schema({
     require:true,
   },
   catogery:{
-<<<<<<< Updated upstream
     type:String,
     require:true,
-=======
-    type :String,
-    require
->>>>>>> Stashed changes
+ 
   },
   "Book-Author":{
     type:String,
