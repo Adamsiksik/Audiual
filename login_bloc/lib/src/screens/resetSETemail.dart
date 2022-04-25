@@ -1,24 +1,27 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:login_bloc/src/screens/resetSETemail.dart';
-import 'signup.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'resetSETkey.dart';
 import 'package:flutter_session/flutter_session.dart';
 import '../data/api/apiser.dart';
 import '../data/models/user.dart';
 import 'first.dart';
 
-class LoginScreen extends StatefulWidget {
+class reset extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _resetState createState() => _resetState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _resetState extends State<reset> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
   final PassController = TextEditingController();
-
+  late String something;
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -32,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          title: Text("Login Page"),
+          title: Text(" Reset Password page "),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -68,35 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       EmailValidator(errorText: "Enter valid email "),
                     ])),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 15.0, right: 15.0, top: 15, bottom: 0),
-                child: TextFormField(
-                    controller: PassController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        hintText: 'Enter secure password'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password Cant be Empty';
-                      }
-                      if (value.length < 6) {
-                        return 'Password Cant be less than 6 Characters ';
-                      }
-                    }),
-              ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => reset()));
-                },
-                child: Text(
-                  'Forgot Password',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
-                ),
-              ),
               Container(
                 height: 50,
                 width: 250,
@@ -106,33 +80,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: FlatButton(
                   onPressed: () async {
                     if (formkey.currentState!.validate()) {
-                      final result = await ApiService().checkuser(User(
-                          Email: myController.text.toLowerCase(),
-                          Password: PassController.text));
+                      final result = await ApiService()
+                          .resetCheckUser(myController.text.toLowerCase());
                       print(result.message.toString());
-                      if (result.message.toString() == "bad password") {
-                        print("bad");
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
-                      } else if (result.message.toString() ==
+                      final usernameController =
+                          myController.text.toLowerCase();
+                      print(result.message.toString() + "result");
+                      if (result.message.toString() ==
                           "no user with such email") {
                         print("no user");
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
-                      } else if (result.message.toString() == "Succeful") {
+                            MaterialPageRoute(builder: (_) => reset()));
+                      } else if (result.message.toString() ==
+                          "check your email to rest your password ") {
                         await FlutterSession().set('token', myController.text);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => First()));
-                      } else {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) =>
+                                    resetSETkey(usernameController)));
                       }
                     } else {
                       formkey.currentState!.validate();
                     }
                   },
                   child: Text(
-                    'Login',
+                    'reset password ',
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
@@ -182,16 +156,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(
                 height: 20,
-              ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()));
-                },
-                child: Text(
-                  'Make Account Using Email',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
-                ),
               ),
             ],
           ),

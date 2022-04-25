@@ -1,24 +1,31 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:login_bloc/src/screens/resetSETemail.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'signup.dart';
+import 'resetSETpass.dart';
 import 'package:flutter_session/flutter_session.dart';
 import '../data/api/apiser.dart';
 import '../data/models/user.dart';
 import 'first.dart';
 
-class LoginScreen extends StatefulWidget {
+class resetSETkey extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  late String something;
+  resetSETkey(this.something);
+  _resetSETkeyState createState() => _resetSETkeyState(this.something);
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _resetSETkeyState extends State<resetSETkey> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
   final PassController = TextEditingController();
-
+  late String something;
+  _resetSETkeyState(this.something);
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -32,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-          title: Text("Login Page"),
+          title: Text(" Reset Password page2 "),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -58,43 +65,11 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: TextFormField(
-                    controller: myController,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Email',
-                        hintText: 'abc@mail.com'),
-                    validator: MultiValidator([
-                      RequiredValidator(errorText: "Enter valid email "),
-                      EmailValidator(errorText: "Enter valid email "),
-                    ])),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 15.0, right: 15.0, top: 15, bottom: 0),
-                child: TextFormField(
-                    controller: PassController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        hintText: 'Enter secure password'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password Cant be Empty';
-                      }
-                      if (value.length < 6) {
-                        return 'Password Cant be less than 6 Characters ';
-                      }
-                    }),
-              ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => reset()));
-                },
-                child: Text(
-                  'Forgot Password',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
+                  controller: myController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'key',
+                      hintText: 'rijsqeth'),
                 ),
               ),
               Container(
@@ -106,33 +81,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: FlatButton(
                   onPressed: () async {
                     if (formkey.currentState!.validate()) {
-                      final result = await ApiService().checkuser(User(
-                          Email: myController.text.toLowerCase(),
-                          Password: PassController.text));
-                      print(result.message.toString());
-                      if (result.message.toString() == "bad password") {
-                        print("bad");
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
-                      } else if (result.message.toString() ==
-                          "no user with such email") {
+                      final result = await ApiService()
+                          .resetCheckUserkey(myController.text);
+                      print(myController.text);
+                      print("result " + result.message.toString());
+                      if (result.message.toString() ==
+                          "your token has been expered ") {
                         print("no user");
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
-                      } else if (result.message.toString() == "Succeful") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => resetSETkey(something)));
+                      } else if (result.message.toString() ==
+                          "you can update password now ") {
+                        print("you can update password now ");
                         await FlutterSession().set('token', myController.text);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => First()));
-                      } else {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => resetpass(myController.text)));
                       }
                     } else {
                       formkey.currentState!.validate();
                     }
                   },
                   child: Text(
-                    'Login',
+                    'reset password ',
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
@@ -182,16 +157,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(
                 height: 20,
-              ),
-              FlatButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()));
-                },
-                child: Text(
-                  'Make Account Using Email',
-                  style: TextStyle(color: Colors.blue, fontSize: 15),
-                ),
               ),
             ],
           ),

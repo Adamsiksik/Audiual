@@ -158,6 +158,8 @@ exports.postlogin = async (req, res, next) => {
 exports.postreset1 = async (req, res, next) => {
 
   const email = req.query.Email;
+
+  console.log(email+"nulllllllllllllllllll")
   await User.findOne({ Email: email })
     .then(user1 => {
 
@@ -171,12 +173,22 @@ exports.postreset1 = async (req, res, next) => {
       } else {
         console.log(user1.Email);
         mykey = rand.generate(8)
-        record = new recordReset({
-          Email: email,
-          key: mykey
-        });
+        let record =   recordReset.findOne({ Email: user1.Email }).then(user1 => {
+          if (!user1) {
+            record = new recordReset({
+              Email: email,
+              key: mykey
+            });
+            record.save()
+          }
+          else{
+            user1.key =mykey;
+            user1.save();
+          }
+        })
+       
         console.log(record);
-        record.save()
+       
 
         var transporter = nodemailer.createTransport({
           service: 'gmail',
@@ -190,7 +202,7 @@ exports.postreset1 = async (req, res, next) => {
           from: 'oday.qr.2001@gmail.com',
           to: email,
           subject: 'Sending Email to rest youer aduial passwor',
-          text: 'localhost:3000/users/reset/?key=' + mykey
+          text: 'http://localhost:54588/reset?key=' + mykey
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -201,13 +213,38 @@ exports.postreset1 = async (req, res, next) => {
           }
         });
 
-        res.json('check your email to rest your password ');
+        res.json({ URL: "/login",message:'check your email to rest your password '});
       }
     })
 
 }
 
-exports.getreset = async (req, res, next) => {
+exports.getresetkey = async (req, res, next) => {
+  const keyreq = req.query.key
+  console.log(keyreq)
+  await recordReset.findOne({ key: keyreq })
+    .then( async record => {
+
+      if (!record) {
+        console.log('not found');
+
+        return res.json({
+          URL: "/login"
+          , message: "your token has been expered "
+        });
+      } else {
+        return res.json({
+          URL: "/resetpassword"
+          , message: "you can update password now "
+        });
+      
+
+
+      }
+    })
+}
+
+exports.getresetpass = async (req, res, next) => {
   const keyreq = req.query.key
   const pass = req.query.password
   console.log(keyreq)
@@ -224,9 +261,31 @@ exports.getreset = async (req, res, next) => {
       } else {
         const hash = bcrypt.hashSync(pass, 5);
         console.log(hash);
-        await User.findOneAndUpdate({ Email: record.Email }, { password: hash })
+        console.log(record.Email)
 
-        res.json("your passwor has been updated ")
+       let doc =  await User.findOne({ Email: record.Email },{Password: hash} ).then(user1 => {
+
+     
+          if (!user1) {
+            return res.json({
+              URL: "/login"
+              , message: "no user "
+            });
+
+            
+          }
+          else{
+            user1.Password =hash;
+            user1.save()
+            res.json("")
+            return res.json({
+              URL: "/login"
+              , message: "your passwor has been updated "
+            });
+          }
+          
+          
+        })
 
 
       }

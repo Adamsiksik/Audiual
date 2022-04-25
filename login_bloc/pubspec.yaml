@@ -32,18 +32,25 @@ dependencies:
   
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  flutter_cupertino_date_picker: ^0.8.0
+
+  flutter_cupertino_date_picker: ^1.0.26+2
   intl: ^0.17.0
-  provider: ^5.0.0
+  provider: ^6.0.2
   cupertino_icons: ^1.0.2
   rxdart: ^0.21.0
   http: ^0.12.0
   flutter_image_slideshow: ^0.1.2
-  email_validator: '^1.0.6'
+  email_validator: ^2.0.1
   form_field_validator: ^1.1.0
   flutter_session: ^0.1.1
   flutter_plugin_pdf_viewer: ^1.0.7
+<<<<<<< Updated upstream
   get: ^4.6.1
+=======
+  advance_pdf_viewer: any
+  file_picker: ^2.1.7
+  firebase_storage: ^7.0.0
+>>>>>>> Stashed changes
 
 dev_dependencies:
   flutter_test:
