@@ -10,7 +10,6 @@ import '../models/UF.dart';
 
 import '../models/info.dart';
 
-
 class ApiService {
   static final ApiService _apiService = ApiService._init();
 
@@ -21,7 +20,7 @@ class ApiService {
   ApiService._init();
 
   Future<Response> createuser(User user) async {
-    final url = Uri.parse("http://localhost:3000/users/signup");
+    final url = Uri.parse("http://192.168.1.19:3000/users/signup");
     final request = await http.post(
       url,
       body: jsonEncode(user.toJson()),
@@ -40,36 +39,35 @@ class ApiService {
     return response;
   }
 
+  Future<List<UserFull>> getuser(String s) async {
+    final response = await http
+        .get(Uri.parse('http://192.168.1.19:3000/users/profile?email=${s}'));
+    print("http://localhost:3000/users/profile?email=${s}");
 
-Future<List<UserFull>> getuser(String s) async {
-  final response = await http
-      .get(Uri.parse('http://localhost:3000/users/profile?email=${s}'));
-          print("http://localhost:3000/users/profile?email=${s}");
-
-   if (response.statusCode == 200) {
-    final parsed = json.decode("[" + response.body + "]") as List<dynamic>;
-    return parsed.map<UserFull>((json) => UserFull.fromMap(json)).toList();
-  } else {
-    throw Exception('Failed to load album');
+    if (response.statusCode == 200) {
+      final parsed = json.decode("[" + response.body + "]") as List<dynamic>;
+      return parsed.map<UserFull>((json) => UserFull.fromMap(json)).toList();
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
-}
 
-Future<String> ispress(String s,String c) async {
-  final response = await http
-      .get(Uri.parse('localhost:3000/users/ispress?Email=${s}&likedbook=${c}'));
+  Future<String> ispress(String s, String c) async {
+    final response = await http.get(
+        Uri.parse('192.168.1.19:3000/users/ispress?Email=${s}&likedbook=${c}'));
 
-   if (response.statusCode == 200) {
-    return response.body;
-  } else {
-    throw Exception('Failed to load book');
+    if (response.statusCode == 200) {
+      return response.body;
+    } else {
+      throw Exception('Failed to load book');
+    }
   }
-}
 
-
-Future<Response> changeD(String s,String c) async {
- final url = Uri.parse("http://localhost:3000/users/update?email=${s}&userName=${c}");
-print("localhost:3000/users/update?email=${s}&userName=${c}");
-final request = await http.post(
+  Future<Response> changeD(String s, String c) async {
+    final url = Uri.parse(
+        "http://192.168.1.19:3000/users/update?email=${s}&userName=${c}");
+    print("localhost:3000/users/update?email=${s}&userName=${c}");
+    final request = await http.post(
       url,
       headers: AppConstants.HEADERS,
     );
@@ -86,11 +84,12 @@ final request = await http.post(
     return response;
   }
 
-Future<Response> like(String s,String c) async {
-  print("http://localhost:3000/users/like?Email=${s}&likedbook=${c}");
+  Future<Response> like(String s, String c) async {
+    print("http://192.168.1.19:3000/users/like?Email=${s}&likedbook=${c}");
 
- final url = Uri.parse("http://localhost:3000/users/like?Email=${s}&likedbook=${c}");
-final request = await http.post(
+    final url = Uri.parse(
+        "http://192.168.1.19:3000/users/like?Email=${s}&likedbook=${c}");
+    final request = await http.post(
       url,
       headers: AppConstants.HEADERS,
     );
@@ -107,8 +106,8 @@ final request = await http.post(
     return response;
   }
 
-    Future<Response> Userinfo(Info info) async {
-    final url = Uri.parse("http://localhost:3000/users/signup2");
+  Future<Response> Userinfo(Info info) async {
+    final url = Uri.parse("http://192.168.1.19:3000/users/signup2");
     print(info.toJson());
     final request = await http.post(
       url,
@@ -128,13 +127,14 @@ final request = await http.post(
     return response;
   }
 
-Future<books> getbook(String something) async {
-final request =  await http.post(Uri.parse("http://localhost:3000/books/book?isbn=${something}"));
-  books book = books();
+  Future<books> getbook(String something) async {
+    final request = await http.post(
+        Uri.parse("http://192.168.1.19:3000/books/book?isbn=${something}"));
+    books book = books();
     try {
       if (request.statusCode == 200) {
-        final parsed=json.decode(request.body).cast<Map<String, dynamic>>();
-        book =parsed.map<books>((json) => books.fromMap(json)).toList();
+        final parsed = json.decode(request.body).cast<Map<String, dynamic>>();
+        book = parsed.map<books>((json) => books.fromMap(json)).toList();
         print(book);
       } else {
         print(request.statusCode);
@@ -145,10 +145,8 @@ final request =  await http.post(Uri.parse("http://localhost:3000/books/book?isb
     return book;
   }
 
-
-
-Future<Response> checkuser(User user) async {
-    final url = Uri.parse("http://localhost:3000/users/login");
+  Future<Response> checkuser(User user) async {
+    final url = Uri.parse("http://192.168.1.19:3000/users/login");
     final request = await http.post(
       url,
       body: jsonEncode(user.toJson()),
@@ -167,4 +165,3 @@ Future<Response> checkuser(User user) async {
     return response;
   }
 }
-

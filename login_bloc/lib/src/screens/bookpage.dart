@@ -16,7 +16,7 @@ List<books> bookFromJson(String str) =>
 
 Future<List<books>> fetchPost(String something) async {
   final response = await http
-      .get(Uri.parse('http://localhost:3000/books/book?isbn=${something}'));
+      .get(Uri.parse('http://192.168.1.19:3000/books/book?isbn=${something}'));
   if (response.statusCode == 200) {
     final parsed = json.decode("[" + response.body + "]") as List<dynamic>;
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -61,7 +61,6 @@ class _BookPageState extends State<BookPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           print("2" + snapshot.toString());
           if (snapshot.hasData) {
-
             return Scaffold(
               appBar: AppBar(
                 titleSpacing: 20,
@@ -76,7 +75,7 @@ class _BookPageState extends State<BookPage> {
                           (ispressed) ? Color(0xff007397) : Color(0xff9A9A9A),
                     ),
                     onPressed: () async {
-                       if (!ispressed) {
+                      if (!ispressed) {
                         setState(() {
                           ispressed = true;
                         });
@@ -88,7 +87,6 @@ class _BookPageState extends State<BookPage> {
                       String s = await FlutterSession().get('token');
                       await ApiService().like(
                           s.toString(), snapshot.data![0].BookTitle.toString());
-                     
                     },
                   ),
                   Padding(padding: padding)

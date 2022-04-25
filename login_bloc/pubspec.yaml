@@ -43,7 +43,7 @@ dependencies:
   form_field_validator: ^1.1.0
   flutter_session: ^0.1.1
   flutter_plugin_pdf_viewer: ^1.0.7
-
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:

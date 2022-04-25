@@ -34,12 +34,12 @@ exports.getOne = async (req, res) => {
 exports.sendpdf = (req, res) => {
 
   console.log("Getting PDF file from the server! (streaming version)");
-    const isbn = req.query.isbn;
-  const filePath = '../../books1/books/'+isbn+'.pdf';
+  const isbn = req.query.isbn;
+  const filePath = '../../books1/books/' + isbn + '.pdf';
   const stream = fs.createReadStream(filePath);
   res.writeHead(200, {
-      'Content-disposition': 'attachment; filename="' + encodeURIComponent(path.basename(filePath))  + '"',
-      'Content-type': 'application/pdf',
+    'Content-disposition': 'attachment; filename="' + encodeURIComponent(path.basename(filePath)) + '"',
+    'Content-type': 'application/pdf',
   });
   stream.pipe(res);
 }
@@ -53,13 +53,13 @@ exports.getliked = async (req, res) => {
     let user1;
 
     console.log(req.query.email);
-    user1=await User.findOne({ Email: email })
- 
- 
+    user1 = await User.findOne({ Email: email })
+
+
     for (var i = 0; i < user1.liked.length; i++) {
-    books = await book.findOne({ "Book-Title": user1.liked[i] });
-    console.log(books);
-    booksArray.push(books);
+      books = await book.findOne({ "Book-Title": user1.liked[i] });
+      console.log(books);
+      booksArray.push(books);
     }
     res.json(booksArray);
   } catch (err) {
@@ -76,35 +76,47 @@ exports.getrec = async (req, res) => {
     let user1;
 
     console.log(req.query.email);
-    user1=await User.findOne({ Email: email })
- 
- 
+    user1 = await User.findOne({ Email: email })
+
+
     for (var i = 0; i < user1.genre.length; i++) {
-    books = await book.find({ "catogery": user1.genre[i] });
-    Array.prototype.push.apply(booksArray, books);
+      books = await book.find({ "catogery": user1.genre[i] });
+      Array.prototype.push.apply(booksArray, books);
     }
     res.json(booksArray);
   } catch (err) {
     res.json({ message: err })
   }
 }
-exports.getloadBook =  (req,res) => {
+exports.getloadBook = (req, res) => {
 
   var fs = require('fs');
 
-require.extensions['.txt'] = function (module, filename) {
+  require.extensions['.txt'] = function (module, filename) {
     module.exports = fs.readFileSync(filename, 'utf8');
-};
+  };
 
-var words = require("../../../books1/epubtxt/1st-chance.epub.txt");
+  var words = require("../../../books1/epubtxt/1st-chance.epub.txt");
 
-console.log(typeof words);
-  
+  console.log(typeof words);
+
 }
-exports.getaudiobook =  (req,res) => {
+exports.getaudiobook = (req, res) => {
 
-let audio = document.querySelector('audio');
-audio.src = base64str;
-audio.play();
+  let audio = document.querySelector('audio');
+  audio.src = base64str;
+  audio.play();
 
+}
+
+exports.search = async (req, res) => {
+  try {
+  booksArray = [];
+
+  books = await book.find( { "Book-Title" : { $regex : new RegExp(req.query.name, "i") } } );
+  Array.prototype.push.apply(booksArray, books);
+} catch (err) {
+  res.json({ message: err })
+}
+res.json(booksArray);
 }

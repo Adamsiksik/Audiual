@@ -268,7 +268,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (_) =>
-                                                                First(  )));
+                                                                First()));
                                                   }
                                                 },
                                               ),

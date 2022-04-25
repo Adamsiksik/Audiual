@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
 
-
 class PDF extends StatefulWidget {
   @override
   _PDFState createState() => _PDFState();
@@ -14,7 +13,7 @@ class _PDFState extends State<PDF> {
   late bool _loading;
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     _initPdf();
   }
@@ -25,7 +24,7 @@ class _PDFState extends State<PDF> {
     });
     final doc = await PDFDocument.fromURL(url);
     setState(() {
-      _doc=doc;
+      _doc = doc;
       _loading = false;
     });
   }
@@ -33,12 +32,19 @@ class _PDFState extends State<PDF> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Flutter PDF Demo"),),
-      body: _loading ? Center(child: CircularProgressIndicator(),) : PDFViewer(document: _doc, 
-      indicatorBackground: Colors.red,
-      // showIndicator: false,
-      // showPicker: false,
-       ),
+      appBar: AppBar(
+        title: Text("Flutter PDF Demo"),
+      ),
+      body: _loading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : PDFViewer(
+              document: _doc,
+              indicatorBackground: Colors.red,
+              // showIndicator: false,
+              // showPicker: false,
+            ),
     );
   }
 }

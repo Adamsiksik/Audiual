@@ -15,7 +15,7 @@ List<books> bookFromJson(String str) =>
 
 Future<List<books>> fetchliked(String s) async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.19:3000/books/liked?email=${s}'));
+      .get(Uri.parse('http://192.168.1.19:3000/books/search?name=${s}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -24,21 +24,21 @@ Future<List<books>> fetchliked(String s) async {
   }
 }
 
-class LikedB extends StatefulWidget {
+class Search extends StatefulWidget {
   @override
   late String something;
-  LikedB(this.something);
+  Search(this.something);
   late Future<List<books>> liked;
-  _ikedB createState() => _ikedB(this.something);
+  _Search createState() => _Search(this.something);
 }
 
-class _ikedB extends State<LikedB> {
+class _Search extends State<Search> {
   final padding = EdgeInsets.symmetric(horizontal: 8);
 
   late Future<List<books>> liked;
   late String something;
 
-  _ikedB(this.something);
+  _Search(this.something);
   @override
   void initState() {
     super.initState();
@@ -52,7 +52,7 @@ class _ikedB extends State<LikedB> {
         appBar: AppBar(
           titleSpacing: 20,
           backgroundColor: Colors.blueGrey,
-          title: const Text('Liked Books'),
+          title: const Text('Search Result'),
           actions: <Widget>[
             IconButton(
               icon: Icon(

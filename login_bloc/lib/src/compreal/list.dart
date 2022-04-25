@@ -1,4 +1,3 @@
-
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unnecessary_null_comparison
 
 import 'package:http/http.dart' as http;
@@ -13,10 +12,9 @@ import '../screens/bookpage.dart';
 List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
 
-
 Future<List<books>> fetchPost() async {
   final response =
-      await http.get(Uri.parse('http://localhost:3000/books/all'));
+      await http.get(Uri.parse('http://192.168.1.19:3000/books/all'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -43,20 +41,24 @@ class _list extends State<ListV> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<List<books>>(
+        body: FutureBuilder<List<books>>(
       future: futurePost,
       builder: (context, snapshot) {
         print(snapshot);
-        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data != null) {
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.hasData &&
+            snapshot.data != null) {
           return ListView.builder(
             itemCount: snapshot.data!.length,
-            itemBuilder: (_, index) =>
-             Container(
-                height: 150,
-               child: GestureDetector(
+            itemBuilder: (_, index) => Container(
+              height: 150,
+              child: GestureDetector(
                 onTap: () => {
-                   Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => BookPage(snapshot.data![index].ISBN.toString())))
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) =>
+                              BookPage(snapshot.data![index].ISBN.toString())))
                 },
                 child: Card(
                   elevation: 5,
@@ -66,7 +68,7 @@ class _list extends State<ListV> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children:[    
+                      children: [
                         Container(
                           width: 70,
                           height: 100,
@@ -101,10 +103,10 @@ class _list extends State<ListV> {
                         ))
                       ],
                     ),
-                    ),
                   ),
                 ),
-             ),
+              ),
+            ),
           );
         } else {
           return Center(

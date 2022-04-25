@@ -105,19 +105,10 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   const SizedBox(height: 16),
                   InkWell(
                     onTap: () {
-                      if (user == "Click on the image to login") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
-                        );
-                      }
-                      else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => First()),
-                        );
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => First()),
+                      );
                     },
                     child: IgnorePointer(
                       child: MenuItem(
@@ -128,15 +119,14 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   ),
                   const SizedBox(height: 16),
                   InkWell(
-                   onTap: () {
+                    onTap: () {
                       if (user == "Click on the image to login") {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => LoginScreen()),
                         );
-                      } 
-                        else {
+                      } else {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => RecB(user)),

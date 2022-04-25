@@ -16,7 +16,6 @@ class App extends StatelessWidget {
         '/home': (context) => First(),
         '/login': (context) => LoginScreen(),
         '/signup': (context) => SignupScreen(),
-      
       },
       title: 'Log in screen',
       home: Scaffold(
