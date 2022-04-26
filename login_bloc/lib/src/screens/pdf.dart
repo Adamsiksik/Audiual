@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+
+import 'first.dart';
 
 class PDF extends StatefulWidget {
   @override
@@ -7,44 +9,27 @@ class PDF extends StatefulWidget {
 }
 
 class _PDFState extends State<PDF> {
-  String url = "http://www.pdf995.com/samples/pdf.pdf";
-  String pdfasset = "assets/tao.pdf";
-  late PDFDocument _doc;
-  late bool _loading;
-
   @override
   void initState() {
     super.initState();
-    _initPdf();
-  }
-
-  _initPdf() async {
-    setState(() {
-      _loading = true;
-    });
-    final doc = await PDFDocument.fromURL(url);
-    setState(() {
-      _doc = doc;
-      _loading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter PDF Demo"),
+        title: const Text('Syncfusion Flutter PDF Viewer'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => First()));
+          },
+        ),
       ),
-      body: _loading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : PDFViewer(
-              document: _doc,
-              indicatorBackground: Colors.red,
-              // showIndicator: false,
-              // showPicker: false,
-            ),
+      body: SfPdfViewer.network(
+        'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
+      ),
     );
   }
 }

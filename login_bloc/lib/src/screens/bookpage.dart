@@ -10,6 +10,7 @@ import 'package:flutter/services.dart' as rootBundle;
 import '../data/api/apiser.dart';
 import '../data/books.dart';
 import '../screens/bookpage.dart';
+import 'audio.dart';
 
 List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
@@ -152,7 +153,7 @@ class _BookPageState extends State<BookPage> {
                         ),
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: 250,
                       child: GestureDetector(
                         onTap: () => {},
@@ -182,7 +183,34 @@ class _BookPageState extends State<BookPage> {
                                 ),
                               ),
                               Expanded(
-                                child: Container(),
+                                child: Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(left: 30, top: 20),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            (Icons.play_arrow),
+                                            size: 40.0,
+                                            color: Colors.blue[900],
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MyApp()),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ],
                           ),

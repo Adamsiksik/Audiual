@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
-import 'package:get/get.dart';
 import 'package:login_bloc/src/screens/search.dart';
 import '../compreal/nav.dart';
 import '../compreal/list.dart';
