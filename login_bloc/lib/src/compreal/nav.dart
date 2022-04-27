@@ -33,10 +33,10 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             if (user != "") {
               user = snapshot.data.toString().toLowerCase();
             } else {
-              user = "Click on the image to login";
+              user = "click on the image to login";
             }
           } else {
-            user = "Click on the image to login";
+            user = "click on the image to login";
           }
           return Drawer(
             child: Material(
@@ -59,7 +59,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                         ),
                       ),
                       onTap: () {
-                        if (user == "Click on the image to login") {
+                        if (user == "click on the image to login") {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -83,7 +83,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   const SizedBox(height: 20),
                   InkWell(
                     onTap: () {
-                      if (user == "Click on the image to login") {
+                      if (user == "click on the image to login") {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -121,7 +121,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   const SizedBox(height: 16),
                   InkWell(
                     onTap: () {
-                      if (user == "Click on the image to login") {
+                      if (user == "click on the image to login") {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -143,7 +143,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   const SizedBox(height: 16),
                   InkWell(
                     onTap: () {
-                      if (user == "Click on the image to login") {
+                      if (user == "click on the image to login") {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -160,7 +160,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   const SizedBox(height: 20),
                   InkWell(
                     onTap: () {
-                      if (user == "Click on the image to login") {
+                      if (user == "click on the image to login") {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -175,7 +175,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   const SizedBox(height: 16),
                   InkWell(
                     onTap: () {
-                      if (user == "Click on the image to login") {
+                      if (user == "click on the image to login") {
                         Navigator.push(
                           context,
                           MaterialPageRoute(

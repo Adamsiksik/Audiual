@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Colors.brown[900],
                 ),
                 onPressed: () {
-                  FlutterSession().set("token", 'Click on the image to login');
+                  FlutterSession().set("token", 'click on the image to login');
                   Navigator.push(
                       context, MaterialPageRoute(builder: (_) => First()));
                 },
