@@ -2,9 +2,9 @@ import 'package:audio_session/audio_session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:login_bloc/src/screens/pdf.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'comm.dart';
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'first.dart';
@@ -18,7 +18,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final _player = AudioPlayer();
-
+  late PDFDocument document;
+  bool _isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -41,8 +42,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
     // Try to load audio from a source and catch any errors.
     try {
-      await _player.setAudioSource(AudioSource.uri(Uri.parse(
-          "https://s3.amazonaws.com/scifri-episodes/scifri20181123-episode.mp3")));
+      _player
+          .setUrl("http://192.168.1.19:3000/books/loadAudio?isbn=sample-15s");
     } catch (e) {
       print("Error loading audio source: $e");
     }
@@ -83,7 +84,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-            title: Text("Login Page"),
+            title: Text("Books"),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -100,7 +101,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 height: 480,
                 width: 400,
                 child: SfPdfViewer.network(
-                  'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf',
+                  'http://192.168.1.19:3000/books/someroute?isbn=Assignment3-NEW',
                 ),
               ),
               // Display play/pause button and volume/speed sliders.

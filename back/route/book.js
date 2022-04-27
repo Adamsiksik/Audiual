@@ -17,6 +17,7 @@ const router = express.Router();
  router.get( '/someroute', bookController.sendpdf )
  router.get('/getaudiobook', bookController.getaudiobook )
  router.get('/search', bookController.search )
+ router.get('/loadAudio', bookController.sendaudio )
 
  
  module.exports=router;

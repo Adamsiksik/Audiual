@@ -32,16 +32,13 @@ exports.getOne = async (req, res) => {
 }
 
 exports.sendpdf = (req, res) => {
+  let s=req.query.isbn;
+  res.sendFile("C:/Users/user/Downloads/"+s+".pdf");
+}
 
-  console.log("Getting PDF file from the server! (streaming version)");
-  const isbn = req.query.isbn;
-  const filePath = '../../books1/books/' + isbn + '.pdf';
-  const stream = fs.createReadStream(filePath);
-  res.writeHead(200, {
-    'Content-disposition': 'attachment; filename="' + encodeURIComponent(path.basename(filePath)) + '"',
-    'Content-type': 'application/pdf',
-  });
-  stream.pipe(res);
+exports.sendaudio = (req, res) => {
+  let s=req.query.isbn;
+  res.sendFile("C:/Users/user/Downloads/"+s+".mp3");
 }
 exports.getliked = async (req, res) => {
   try {

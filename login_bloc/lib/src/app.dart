@@ -9,6 +9,7 @@ import 'screens/resetSETkey.dart';
 import 'screens/first.dart';
 import 'screens/info.dart';
 import 'screens/profile.dart';
+import 'screens/pdf.dart';
 
 class App extends StatelessWidget {
   @override

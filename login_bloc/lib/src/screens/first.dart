@@ -41,8 +41,8 @@ class _Firststate extends State<First> {
                     labelText: 'Enter A book to Search',
                   ),
                   style: const TextStyle(
-                    color: Colors.red,
-                    fontSize: 18.0,
+                    color: Colors.black,
+                    fontSize: 12.0,
                   ),
                 ),
               ),
