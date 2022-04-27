@@ -11,6 +11,8 @@ const router = express.Router();
  router.post('/signup', userController.postAddUser);
  router.post('/login', userController.postlogin);
  router.post('/like', userController.postlike);
+ router.post('/later', userController.postlater);
+
  router.post('/signup2', userController.postsignup2);
  router.post('/reset', userController.postreset1);
  router.get('/resetkey', userController.getresetkey);

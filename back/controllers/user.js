@@ -56,6 +56,31 @@ exports.postlike = async (req, res) => {
 }
 }
 
+exports.postlater = async (req, res) => {
+  console.log("1"+req.query.Email)
+  console.log("2"+req.query.laterbook)
+  email = req.query.Email;
+  const laterbook = req.query.laterbook;
+  user = await User.findOne({ Email: email }).select('later');
+
+  if ( Array.from(user.later).includes(laterbook)) {
+    const update = { $pull: { later: laterbook } }
+    const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
+      if (err) console.log(err);
+      else
+        console.log("Successfully removed");
+    })
+  }
+  else{
+  const update = { $push: { later: laterbook } }
+  const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
+    if (err) console.log(err);
+    else
+      console.log("Successfully added");
+  })
+}
+}
+
 exports.ispress = async (req, res) => {
   console.log("1"+req.query.Email)
   console.log("2"+req.query.likedbook)

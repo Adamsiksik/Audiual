@@ -176,7 +176,14 @@ class _BookPageState extends State<BookPage> {
                                           size: 40.0,
                                           color: Colors.blue[900],
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          String s = await FlutterSession()
+                                              .get('token');
+                                          await ApiService().later(
+                                              s.toString(),
+                                              snapshot.data![0].BookTitle
+                                                  .toString());
+                                        },
                                       ),
                                     ),
                                   ],

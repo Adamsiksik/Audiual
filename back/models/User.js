@@ -26,6 +26,9 @@ const UserSchema = mongoose.Schema({
   },
   liked: [{
     type: String,
+  }],
+  later: [{
+    type: String,
   }]
 })
 

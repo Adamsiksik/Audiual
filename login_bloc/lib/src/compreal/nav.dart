@@ -7,6 +7,7 @@ import '../screens/login.dart';
 import '../screens/first.dart';
 import '../screens/profile.dart';
 import '../screens/rec.dart';
+import '../screens/watchlater.dart';
 import 'list.dart';
 
 class NavigationDrawer extends StatefulWidget {
@@ -179,6 +180,11 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => LoginScreen()),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LaterB(user)),
                         );
                       }
                     },

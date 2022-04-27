@@ -10,6 +10,7 @@ const router = express.Router();
 
  router.get('/all', bookController.getAll);
  router.get('/book', bookController.getOne);
+ router.get('/later', bookController.getlater);
  router.get('/liked', bookController.getliked);
  router.get('/rec', bookController.getrec);
 
