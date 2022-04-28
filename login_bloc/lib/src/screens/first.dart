@@ -14,7 +14,7 @@ class First extends StatefulWidget {
 class _Firststate extends State<First> {
   final search = TextEditingController();
   final padding = EdgeInsets.symmetric(horizontal: 8);
-  String user = "Click on the image to login";
+  String user = "click on the image to login";
   bool _isVisible = false;
   @override
   Widget build(BuildContext context) {

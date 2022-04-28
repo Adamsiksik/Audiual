@@ -13,9 +13,9 @@ import '../screens/bookpage.dart';
 List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
 
-Future<List<books>> fetchlater(String s) async {
-  final response =
-      await http.get(Uri.parse('192.168.1.19:3000/books/later?email=${s}'));
+Future<List<books>> fetchliked(String s) async {
+  final response = await http
+      .get(Uri.parse('http://192.168.1.19:3000/books/later?email=${s}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -28,21 +28,21 @@ class LaterB extends StatefulWidget {
   @override
   late String something;
   LaterB(this.something);
-  late Future<List<books>> later;
-  _LaterB createState() => _LaterB(this.something);
+  late Future<List<books>> liked;
+  _ikedB createState() => _ikedB(this.something);
 }
 
-class _LaterB extends State<LaterB> {
+class _ikedB extends State<LaterB> {
   final padding = EdgeInsets.symmetric(horizontal: 8);
 
-  late Future<List<books>> later;
+  late Future<List<books>> liked;
   late String something;
 
-  _LaterB(this.something);
+  _ikedB(this.something);
   @override
   void initState() {
     super.initState();
-    later = fetchlater(something);
+    liked = fetchliked(something);
   }
 
   @override
@@ -52,7 +52,7 @@ class _LaterB extends State<LaterB> {
         appBar: AppBar(
           titleSpacing: 20,
           backgroundColor: Colors.blueGrey,
-          title: const Text('Books to read later'),
+          title: const Text('Book to Listen to later'),
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -68,7 +68,7 @@ class _LaterB extends State<LaterB> {
           ],
         ),
         body: FutureBuilder<List<books>>(
-          future: later,
+          future: liked,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData != null &&

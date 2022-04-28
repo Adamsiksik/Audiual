@@ -76,6 +76,7 @@ exports.getlater = async (req, res) => {
     console.log(req.query.email);
     user1 = await User.findOne({ Email: email })
 
+    console.log(user1);
 
     for (var i = 0; i < user1.later.length; i++) {
       books = await book.findOne({ "Book-Title": user1.later[i] });
