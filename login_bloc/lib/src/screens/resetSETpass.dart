@@ -168,13 +168,15 @@ class _resetpassState extends State<resetpass> {
                     if (formkey.currentState!.validate()) {
                       final result = await ApiService()
                           .resetCheckUserpass(something, PassController2.text);
-                      print(result.message.toString());
+                      print("====================" + result.message.toString());
                       if (result.message.toString() ==
                           "your passwor has been updated ") {
                         print("your passwor has been updated ");
                         Navigator.push(context,
                             MaterialPageRoute(builder: (_) => LoginScreen()));
-                      } else {
+                      } else if (result.message.toString() ==
+                          "your token has been expered ") {
+                        print("your token has been expered ");
                         Navigator.push(
                             context,
                             MaterialPageRoute(

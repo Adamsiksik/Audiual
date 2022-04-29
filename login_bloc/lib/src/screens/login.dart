@@ -2,7 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:login_bloc/src/data/const/google_controler.dart';
 import 'package:login_bloc/src/screens/resetSETemail.dart';
+import 'info.dart';
 import 'signup.dart';
 import 'package:flutter_session/flutter_session.dart';
 import '../data/api/apiser.dart';
@@ -18,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
   final PassController = TextEditingController();
-
+  final googlecontroller = Get.put(logincontroller());
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -133,55 +137,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Text(
                     'Login',
-                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontSize: 25),
                   ),
                 ),
               ),
               SizedBox(
-                height: 40,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  InkWell(
-                    child: Container(
-                      width: 70.0,
-                      height: 70.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    onTap: () {},
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 20)),
-                  InkWell(
-                    child: Container(
-                      width: 70.0,
-                      height: 70.0,
-                      // ignore: prefer_const_constructors
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        // ignore: prefer_const_constructors
-                      ),
-                    ),
-                    onTap: () {},
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 20)),
-                  InkWell(
-                    child: Container(
-                      width: 50.0,
-                      height: 50.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    onTap: () {},
-                  ),
-                ],
+                height: 30,
               ),
               SizedBox(
                 height: 20,
+              ),
+              FloatingActionButton.extended(
+                onPressed: () {
+                  GoogleSignIn().signIn();
+                  //   var name =
+                  //       await googlecontroller.googleAccount.value?.displayName ??
+                  //           '';
+                  //   var email =
+                  //       await googlecontroller.googleAccount.value?.email ?? '';
+                  //   FlutterSession().set('token', name);
+
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => InfoScreen(email, name)));
+                },
+                icon: Icon(Icons.g_mobiledata),
+                label: Text('Sign in with Google'),
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
               ),
               FlatButton(
                 onPressed: () {

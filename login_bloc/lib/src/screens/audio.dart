@@ -6,6 +6,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'comm.dart';
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 import 'first.dart';
 
@@ -43,7 +44,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // Try to load audio from a source and catch any errors.
     try {
       _player
-          .setUrl("http://192.168.1.19:3000/books/loadAudio?isbn=sample-15s");
+          .setUrl("http://192.168.1.18:3000/books/loadAudio?isbn=0060801263");
     } catch (e) {
       print("Error loading audio source: $e");
     }
@@ -101,7 +102,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 height: 480,
                 width: 400,
                 child: SfPdfViewer.network(
-                  'http://192.168.1.19:3000/books/someroute?isbn=Assignment3-NEW',
+                  'http://192.168.1.18:3000/books/someroute?isbn=0060801263',
                 ),
               ),
               // Display play/pause button and volume/speed sliders.

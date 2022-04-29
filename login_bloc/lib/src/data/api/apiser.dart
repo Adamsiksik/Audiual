@@ -19,7 +19,7 @@ class ApiService {
   ApiService._init();
 
   Future<Response> createuser(User user) async {
-    final url = Uri.parse("http://192.168.1.19:3000/users/signup");
+    final url = Uri.parse("http://192.168.1.18:3000/users/signup");
     final request = await http.post(
       url,
       body: jsonEncode(user.toJson()),
@@ -40,7 +40,7 @@ class ApiService {
 
   Future<List<UserFull>> getuser(String s) async {
     final response = await http
-        .get(Uri.parse('http://192.168.1.19:3000/users/profile?email=${s}'));
+        .get(Uri.parse('http://192.168.1.18:3000/users/profile?email=${s}'));
     print("http://localhost:3000/users/profile?email=${s}");
 
     if (response.statusCode == 200) {
@@ -53,7 +53,7 @@ class ApiService {
 
   Future<String> ispress(String s, String c) async {
     final response = await http.get(
-        Uri.parse('192.168.1.19:3000/users/ispress?Email=${s}&likedbook=${c}'));
+        Uri.parse('192.168.1.18:3000/users/ispress?Email=${s}&likedbook=${c}'));
 
     if (response.statusCode == 200) {
       return response.body;
@@ -64,7 +64,7 @@ class ApiService {
 
   Future<Response> changeD(String s, String c) async {
     final url = Uri.parse(
-        "http://192.168.1.19:3000/users/update?email=${s}&userName=${c}");
+        "http://192.168.1.18:3000/users/update?email=${s}&userName=${c}");
     print("localhost:3000/users/update?email=${s}&userName=${c}");
     final request = await http.post(
       url,
@@ -84,10 +84,10 @@ class ApiService {
   }
 
   Future<Response> like(String s, String c) async {
-    print("http://192.168.1.19:3000/users/like?Email=${s}&likedbook=${c}");
+    print("http://192.168.1.18:3000/users/like?Email=${s}&likedbook=${c}");
 
     final url = Uri.parse(
-        "http://192.168.1.19:3000/users/like?Email=${s}&likedbook=${c}");
+        "http://192.168.1.18:3000/users/like?Email=${s}&likedbook=${c}");
     final request = await http.post(
       url,
       headers: AppConstants.HEADERS,
@@ -128,7 +128,7 @@ class ApiService {
   }
 
   Future<Response> Userinfo(Info info) async {
-    final url = Uri.parse("http://192.168.1.19:3000/users/signup2");
+    final url = Uri.parse("http://192.168.1.18:3000/users/signup2");
     print(info.toJson());
     final request = await http.post(
       url,
@@ -150,7 +150,7 @@ class ApiService {
 
   Future<books> getbook(String something) async {
     final request = await http.post(
-        Uri.parse("http://192.168.1.19:3000/books/book?isbn=${something}"));
+        Uri.parse("http://192.168.1.18:3000/books/book?isbn=${something}"));
     books book = books();
     try {
       if (request.statusCode == 200) {
@@ -167,7 +167,7 @@ class ApiService {
   }
 
   Future<Response> checkuser(User user) async {
-    final url = Uri.parse("http://192.168.1.19:3000/users/login");
+    final url = Uri.parse("http://192.168.1.18:3000/users/login");
     final request = await http.post(
       url,
       body: jsonEncode(user.toJson()),
@@ -189,7 +189,7 @@ class ApiService {
   Future<Response> resetCheckUser(String user) async {
     print("sss");
     final request = await http
-        .post(Uri.parse("http://localhost:3000/users/reset?Email=${user}"));
+        .post(Uri.parse("http://192.168.1.18:3000/users/reset?Email=${user}"));
 
     Response response = Response();
     try {
@@ -207,7 +207,7 @@ class ApiService {
   Future<Response> resetCheckUserkey(String user) async {
     print("sss");
     final request = await http
-        .get(Uri.parse("http://localhost:3000/users/resetkey?key=${user}"));
+        .get(Uri.parse("http://192.168.1.18:3000/users/resetkey?key=${user}"));
 
     Response response = Response();
     print(request.body);
@@ -228,7 +228,7 @@ class ApiService {
   Future<Response> resetCheckUserpass(String key, String pass) async {
     print("sss");
     final request = await http.get(Uri.parse(
-        "http://localhost:3000/users/resetpass?key=${key}&password=${pass}"));
+        "http://192.168.1.18:3000/users/resetpass?key=${key}&password=${pass}"));
     print("asdasd");
     Response response = Response();
     try {

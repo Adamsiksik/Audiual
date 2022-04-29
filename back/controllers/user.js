@@ -302,7 +302,6 @@ exports.getresetpass = async (req, res, next) => {
           else{
             user1.Password =hash;
             user1.save()
-            res.json("")
             return res.json({
               URL: "/login"
               , message: "your passwor has been updated "

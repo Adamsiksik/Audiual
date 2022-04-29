@@ -131,7 +131,8 @@ class _SignupScreenState extends State<SignupScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) => InfoScreen(myController.text)));
+                              builder: (_) =>
+                                  InfoScreen(myController.text, " ")));
                     } else {
                       formkey.currentState!.validate();
                     }

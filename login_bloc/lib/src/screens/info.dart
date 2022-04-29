@@ -12,15 +12,19 @@ import '../data/models/info.dart';
 import '../compreal/gradText.dart';
 
 class InfoScreen extends StatefulWidget {
-  String something;
-  InfoScreen(this.something);
+  String email;
+  String username;
+
+  InfoScreen(this.email, this.username);
   @override
-  _InfoScreenState createState() => _InfoScreenState(this.something);
+  _InfoScreenState createState() => _InfoScreenState(this.email, this.username);
 }
 
 class _InfoScreenState extends State<InfoScreen> {
-  late String something;
-  _InfoScreenState(this.something);
+  late String email;
+  late String username;
+
+  _InfoScreenState(this.email, this.username);
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
   String gender = "Male";
@@ -78,6 +82,7 @@ class _InfoScreenState extends State<InfoScreen> {
                       border: OutlineInputBorder(),
                       labelText: 'Username',
                     ),
+                    initialValue: username,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Fill Up This Field';
@@ -333,7 +338,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           gen.insert(0, "Sports");
                         }
                         await ApiService().Userinfo(Info(
-                            Email: something,
+                            Email: email,
                             Username: myController.text,
                             Gender: gender,
                             DOB: _dateTime.toString(),

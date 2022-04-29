@@ -42,13 +42,18 @@ dependencies:
   flutter_image_slideshow: any
   email_validator: any
   form_field_validator: any
-  just_audio: ^0.9.15
-  advance_pdf_viewer: ^2.0.1
+  syncfusion_flutter_pdf: any
+  just_audio: any
+  advance_pdf_viewer: any
+
+  
   flutter_session:
     git:
       url: https://github.com/RomanIvn/flutter_session.git
       ref: master
   syncfusion_flutter_pdfviewer: ^20.1.51-beta
+  get: ^4.6.1
+  google_sign_in: ^5.3.0
 
 dev_dependencies:
   flutter_test:

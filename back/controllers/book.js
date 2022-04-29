@@ -4,9 +4,13 @@ const User = require('../models/User');
 const fs = require('fs');
 const path = require('path');
 const textToSpeech = require('@google-cloud/text-to-speech');
-
+const PDFExtract = require('pdf.js-extract').PDFExtract;
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const axios = require('axios');
+const PDFDocument = require('pdfkit');
+const doc = new PDFDocument;
+const request = require('request');
 
 exports.getAll = async (req, res) => {
   try {
@@ -31,14 +35,63 @@ exports.getOne = async (req, res) => {
   }
 }
 
+
+exports.sendtxt = (req, res) => {
+  let s=req.query.isbn;
+
+const pdfExtract = new PDFExtract();
+const options = {}; /* see below */
+console.log(s)
+pdfExtract.extract("C:/Users/ali_q/Documents/GitHub/books1/books/"+s+".pdf", options, (err, data) => {
+  if (err) return console.log(err);
+  res.json(data);
+  console.log(data);
+});
+ 
+}
 exports.sendpdf = (req, res) => {
   let s=req.query.isbn;
+<<<<<<< Updated upstream
   res.sendFile("C:/Users/user/Downloads/audiual/"+s+".pdf");
+=======
+  res.sendFile("C:/Users/ali_q/Documents/GitHub/books1/books/"+s+".pdf");
 }
-
+exports.addbook = (req, res1) => {
+  let s=req.query.name;
+  console.log(s)
+  const requestq = request.get(
+    'http://192.168.1.18:3000/books/someroute?isbn=0060801263',
+    {},
+  ).on('error', function(e) {
+    console.log("Got error: " + e.message);
+  }); 
+  requestq.on('response', function (res) {
+    res.pipe(fs.createWriteStream('./filename_to_save.pdf'));
+  });
+  res1.json('File is created successfully.');
+}
+exports.addmp3 = (req, res1) => {
+  let s=req.query.name;
+  console.log(s)
+  const requestq = request.get(
+    'http://localhost:3000/books/loadAudio?isbn=0060801263',
+    {},
+  ).on('error', function(e) {
+    console.log("Got error: " + e.message);
+  }); 
+  requestq.on('response', function (res) {
+    res.pipe(fs.createWriteStream('./'+s+'.mp3'));
+  });
+  res1.json('File is created successfully.');
+>>>>>>> Stashed changes
+}
 exports.sendaudio = (req, res) => {
   let s=req.query.isbn;
+<<<<<<< Updated upstream
   res.sendFile("C:/Users/user/Downloads/audiual/"+s+".mp3");
+=======
+  res.sendFile("C:/Users/ali_q/Documents/GitHub/books1/books/"+s+".mp3");
+>>>>>>> Stashed changes
 }
 exports.getliked = async (req, res) => {
   try {
