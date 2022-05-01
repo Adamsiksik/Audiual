@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                           image: NetworkImage(
-                            "https://imgur.com/gallery/mCHMpLT",
+                            "https://i.imgur.com/mCHMpLT.png",
                           ),
                           fit: BoxFit.cover),
                     ),

@@ -10,15 +10,17 @@ import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 import 'first.dart';
 
-void main() => runApp(MyApp());
-
 class MyApp extends StatefulWidget {
+  String something;
+  MyApp(this.something);
   @override
-  _MyAppState createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState(this.something);
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final _player = AudioPlayer();
+  late String something;
+  _MyAppState(this.something);
   late PDFDocument document;
   bool _isLoading = true;
   @override
@@ -44,7 +46,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // Try to load audio from a source and catch any errors.
     try {
       _player
-          .setUrl("http://192.168.1.18:3000/books/loadAudio?isbn=0060801263");
+          .setUrl("http://192.168.1.19:3000/books/loadAudio?isbn=$something");
     } catch (e) {
       print("Error loading audio source: $e");
     }
@@ -102,8 +104,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 height: 480,
                 width: 400,
                 child: SfPdfViewer.network(
-                  'http://192.168.1.18:3000/books/someroute?isbn=0060801263',
-                ),
+                    'http://192.168.1.19:3000/books/someroute?isbn=$something',
+                    scrollDirection: PdfScrollDirection.horizontal),
               ),
               // Display play/pause button and volume/speed sliders.
               ControlButtons(_player),

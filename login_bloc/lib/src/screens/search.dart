@@ -15,7 +15,7 @@ List<books> bookFromJson(String str) =>
 
 Future<List<books>> fetchliked(String s) async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.18:3000/books/search?name=${s}'));
+      .get(Uri.parse('http://192.168.1.19:3000/books/search?name=${s}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -37,8 +37,11 @@ class _Search extends State<Search> {
 
   late Future<List<books>> liked;
   late String something;
+  final search = TextEditingController();
 
   _Search(this.something);
+  bool _isVisible = false;
+
   @override
   void initState() {
     super.initState();
@@ -54,6 +57,29 @@ class _Search extends State<Search> {
           backgroundColor: Colors.blueGrey,
           title: const Text('Search Result'),
           actions: <Widget>[
+            Visibility(
+              visible: _isVisible,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: 200.0,
+                  height: 60.0,
+                  padding: const EdgeInsets.only(
+                      top: 10.0, left: 0.0, bottom: 10.0, right: 0.0),
+                  child: TextFormField(
+                    controller: search,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Enter A book to Search',
+                    ),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                ),
+              ),
+            ),
             IconButton(
               icon: Icon(
                 (Icons.search),
@@ -61,7 +87,17 @@ class _Search extends State<Search> {
                 color: Colors.brown[900],
               ),
               onPressed: () {
-                //   _onDeleteItemPressed(index);
+                if (!_isVisible) {
+                  setState(() {
+                    _isVisible = true;
+                  });
+                } else if (_isVisible) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Search(search.text)),
+                  );
+                }
               },
             ),
             Padding(padding: padding)

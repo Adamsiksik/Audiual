@@ -24,7 +24,7 @@ class App extends StatelessWidget {
       },
       title: 'Log in screen',
       home: Scaffold(
-        body: Center(child: LoginScreen()),
+        body: Center(child: First()),
       ),
     );
   }

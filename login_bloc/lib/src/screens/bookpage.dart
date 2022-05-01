@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:convert' show json, utf8;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
+import 'package:login_bloc/src/screens/pdf.dart';
 import '../data/api/apiser.dart';
 import '../data/books.dart';
 import '../screens/bookpage.dart';
@@ -17,7 +18,7 @@ List<books> bookFromJson(String str) =>
 
 Future<List<books>> fetchPost(String something) async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.18:3000/books/book?isbn=${something}'));
+      .get(Uri.parse('http://192.168.1.19:3000/books/book?isbn=${something}'));
   if (response.statusCode == 200) {
     final parsed = json.decode("[" + response.body + "]") as List<dynamic>;
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -191,7 +192,43 @@ class _BookPageState extends State<BookPage> {
                               ),
                               Expanded(
                                 child: Container(
-                                  padding: EdgeInsets.only(top: 10),
+                                  padding: EdgeInsets.only(left: 50),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(top: 20),
+                                        child: IconButton(
+                                          icon: Icon(
+                                            (Icons.play_arrow),
+                                            size: 40.0,
+                                            color: Colors.blue[900],
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => MyApp(
+                                                      snapshot.data![0].ISBN
+                                                          .toString())),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Container(
+                                          margin: EdgeInsets.only(right: 20),
+                                          child: Text(
+                                            'PreRecorded Audio',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -209,12 +246,20 @@ class _BookPageState extends State<BookPage> {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      MyApp()),
+                                                builder: (context) => HomePage(
+                                                  snapshot.data![0].ISBN
+                                                      .toString(),
+                                                ),
+                                              ),
                                             );
                                           },
                                         ),
                                       ),
+                                      const Text(
+                                        'Text To Speech',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )
                                     ],
                                   ),
                                 ),
