@@ -53,9 +53,9 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               image: NetworkImage(
-                                "https://i.imgur.com/mCHMpLT.png",
+                                "https://imgur.com/gallery/mCHMpLT",
                               ),
-                              fit: BoxFit.fitHeight),
+                              fit: BoxFit.cover),
                         ),
                       ),
                       onTap: () {
