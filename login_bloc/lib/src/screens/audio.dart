@@ -7,6 +7,8 @@ import 'comm.dart';
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:web_browser/web_browser.dart';
 
 import 'first.dart';
 
@@ -36,6 +38,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Future<void> _init() async {
     // Inform the operating system of our app's audio attributes etc.
     // We pick a reasonable default for an app that plays speech.
+    String s = await something;
     final session = await AudioSession.instance;
     await session.configure(AudioSessionConfiguration.speech());
     // Listen to errors during playback.
@@ -87,7 +90,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-            title: Text("Books"),
+            title: Text("Book"),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -96,35 +99,73 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               },
             )),
         body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 480,
-                width: 400,
-                child: SfPdfViewer.network(
-                    'http://192.168.1.19:3000/books/someroute?isbn=$something',
-                    scrollDirection: PdfScrollDirection.horizontal),
-              ),
-              // Display play/pause button and volume/speed sliders.
-              ControlButtons(_player),
-              // Display seek bar. Using StreamBuilder, this widget rebuilds
-              // each time the position, buffered position or duration changes.
-              StreamBuilder<PositionData>(
-                stream: _positionDataStream,
-                builder: (context, snapshot) {
-                  final positionData = snapshot.data;
-                  return SeekBar(
-                    duration: positionData?.duration ?? Duration.zero,
-                    position: positionData?.position ?? Duration.zero,
-                    bufferedPosition:
-                        positionData?.bufferedPosition ?? Duration.zero,
-                    onChangeEnd: _player.seek,
-                  );
-                },
-              ),
-            ],
+          child: Builder(
+            builder: (context) {
+              return kIsWeb
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 520,
+                          width: 480,
+                          child: const WebBrowser(
+                            initialUrl:
+                                'http://192.168.1.19:3000/books/someroute?isbn=0140067477',
+                          ),
+                        ),
+                        // Display play/pause button and volume/speed sliders.
+                        ControlButtons(_player),
+                        // Display seek bar. Using StreamBuilder, this widget rebuilds
+                        // each time the position, buffered position or duration changes.
+                        StreamBuilder<PositionData>(
+                          stream: _positionDataStream,
+                          builder: (context, snapshot) {
+                            final positionData = snapshot.data;
+                            return SeekBar(
+                              duration: positionData?.duration ?? Duration.zero,
+                              position: positionData?.position ?? Duration.zero,
+                              bufferedPosition:
+                                  positionData?.bufferedPosition ??
+                                      Duration.zero,
+                              onChangeEnd: _player.seek,
+                            );
+                          },
+                        ),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 480,
+                          width: 400,
+                          child: SfPdfViewer.network(
+                              'http://192.168.1.19:3000/books/someroute?isbn=$something',
+                              scrollDirection: PdfScrollDirection.horizontal),
+                        ),
+                        // Display play/pause button and volume/speed sliders.
+                        ControlButtons(_player),
+                        // Display seek bar. Using StreamBuilder, this widget rebuilds
+                        // each time the position, buffered position or duration changes.
+                        StreamBuilder<PositionData>(
+                          stream: _positionDataStream,
+                          builder: (context, snapshot) {
+                            final positionData = snapshot.data;
+                            return SeekBar(
+                              duration: positionData?.duration ?? Duration.zero,
+                              position: positionData?.position ?? Duration.zero,
+                              bufferedPosition:
+                                  positionData?.bufferedPosition ??
+                                      Duration.zero,
+                              onChangeEnd: _player.seek,
+                            );
+                          },
+                        ),
+                      ],
+                    );
+            },
           ),
         ),
       ),
@@ -157,6 +198,17 @@ class ControlButtons extends StatelessWidget {
               stream: player.volumeStream,
               onChanged: player.setVolume,
             );
+          },
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.forward_10,
+            color: Colors.black,
+          ),
+          iconSize: 25,
+          onPressed: () async {
+            await player
+                .seek(Duration(seconds: player.position.inSeconds + 10));
           },
         ),
 
@@ -199,11 +251,22 @@ class ControlButtons extends StatelessWidget {
             }
           },
         ),
+        IconButton(
+          icon: Icon(
+            Icons.replay_10,
+            color: Colors.black,
+          ),
+          iconSize: 25,
+          onPressed: () async {
+            await player
+                .seek(Duration(seconds: player.position.inSeconds - 10));
+          },
+        ),
         // Opens speed slider dialog
         StreamBuilder<double>(
           stream: player.speedStream,
           builder: (context, snapshot) => IconButton(
-            icon: Text("${snapshot.data?.toStringAsFixed(1)}x",
+            icon: Text("${snapshot.data?.toStringAsFixed(1)}",
                 style: TextStyle(fontWeight: FontWeight.bold)),
             onPressed: () {
               showSliderDialog(

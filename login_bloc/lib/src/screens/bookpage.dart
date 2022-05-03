@@ -301,8 +301,8 @@ class _BookPageState extends State<BookPage> {
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
                                 itemCount: snapshot.data!.length,
-                                itemBuilder: (_, index) => Container(
-                                  height: 120,
+                                itemBuilder: (_, index) => SizedBox(
+                                  height: 150,
                                   child: GestureDetector(
                                     onTap: () => {
                                       Navigator.push(
@@ -317,16 +317,16 @@ class _BookPageState extends State<BookPage> {
                                       margin: EdgeInsets.symmetric(
                                           horizontal: 4, vertical: 6),
                                       child: Container(
-                                        padding: EdgeInsets.all(8),
+                                        padding: EdgeInsets.all(6),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               width: 100,
-                                              height: 120,
+                                              height: 150,
                                               child: Image(
                                                 image: NetworkImage(
                                                     "${snapshot.data![index].ImageURLS}"),

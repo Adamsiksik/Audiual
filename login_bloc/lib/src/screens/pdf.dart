@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:web_browser/web_browser.dart';
 
 /// Represents Homepage for Navigation
 class HomePage extends StatefulWidget {
@@ -53,28 +55,42 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Text("Books"),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                tts.stop();
-                Navigator.pop(context);
-              },
-            )),
-        body: Container(
-            child: SfPdfViewer.network(
-          'http://192.168.1.19:3000/books/someroute?isbn=$something',
-          scrollDirection: PdfScrollDirection.horizontal,
-          onTextSelectionChanged: (PdfTextSelectionChangedDetails details) {
-            if (details.selectedText == null && _overlayEntry != null) {
-              _overlayEntry!.remove();
-              _overlayEntry = null;
-            } else if (details.selectedText != null && _overlayEntry == null) {
-              _showContextMenu(context, details);
-            }
+      appBar: AppBar(
+          title: Text("Books"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              tts.stop();
+              Navigator.pop(context);
+            },
+          )),
+      body: Center(
+        child: Builder(
+          builder: (context) {
+            return kIsWeb
+                ? const WebBrowser(
+                    initialUrl:
+                        'http://192.168.1.19:3000/books/someroute?isbn=0140067477',
+                  )
+                : SfPdfViewer.network(
+                    'http://192.168.1.19:3000/books/someroute?isbn=$something',
+                    scrollDirection: PdfScrollDirection.horizontal,
+                    onTextSelectionChanged:
+                        (PdfTextSelectionChangedDetails details) {
+                      if (details.selectedText == null &&
+                          _overlayEntry != null) {
+                        _overlayEntry!.remove();
+                        _overlayEntry = null;
+                      } else if (details.selectedText != null &&
+                          _overlayEntry == null) {
+                        _showContextMenu(context, details);
+                      }
+                    },
+                    controller: _pdfViewerController,
+                  );
           },
-          controller: _pdfViewerController,
-        )));
+        ),
+      ),
+    );
   }
 }

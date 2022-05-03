@@ -18,7 +18,6 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
-  final myController2 = TextEditingController();
 
   final PassController = TextEditingController();
   final PassController2 = TextEditingController();
@@ -28,6 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
     // Clean up the controller when the widget is disposed.
     myController.dispose();
     PassController.dispose();
+    PassController2.dispose();
     super.dispose();
   }
 
@@ -131,8 +131,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) =>
-                                  InfoScreen(myController.text, " ")));
+                              builder: (_) => InfoScreen(myController.text)));
                     } else {
                       formkey.currentState!.validate();
                     }

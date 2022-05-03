@@ -140,38 +140,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           icon: Icons.local_fire_department_sharp),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  InkWell(
-                    onTap: () {
-                      if (user == "click on the image to login") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
-                        );
-                      }
-                    },
-                    child: IgnorePointer(
-                      child: MenuItem(text: 'Best', icon: Icons.favorite),
-                    ),
-                  ),
                   const SizedBox(height: 24),
                   Divider(color: Colors.white),
-                  const SizedBox(height: 20),
-                  InkWell(
-                    onTap: () {
-                      if (user == "click on the image to login") {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
-                        );
-                      }
-                    },
-                    child: IgnorePointer(
-                      child: MenuItem(text: 'History', icon: Icons.alarm),
-                    ),
-                  ),
                   const SizedBox(height: 16),
                   InkWell(
                     onTap: () {
