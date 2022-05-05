@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 const bodyParser=require('body-parser');
 const app=express();
 const cors = require("cors");
-
+//app.use(express.bodyParser({ keepExtensions: true, uploadDir: "uploads" }));                     
+app.engine('jade', require('jade').__express);     
 app.use(cors());
 app.use(session({
   secret:'secretadamobada',
@@ -13,6 +14,8 @@ app.use(session({
   saveUninitialized: false,
   
 }))
+app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use(bodyParser.json());
 const userRoute=require('./route/user');
 const bookRoute=require('./route/book');

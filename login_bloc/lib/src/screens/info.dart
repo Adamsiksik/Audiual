@@ -82,7 +82,7 @@ class _InfoScreenState extends State<InfoScreen> {
                       border: OutlineInputBorder(),
                       labelText: 'Username',
                     ),
-                    initialValue: username,
+                    // initialValue: username,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Fill Up This Field';

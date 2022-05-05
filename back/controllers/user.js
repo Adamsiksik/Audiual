@@ -315,7 +315,13 @@ exports.getresetpass = async (req, res, next) => {
       }
     })
 }
+exports.allusers = async (req, res, next) => {
+ console.log("asasdasdasd")
+ const users= await User.find().limit(40);
+        res.json(users);
+  
 
+}
 exports.getuser = async (req, res, next) => {
   const email = req.query.email;
   console.log(req.query.email);
@@ -323,5 +329,28 @@ exports.getuser = async (req, res, next) => {
     .then(user1 => {
         res.json(user1);
     })
+
+}
+exports.deleteone = async (req, res, next) => {
+  const email = req.query.email;
+  console.log(req.query.email);
+  await User.findOneAndDelete({ Email: email })
+  res.json(" user deleted ")
+}
+exports.editoneuser = async (req, res) => {
+  try {
+    email =req.query.email;
+    something =req.query.something;
+    value  =req.query.value;
+    console.log(something +"vvvvv" + value  +" vvvvvvvv " + email)    
+    const Users = await User.findOne({Email :email})
+    Users[something] =value
+    console.log(something +"vvvvv" + value  +" vvvvvvvv " + email)
+    Users.save();
+    console.log(Users)
+    res.json(Users);
+  } catch (err) {
+    res.json({ message: err })
+  }
 
 }
