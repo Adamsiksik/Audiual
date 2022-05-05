@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_bloc/src/screens/audio.dart';
+import 'package:login_bloc/src/screens/home.dart';
 import 'package:login_bloc/src/screens/pdf.dart';
 import 'package:login_bloc/src/screens/resetSETemail.dart';
 import 'package:login_bloc/src/screens/resetSETpass.dart';
@@ -24,7 +25,7 @@ class App extends StatelessWidget {
       },
       title: 'Log in screen',
       home: Scaffold(
-        body: Center(child: LoginScreen()),
+        body: Center(child: HomeP()),
       ),
     );
   }

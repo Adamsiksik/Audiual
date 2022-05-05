@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:convert' show json, utf8;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
+import 'package:login_bloc/src/screens/pdf.dart';
 import '../data/api/apiser.dart';
 import '../data/books.dart';
 import '../screens/bookpage.dart';
@@ -17,9 +18,20 @@ List<books> bookFromJson(String str) =>
 
 Future<List<books>> fetchPost(String something) async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.18:3000/books/book?isbn=${something}'));
+      .get(Uri.parse('http://192.168.1.19:3000/books/book?isbn=${something}'));
   if (response.statusCode == 200) {
     final parsed = json.decode("[" + response.body + "]") as List<dynamic>;
+    return parsed.map<books>((json) => books.fromMap(json)).toList();
+  } else {
+    throw Exception('Failed to load album');
+  }
+}
+
+Future<List<books>> getbox() async {
+  final response =
+      await http.get(Uri.parse('http://192.168.1.19:3000/books/all'));
+  if (response.statusCode == 200) {
+    final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
   } else {
     throw Exception('Failed to load album');
@@ -29,6 +41,7 @@ Future<List<books>> fetchPost(String something) async {
 class BookPage extends StatefulWidget {
   String something;
   late Future<books> futurePost;
+  late Future<List<books>> futurebooks;
   BookPage(this.something);
   @override
   _BookPageState createState() => _BookPageState(this.something);
@@ -36,6 +49,7 @@ class BookPage extends StatefulWidget {
 
 class _BookPageState extends State<BookPage> {
   late bool ispressed = false;
+  late Future<List<books>> futurebooks;
 
   late Future<List<books>> futurePost;
   late String something;
@@ -47,6 +61,7 @@ class _BookPageState extends State<BookPage> {
   void initState() {
     super.initState();
     futurePost = fetchPost(something);
+    futurebooks = getbox();
   }
 
   @override
@@ -93,10 +108,10 @@ class _BookPageState extends State<BookPage> {
                   Padding(padding: padding)
                 ],
               ),
-              body: Container(
+              body: SizedBox(
                 child: Column(
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       height: 250,
                       child: GestureDetector(
                         onTap: () => {},
@@ -154,16 +169,74 @@ class _BookPageState extends State<BookPage> {
                       ),
                     ),
                     SizedBox(
-                      height: 250,
+                      height: 130,
                       child: GestureDetector(
                         onTap: () => {},
-                        child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(top: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(left: 30, top: 20),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        (Icons.watch_later),
+                                        size: 40.0,
+                                        color: Colors.blue[900],
+                                      ),
+                                      onPressed: () async {
+                                        String s =
+                                            await FlutterSession().get('token');
+                                        await ApiService().later(
+                                            s.toString(),
+                                            snapshot.data![0].BookTitle
+                                                .toString());
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(top: 20),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        (Icons.play_arrow),
+                                        size: 40.0,
+                                        color: Colors.blue[900],
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => MyApp(
+                                                  snapshot.data![0].ISBN
+                                                      .toString())),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Audio',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ))
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -172,56 +245,108 @@ class _BookPageState extends State<BookPage> {
                                           EdgeInsets.only(left: 30, top: 20),
                                       child: IconButton(
                                         icon: Icon(
-                                          (Icons.watch_later),
+                                          (Icons.play_arrow),
                                           size: 40.0,
                                           color: Colors.blue[900],
                                         ),
-                                        onPressed: () async {
-                                          String s = await FlutterSession()
-                                              .get('token');
-                                          await ApiService().later(
-                                              s.toString(),
-                                              snapshot.data![0].BookTitle
-                                                  .toString());
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => HomePage(
+                                                snapshot.data![0].ISBN
+                                                    .toString(),
+                                              ),
+                                            ),
+                                          );
                                         },
                                       ),
                                     ),
+                                    const Text(
+                                      'Text To Speech',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    )
                                   ],
                                 ),
                               ),
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        margin:
-                                            EdgeInsets.only(left: 30, top: 20),
-                                        child: IconButton(
-                                          icon: Icon(
-                                            (Icons.play_arrow),
-                                            size: 40.0,
-                                            color: Colors.blue[900],
-                                          ),
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      MyApp()),
-                                            );
-                                          },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(left: 30, bottom: 20),
+                        child: Text(
+                          "Books To Read",
+                          style: DefaultTextStyle.of(context)
+                              .style
+                              .apply(fontSizeFactor: 1.5),
+                        )),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      height: 150.0,
+                      width: 400,
+                      child: FutureBuilder<List<books>>(
+                        future: futurebooks,
+                        builder: (context, snapshot) {
+                          print(snapshot);
+                          if (snapshot.connectionState ==
+                                  ConnectionState.done &&
+                              snapshot.hasData &&
+                              snapshot.data != null) {
+                            return SizedBox(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (_, index) => SizedBox(
+                                  height: 150,
+                                  child: GestureDetector(
+                                    onTap: () => {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookPage(snapshot
+                                                  .data![index].ISBN
+                                                  .toString())))
+                                    },
+                                    child: Card(
+                                      elevation: 5,
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 4, vertical: 6),
+                                      child: Container(
+                                        padding: EdgeInsets.all(6),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: 100,
+                                              height: 150,
+                                              child: Image(
+                                                image: NetworkImage(
+                                                    "${snapshot.data![index].ImageURLS}"),
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
+                            );
+                          } else {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],

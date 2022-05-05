@@ -13,18 +13,16 @@ import '../compreal/gradText.dart';
 
 class InfoScreen extends StatefulWidget {
   String email;
-  String username;
 
-  InfoScreen(this.email, this.username);
+  InfoScreen(this.email);
   @override
-  _InfoScreenState createState() => _InfoScreenState(this.email, this.username);
+  _InfoScreenState createState() => _InfoScreenState(this.email);
 }
 
 class _InfoScreenState extends State<InfoScreen> {
   late String email;
-  late String username;
 
-  _InfoScreenState(this.email, this.username);
+  _InfoScreenState(this.email);
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
   String gender = "Male";
@@ -82,7 +80,6 @@ class _InfoScreenState extends State<InfoScreen> {
                       border: OutlineInputBorder(),
                       labelText: 'Username',
                     ),
-                    // initialValue: username,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Fill Up This Field';

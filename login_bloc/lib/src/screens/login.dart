@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_bloc/src/data/const/google_controler.dart';
 import 'package:login_bloc/src/screens/resetSETemail.dart';
@@ -22,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
   final PassController = TextEditingController();
-  final googlecontroller = Get.put(logincontroller());
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
