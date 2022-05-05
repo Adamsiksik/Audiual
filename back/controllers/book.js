@@ -159,3 +159,17 @@ exports.s = async (req, res) => {
 }
 res.json(booksArray);
 }
+
+exports.getgene = async (req, res) => {
+  try {
+  let books;
+console.log(req.query.name);
+books = await book.find({ "catogery": req.query.name});
+res.json(books);
+
+} catch (err) {
+  res.json({ message: err })
+}
+
+}
+

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
+import 'package:login_bloc/src/screens/home.dart';
 import 'package:login_bloc/src/screens/likeb.dart';
 import '../screens/login.dart';
 import '../screens/first.dart';
@@ -81,6 +82,21 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           decorationStyle: TextDecorationStyle.wavy)),
                   Divider(color: Colors.white),
                   const SizedBox(height: 20),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeP()),
+                      );
+                    },
+                    child: IgnorePointer(
+                      child: MenuItem(
+                        text: 'Home',
+                        icon: Icons.house,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
                   InkWell(
                     onTap: () {
                       if (user == "click on the image to login") {
