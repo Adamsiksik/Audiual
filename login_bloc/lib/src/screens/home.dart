@@ -44,6 +44,17 @@ Future<List<books>> getActi() async {
   }
 }
 
+Future<List<books>> getMyst() async {
+  final response = await http
+      .get(Uri.parse('http://192.168.1.19:3000/books/gene?name=Mystery'));
+  if (response.statusCode == 200) {
+    final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+    return parsed.map<books>((json) => books.fromMap(json)).toList();
+  } else {
+    throw Exception('Failed to load album');
+  }
+}
+
 class HomeP extends StatefulWidget {
   const HomeP({Key? key}) : super(key: key);
 
@@ -54,6 +65,8 @@ class HomeP extends StatefulWidget {
 class _HomeP extends State<HomeP> {
   late Future<List<books>> futurebooks;
   late Future<List<books>> futurehist;
+  late Future<List<books>> futuremyst;
+
   late Future<List<books>> futureact;
 
   final search = TextEditingController();
@@ -66,6 +79,7 @@ class _HomeP extends State<HomeP> {
     futurebooks = getbox();
     futurehist = getHist();
     futureact = getActi();
+    futuremyst = getMyst();
   }
 
   @override
@@ -222,6 +236,81 @@ class _HomeP extends State<HomeP> {
                   width: double.infinity,
                   child: FutureBuilder<List<books>>(
                     future: futurehist,
+                    builder: (context, snapshot2) {
+                      if (snapshot2.connectionState == ConnectionState.done &&
+                          snapshot2.hasData &&
+                          snapshot2.data != null) {
+                        return SizedBox(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot2.data!.length,
+                            itemBuilder: (_, index) => SizedBox(
+                              height: 150,
+                              child: GestureDetector(
+                                onTap: () => {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => BookPage(snapshot2
+                                              .data![index].ISBN
+                                              .toString())))
+                                },
+                                child: Card(
+                                  elevation: 5,
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 4, vertical: 6),
+                                  child: Container(
+                                    padding: EdgeInsets.all(6),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 100,
+                                          height: 150,
+                                          child: Image(
+                                            image: NetworkImage(
+                                                "${snapshot2.data![index].ImageURLS}"),
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.bottomLeft,
+                  margin: EdgeInsets.only(left: 20, top: 10),
+                  child: GradientText(
+                    'Best Mystery Books',
+                    style: const TextStyle(fontSize: 20),
+                    gradient: LinearGradient(colors: const [
+                      Colors.blue,
+                      Colors.blueGrey,
+                    ]),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.topLeft,
+                  height: 150.0,
+                  width: double.infinity,
+                  child: FutureBuilder<List<books>>(
+                    future: futuremyst,
                     builder: (context, snapshot2) {
                       if (snapshot2.connectionState == ConnectionState.done &&
                           snapshot2.hasData &&
