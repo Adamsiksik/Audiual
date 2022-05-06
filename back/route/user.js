@@ -22,6 +22,6 @@ const router = express.Router();
  router.get('/ispress', userController.ispress);
  router.post('/editoneuser', userController.editoneuser);
  router.post('/deleteone', userController.editoneuser);
-
+ router.post('/history', userController.posthistory);
 
  module.exports=router;

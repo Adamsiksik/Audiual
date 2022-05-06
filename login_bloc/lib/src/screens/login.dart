@@ -149,18 +149,18 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               FloatingActionButton.extended(
                 onPressed: () async {
-                  await googlecontroller.login();
-                  var name =
-                      await googlecontroller.googleAccount.value?.displayName ??
-                          '';
-                  var email =
-                      await googlecontroller.googleAccount.value?.email ?? '';
-                  FlutterSession().set('token', name);
+                  // await googlecontroller.login();
+                  // var name =
+                  //     await googlecontroller.googleAccount.value?.displayName ??
+                  //         '';
+                  // var email =
+                  //     await googlecontroller.googleAccount.value?.email ?? '';
+                  // FlutterSession().set('token', name);
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => InfoScreen(email, name)));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => InfoScreen(email, name)));
                 },
                 icon: Icon(Icons.g_mobiledata),
                 label: Text('Sign in with Google'),

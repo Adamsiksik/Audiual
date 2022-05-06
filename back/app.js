@@ -17,6 +17,11 @@ app.use(session({
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(bodyParser.json());
+app.use(function (req, res, next) {
+  res.header("Content-Type", 'application/json');
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 const userRoute=require('./route/user');
 const bookRoute=require('./route/book');
 

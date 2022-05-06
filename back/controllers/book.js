@@ -227,11 +227,27 @@ exports.getaudiobook = (req, res) => {
 
 }
 
+exports.searchh = async (req, res) => {
+  try {
+  booksArray = [];
+
+  books = await book.find( { "Book-Title" : { $regex : new RegExp(req.query.Book_Title, "i") } ,"Book-Author" : { $regex : new RegExp(req.query.Book_Author, "i") }
+  ,"Year-Of-Publication" : req.query.YOP
+  ,"ISBN" : { $regex : new RegExp(req.query.ISBN, "i") } }
+ );
+  Array.prototype.push.apply(booksArray, books);
+} catch (err) {
+  res.json({ message: err })
+}
+res.json(booksArray);
+}
+
 exports.s = async (req, res) => {
   try {
   booksArray = [];
 
-  books = await book.find( { "Book-Title" : { $regex : new RegExp(req.query.name, "i") } } );
+  books = await book.find( { "Book-Title" : { $regex : new RegExp(req.query.Book_Title, "i") }  }
+ );
   Array.prototype.push.apply(booksArray, books);
 } catch (err) {
   res.json({ message: err })

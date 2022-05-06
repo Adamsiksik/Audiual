@@ -4,10 +4,10 @@ var bcrypt = require('bcryptjs');
 const { redirect } = require('express/lib/response');
 const user = require('../models/user');
 exports.getlogin = (req, res, next) => {
-  res.render('auth/login');
+ 
 };
 exports.getsignup = (req, res, next) => {
-  res.render('auth/signup');
+ 
 };
 exports.postAddUser = (req, res, next) => {
   const email = req.body.email;

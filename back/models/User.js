@@ -31,6 +31,10 @@ const UserSchema = mongoose.Schema({
   }],
   later: [{
     type: String,
+  }],
+  history: [{
+    type: String,
+    unique: true
   }]
 })
 

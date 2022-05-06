@@ -20,11 +20,14 @@ router.post('/addbookPDF', bookController.addbook)
 router.get('/loadBook', bookController.getloadBook)
 router.get('/someroute', bookController.sendpdf)
 router.get('/getaudiobook', bookController.getaudiobook)
-router.get('/search', bookController.search)
+router.get('/searchall', bookController.searchh)
+router.get('/search', bookController.s)
+
 router.get('/loadAudio', bookController.sendaudio)
 router.get('/addmp3', bookController.addmp3)
 router.post('/deleteone', bookController.deleteone)
 router.post('/Addbook', bookController.postAddbook)
 
+ router.get('/gene', bookController.getgene )
 
 module.exports = router;
