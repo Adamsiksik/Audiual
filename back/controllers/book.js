@@ -95,7 +95,7 @@ exports.sendtxt = (req, res) => {
 const pdfExtract = new PDFExtract();
 const options = {}; /* see below */
 console.log(s)
-pdfExtract.extract("C:/Users/ali_q/Documents/GitHub/books1/books/"+s+".pdf", options, (err, data) => {
+pdfExtract.extract("C:/Users/user/Downloads/audiual"+s+".pdf", options, (err, data) => {
   if (err) return console.log(err);
   res.json(data);
   console.log(data);
@@ -104,7 +104,7 @@ pdfExtract.extract("C:/Users/ali_q/Documents/GitHub/books1/books/"+s+".pdf", opt
 }
 exports.sendpdf = (req, res) => {
   let s=req.query.isbn;
-  res.sendFile("C:/Users/ali_q/Documents/GitHub/books1/books/"+s+".pdf");
+  res.sendFile("C:/Users/user/Downloads/audiual"+s+".pdf");
 }
 exports.addbook = (req,res) => {
   console.log(req.file)
@@ -134,7 +134,7 @@ exports.addmp3 = (req, res1) => {
 }
 exports.sendaudio = (req, res) => {
   let s=req.query.isbn;
-  res.sendFile("C:/Users/ali_q/Documents/GitHub/books1/books/"+s+".mp3");
+  res.sendFile("C:/Users/user/Downloads/audiual"+s+".mp3");
 }
 exports.getliked = async (req, res) => {
   try {
