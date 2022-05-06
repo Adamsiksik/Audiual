@@ -40,6 +40,7 @@ Future<List<books>> getbox() async {
 
 class BookPage extends StatefulWidget {
   String something;
+
   late Future<books> futurePost;
   late Future<List<books>> futurebooks;
   BookPage(this.something);
@@ -215,13 +216,134 @@ class _BookPageState extends State<BookPage> {
                                         color: Colors.blue[900],
                                       ),
                                       onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => MyApp(
-                                                  snapshot.data![0].ISBN
-                                                      .toString())),
-                                        );
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                  content: Stack(
+                                                      overflow:
+                                                          Overflow.visible,
+                                                      children: <Widget>[
+                                                    Positioned(
+                                                      right: -40.0,
+                                                      top: -40.0,
+                                                      child: InkResponse(
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: CircleAvatar(
+                                                          child:
+                                                              Icon(Icons.close),
+                                                          backgroundColor:
+                                                              Colors.red,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: <Widget>[
+                                                        ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            primary:
+                                                                Colors.blue,
+                                                            minimumSize: const Size
+                                                                    .fromHeight(
+                                                                50), // NEW
+                                                          ),
+                                                          onPressed: () {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => MyApp(snapshot
+                                                                          .data![
+                                                                              0]
+                                                                          .ISBN
+                                                                          .toString() +
+                                                                      "A")),
+                                                            );
+                                                          },
+                                                          child: const Text(
+                                                            'Audio1',
+                                                            style: TextStyle(
+                                                                fontSize: 24),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  8.0),
+                                                        ),
+                                                        ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            primary:
+                                                                Colors.blue,
+                                                            minimumSize: const Size
+                                                                    .fromHeight(
+                                                                50), // NEW
+                                                          ),
+                                                          onPressed: () {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => MyApp(snapshot
+                                                                          .data![
+                                                                              0]
+                                                                          .ISBN
+                                                                          .toString() +
+                                                                      "B")),
+                                                            );
+                                                          },
+                                                          child: const Text(
+                                                            'Audio2',
+                                                            style: TextStyle(
+                                                                fontSize: 24),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  8.0),
+                                                        ),
+                                                        ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            primary:
+                                                                Colors.blue,
+                                                            minimumSize: const Size
+                                                                    .fromHeight(
+                                                                50), // NEW
+                                                          ),
+                                                          onPressed: () {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (context) => MyApp(snapshot
+                                                                          .data![
+                                                                              0]
+                                                                          .ISBN
+                                                                          .toString() +
+                                                                      "C")),
+                                                            );
+                                                          },
+                                                          child: const Text(
+                                                            'Audio3',
+                                                            style: TextStyle(
+                                                                fontSize: 24),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  8.0),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ]));
+                                            });
                                       },
                                     ),
                                   ),

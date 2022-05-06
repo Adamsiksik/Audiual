@@ -27,25 +27,36 @@ class _Firststate extends State<First> {
         actions: <Widget>[
           Visibility(
             visible: _isVisible,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                width: 200.0,
-                height: 60.0,
-                padding: const EdgeInsets.only(
-                    top: 10.0, left: 0.0, bottom: 10.0, right: 0.0),
-                child: TextFormField(
-                  controller: search,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter A book to Search',
-                  ),
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12.0,
+            child: Row(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 200.0,
+                    height: 60.0,
+                    padding: const EdgeInsets.only(
+                        top: 10.0, left: 0.0, bottom: 10.0, right: 0.0),
+                    child: TextFormField(
+                      controller: search,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Enter A book to Search',
+                      ),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.0,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                IconButton(
+                    icon: Icon(
+                      (Icons.settings),
+                      size: 30.0,
+                      color: Colors.brown[900],
+                    ),
+                    onPressed: () {}),
+              ],
             ),
           ),
           IconButton(
