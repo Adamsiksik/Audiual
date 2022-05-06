@@ -5,6 +5,8 @@ const UserSchema = mongoose.Schema({
   Email: {
     type: String,
     require: true,
+    unique: true
+    
   },
   Password: {
     type: String,
@@ -29,6 +31,10 @@ const UserSchema = mongoose.Schema({
   }],
   later: [{
     type: String,
+  }],
+  history: [{
+    type: String,
+    unique: true
   }]
 })
 

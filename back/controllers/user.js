@@ -32,13 +32,13 @@ exports.postAddUser = async (req, res) => {
 };
 
 exports.postlike = async (req, res) => {
-  console.log("1"+req.query.Email)
-  console.log("2"+req.query.likedbook)
+  console.log("1" + req.query.Email)
+  console.log("2" + req.query.likedbook)
   email = req.query.Email;
   const likedbook = req.query.likedbook;
   user = await User.findOne({ Email: email }).select('liked');
 
-  if ( Array.from(user.liked).includes(likedbook)) {
+  if (Array.from(user.liked).includes(likedbook)) {
     const update = { $pull: { liked: likedbook } }
     const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
       if (err) console.log(err);
@@ -46,24 +46,45 @@ exports.postlike = async (req, res) => {
         console.log("Successfully removed");
     })
   }
-  else{
-  const update = { $push: { liked: likedbook } }
-  const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
-    if (err) console.log(err);
-    else
-      console.log("Successfully added");
-  })
+  else {
+    const update = { $push: { liked: likedbook } }
+    const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
+      if (err) console.log(err);
+      else
+        console.log("Successfully added");
+    })
+  }
 }
+
+exports.posthistory = async (req, res) => {
+  console.log("1" + req.query.Email)
+  console.log("2" + req.query.history)
+  email = req.query.Email;
+  let mass ;
+  const historybook = req.query.history;
+  user =   await User.findOne({ Email: email }).select('history');
+
+  if (Array.from(user.history).includes(historybook)) {
+    user.history.pull(historybook)
+    user.history.unshift(historybook)
+    user.save();
+  }
+  else {
+    user.history.unshift(historybook)
+    user.save();
+  }
+
+  await res.json(mass)
 }
 
 exports.postlater = async (req, res) => {
-  console.log("1"+req.query.Email)
-  console.log("2"+req.query.laterbook)
+  console.log("1" + req.query.Email)
+  console.log("2" + req.query.laterbook)
   email = req.query.Email;
   const laterbook = req.query.laterbook;
   user = await User.findOne({ Email: email }).select('later');
 
-  if ( Array.from(user.later).includes(laterbook)) {
+  if (Array.from(user.later).includes(laterbook)) {
     const update = { $pull: { later: laterbook } }
     const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
       if (err) console.log(err);
@@ -71,40 +92,40 @@ exports.postlater = async (req, res) => {
         console.log("Successfully removed");
     })
   }
-  else{
-  const update = { $push: { later: laterbook } }
-  const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
-    if (err) console.log(err);
-    else
-      console.log("Successfully added");
-  })
-}
+  else {
+    const update = { $push: { later: laterbook } }
+    const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
+      if (err) console.log(err);
+      else
+        console.log("Successfully added");
+    })
+  }
 }
 
 exports.ispress = async (req, res) => {
-  console.log("1"+req.query.Email)
-  console.log("2"+req.query.likedbook)
+  console.log("1" + req.query.Email)
+  console.log("2" + req.query.likedbook)
   email = req.query.Email;
   const likedbook = req.query.likedbook;
   user = await User.findOne({ Email: email }).select('liked');
 
-  if ( Array.from(user.liked).includes(likedbook)) {
+  if (Array.from(user.liked).includes(likedbook)) {
     res.json("1")
   }
-  else{  
-  console.log("2");
-}
+  else {
+    console.log("2");
+  }
 }
 
 exports.postsignup2 = async (req, res) => {
   console.log(req.body);
   console.log(req.json);
-  const  DoBReq = req.body.DOB;
+  const DoBReq = req.body.DOB;
   const email = req.body.Email;
   const genderReq = req.body.Gender;
   const userNameReq = req.body.Username;
   const ge = req.body.genre;
-  const update = {userName :userNameReq, DoB :  DoBReq , gender:genderReq ,liked:[],genre:ge,later:[]};
+  const update = { userName: userNameReq, DoB: DoBReq, gender: genderReq, liked: [], genre: ge, later: [] };
   console.log(update)
   const updated = User.findOneAndUpdate({ Email: email }, update, (err, doc) => {
     if (err) console.log(err);
@@ -119,7 +140,7 @@ exports.updateData = async (req, res) => {
 
   const email = req.query.email;
   const userNameReq = req.query.userName;
-  const update = {userName :userNameReq,}
+  const update = { userName: userNameReq, }
   console.log(update)
   const updated = User.findOneAndUpdate({ Email: email }, update, (err, doc) => {
     if (err) console.log(err);
@@ -184,7 +205,7 @@ exports.postreset1 = async (req, res, next) => {
 
   const email = req.query.Email;
 
-  console.log(email+"nulllllllllllllllllll")
+  console.log(email + "nulllllllllllllllllll")
   await User.findOne({ Email: email })
     .then(user1 => {
 
@@ -198,7 +219,7 @@ exports.postreset1 = async (req, res, next) => {
       } else {
         console.log(user1.Email);
         mykey = rand.generate(8)
-        let record =   recordReset.findOne({ Email: user1.Email }).then(user1 => {
+        let record = recordReset.findOne({ Email: user1.Email }).then(user1 => {
           if (!user1) {
             record = new recordReset({
               Email: email,
@@ -206,14 +227,14 @@ exports.postreset1 = async (req, res, next) => {
             });
             record.save()
           }
-          else{
-            user1.key =mykey;
+          else {
+            user1.key = mykey;
             user1.save();
           }
         })
-       
+
         console.log(record);
-       
+
 
         var transporter = nodemailer.createTransport({
           service: 'gmail',
@@ -238,7 +259,7 @@ exports.postreset1 = async (req, res, next) => {
           }
         });
 
-        res.json({ URL: "/login",message:'check your email to rest your password '});
+        res.json({ URL: "/login", message: 'check your email to rest your password ' });
       }
     })
 
@@ -248,7 +269,7 @@ exports.getresetkey = async (req, res, next) => {
   const keyreq = req.query.key
   console.log(keyreq)
   await recordReset.findOne({ key: keyreq })
-    .then( async record => {
+    .then(async record => {
 
       if (!record) {
         console.log('not found');
@@ -262,7 +283,7 @@ exports.getresetkey = async (req, res, next) => {
           URL: "/resetpassword"
           , message: "you can update password now "
         });
-      
+
 
 
       }
@@ -274,7 +295,7 @@ exports.getresetpass = async (req, res, next) => {
   const pass = req.query.password
   console.log(keyreq)
   await recordReset.findOne({ key: keyreq })
-    .then( async record => {
+    .then(async record => {
 
       if (!record) {
         console.log('not found');
@@ -288,40 +309,69 @@ exports.getresetpass = async (req, res, next) => {
         console.log(hash);
         console.log(record.Email)
 
-       let doc =  await User.findOne({ Email: record.Email },{Password: hash} ).then(user1 => {
+        let doc = await User.findOne({ Email: record.Email }, { Password: hash }).then(user1 => {
 
-     
+
           if (!user1) {
             return res.json({
               URL: "/login"
               , message: "no user "
             });
 
-            
+
           }
-          else{
-            user1.Password =hash;
+          else {
+            user1.Password = hash;
             user1.save()
             return res.json({
               URL: "/login"
               , message: "your passwor has been updated "
             });
           }
-          
-          
+
+
         })
 
 
       }
     })
 }
+exports.allusers = async (req, res, next) => {
+  console.log("asasdasdasd")
+  const users = await User.find().limit(40);
+  res.json(users);
 
+
+}
 exports.getuser = async (req, res, next) => {
   const email = req.query.email;
   console.log(req.query.email);
   await User.findOne({ Email: email })
     .then(user1 => {
-        res.json(user1);
+      res.json(user1);
     })
+
+}
+exports.deleteone = async (req, res, next) => {
+  const email = req.query.email;
+  console.log(req.query.email);
+  await User.findOneAndDelete({ Email: email })
+  res.json(" user deleted ")
+}
+exports.editoneuser = async (req, res) => {
+  try {
+    email = req.query.email;
+    something = req.query.something;
+    value = req.query.value;
+    console.log(something + "vvvvv" + value + " vvvvvvvv " + email)
+    const Users = await User.findOne({ Email: email })
+    Users[something] = value
+    console.log(something + "vvvvv" + value + " vvvvvvvv " + email)
+    Users.save();
+    console.log(Users)
+    res.json(Users);
+  } catch (err) {
+    res.json({ message: err })
+  }
 
 }
