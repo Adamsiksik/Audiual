@@ -105,6 +105,28 @@ class ApiService {
     return response;
   }
 
+  Future<Response> hist(String s, String c) async {
+    print("http://192.168.1.19:3000/users/history?Email=${s}&history=${c}");
+
+    final url = Uri.parse(
+        "http://192.168.1.19:3000/users/history?Email=${s}&history=${c}");
+    final request = await http.post(
+      url,
+      headers: AppConstants.HEADERS,
+    );
+    Response response = Response();
+    try {
+      if (request.statusCode == 200) {
+        response = responseFromJson(request.body);
+      } else {
+        print(request.statusCode);
+      }
+    } catch (e) {
+      return Response();
+    }
+    return response;
+  }
+
   Future<Response> later(String s, String c) async {
     print("http://192.168.1.19:3000/users/later?Email=${s}&laterbook=${c}");
 

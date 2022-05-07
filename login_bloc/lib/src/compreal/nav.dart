@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:login_bloc/src/screens/home.dart';
 import 'package:login_bloc/src/screens/likeb.dart';
+import '../screens/history.dart';
 import '../screens/login.dart';
 import '../screens/first.dart';
 import '../screens/profile.dart';
@@ -177,6 +178,26 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     child: IgnorePointer(
                       child: MenuItem(
                           text: 'Listen to later ', icon: Icons.watch_later),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  InkWell(
+                    onTap: () {
+                      if (user == "click on the image to login") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HistB(user)),
+                        );
+                      }
+                    },
+                    child: IgnorePointer(
+                      child: MenuItem(text: 'History ', icon: Icons.history),
                     ),
                   ),
                 ],

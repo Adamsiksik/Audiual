@@ -122,7 +122,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (_) => LoginScreen()));
                       } else if (result.message.toString() == "Succeful") {
-                        await FlutterSession().set('token', myController.text);
+                        await FlutterSession()
+                            .set('token', myController.text.toLowerCase());
                         Navigator.push(context,
                             MaterialPageRoute(builder: (_) => First()));
                       } else {

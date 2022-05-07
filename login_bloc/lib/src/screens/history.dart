@@ -17,7 +17,7 @@ List<books> bookFromJson(String str) =>
 
 Future<List<books>> fetchliked(String s) async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.19:3000/books/search?name=${s}'));
+      .get(Uri.parse('http://192.168.1.19:3000/books/history?email=${s}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -26,24 +26,22 @@ Future<List<books>> fetchliked(String s) async {
   }
 }
 
-class Search extends StatefulWidget {
+class HistB extends StatefulWidget {
   @override
   late String something;
-  Search(this.something);
+  HistB(this.something);
   late Future<List<books>> liked;
-  _Search createState() => _Search(this.something);
+  _HistB createState() => _HistB(this.something);
 }
 
-class _Search extends State<Search> {
+class _HistB extends State<HistB> {
   final padding = EdgeInsets.symmetric(horizontal: 8);
   String s = "ss";
+
   late Future<List<books>> liked;
   late String something;
-  final search = TextEditingController();
 
-  _Search(this.something);
-  bool _isVisible = false;
-
+  _HistB(this.something);
   @override
   void initState() {
     super.initState();
@@ -57,31 +55,8 @@ class _Search extends State<Search> {
         appBar: AppBar(
           titleSpacing: 20,
           backgroundColor: Colors.blueGrey,
-          title: const Text('Search Result'),
+          title: const Text('History'),
           actions: <Widget>[
-            Visibility(
-              visible: _isVisible,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: 200.0,
-                  height: 60.0,
-                  padding: const EdgeInsets.only(
-                      top: 10.0, left: 0.0, bottom: 10.0, right: 0.0),
-                  child: TextFormField(
-                    controller: search,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter A book to Search',
-                    ),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 12.0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
             IconButton(
               icon: Icon(
                 (Icons.search),
@@ -89,17 +64,7 @@ class _Search extends State<Search> {
                 color: Colors.brown[900],
               ),
               onPressed: () {
-                if (!_isVisible) {
-                  setState(() {
-                    _isVisible = true;
-                  });
-                } else if (_isVisible) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Search(search.text)),
-                  );
-                }
+                //   _onDeleteItemPressed(index);
               },
             ),
             Padding(padding: padding)

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter_session/flutter_session.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:convert' show json, utf8;
@@ -8,6 +9,7 @@ import 'package:login_bloc/src/screens/search.dart';
 
 import '../compreal/gradText.dart';
 import '../compreal/nav.dart';
+import '../data/api/apiser.dart';
 import '../data/books.dart';
 import '../screens/bookpage.dart';
 
@@ -63,6 +65,10 @@ class HomeP extends StatefulWidget {
 }
 
 class _HomeP extends State<HomeP> {
+  String s = "ss";
+  final year = TextEditingController();
+  final author = TextEditingController();
+  final isbn = TextEditingController();
   late Future<List<books>> futurebooks;
   late Future<List<books>> futurehist;
   late Future<List<books>> futuremyst;
@@ -80,6 +86,16 @@ class _HomeP extends State<HomeP> {
   final padding = EdgeInsets.symmetric(horizontal: 8);
   String user = "click on the image to login";
   bool _isVisible = false;
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    year.dispose();
+    isbn.dispose();
+    author.dispose();
+
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -202,12 +218,13 @@ class _HomeP extends State<HomeP> {
                                                       top: 10,
                                                       bottom: 20),
                                                   child: TextField(
+                                                      controller: year,
                                                       decoration:
                                                           InputDecoration(
-                                                    border:
-                                                        OutlineInputBorder(),
-                                                    labelText: 'Enter Year',
-                                                  )),
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                        labelText: 'Enter Year',
+                                                      )),
                                                 ),
                                                 flex: 3,
                                               ),
@@ -418,6 +435,95 @@ class _HomeP extends State<HomeP> {
                                               ],
                                             ),
                                           ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Expanded(
+                                                child: Container(
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                  margin:
+                                                      EdgeInsets.only(left: 20),
+                                                  child: GradientText(
+                                                    'Author :',
+                                                    style: const TextStyle(
+                                                        fontSize: 15),
+                                                    gradient: LinearGradient(
+                                                        colors: const [
+                                                          Colors.black,
+                                                          Colors.blueGrey,
+                                                        ]),
+                                                  ),
+                                                ),
+                                                flex: 1,
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  margin: EdgeInsets.only(
+                                                      left: 10,
+                                                      top: 10,
+                                                      bottom: 20),
+                                                  child: TextField(
+                                                      controller: author,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                        labelText:
+                                                            'Author Name',
+                                                      )),
+                                                ),
+                                                flex: 3,
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Expanded(
+                                                child: Container(
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                  margin:
+                                                      EdgeInsets.only(left: 20),
+                                                  child: GradientText(
+                                                    'ISBN :',
+                                                    style: const TextStyle(
+                                                        fontSize: 15),
+                                                    gradient: LinearGradient(
+                                                        colors: const [
+                                                          Colors.black,
+                                                          Colors.blueGrey,
+                                                        ]),
+                                                  ),
+                                                ),
+                                                flex: 1,
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  margin: EdgeInsets.only(
+                                                      left: 10,
+                                                      top: 10,
+                                                      bottom: 20),
+                                                  child: TextField(
+                                                      controller: isbn,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                        labelText: 'Book ISBN',
+                                                      )),
+                                                ),
+                                                flex: 3,
+                                              ),
+                                            ],
+                                          ),
                                           RaisedButton(
                                             onPressed: () async {},
                                             shape: RoundedRectangleBorder(
@@ -521,13 +627,30 @@ class _HomeP extends State<HomeP> {
                             itemBuilder: (_, index) => SizedBox(
                               height: 150,
                               child: GestureDetector(
-                                onTap: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => BookPage(snapshot
-                                              .data![index].ISBN
-                                              .toString())))
+                                onTap: () async => {
+                                  s = await FlutterSession().get('token'),
+                                  if (s == "click on the image to login")
+                                    {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookPage(snapshot
+                                                  .data![index].ISBN
+                                                  .toString())))
+                                    }
+                                  else
+                                    {
+                                      await ApiService().hist(
+                                          s.toString(),
+                                          snapshot.data![index].ISBN
+                                              .toString()),
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookPage(snapshot
+                                                  .data![index].ISBN
+                                                  .toString())))
+                                    },
                                 },
                                 child: Card(
                                   elevation: 5,
@@ -596,13 +719,30 @@ class _HomeP extends State<HomeP> {
                             itemBuilder: (_, index) => SizedBox(
                               height: 150,
                               child: GestureDetector(
-                                onTap: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => BookPage(snapshot2
-                                              .data![index].ISBN
-                                              .toString())))
+                                onTap: () async => {
+                                  s = await FlutterSession().get('token'),
+                                  if (s == "click on the image to login")
+                                    {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookPage(snapshot2
+                                                  .data![index].ISBN
+                                                  .toString())))
+                                    }
+                                  else
+                                    {
+                                      await ApiService().hist(
+                                          s.toString(),
+                                          snapshot2.data![index].ISBN
+                                              .toString()),
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookPage(snapshot2
+                                                  .data![index].ISBN
+                                                  .toString())))
+                                    },
                                 },
                                 child: Card(
                                   elevation: 5,
@@ -671,13 +811,30 @@ class _HomeP extends State<HomeP> {
                             itemBuilder: (_, index) => SizedBox(
                               height: 150,
                               child: GestureDetector(
-                                onTap: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => BookPage(snapshot2
-                                              .data![index].ISBN
-                                              .toString())))
+                                onTap: () async => {
+                                  s = await FlutterSession().get('token'),
+                                  if (s == "click on the image to login")
+                                    {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookPage(snapshot2
+                                                  .data![index].ISBN
+                                                  .toString())))
+                                    }
+                                  else
+                                    {
+                                      await ApiService().hist(
+                                          s.toString(),
+                                          snapshot2.data![index].ISBN
+                                              .toString()),
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookPage(snapshot2
+                                                  .data![index].ISBN
+                                                  .toString())))
+                                    },
                                 },
                                 child: Card(
                                   elevation: 5,
@@ -747,13 +904,30 @@ class _HomeP extends State<HomeP> {
                             itemBuilder: (_, index) => SizedBox(
                               height: 150,
                               child: GestureDetector(
-                                onTap: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (_) => BookPage(snapshot
-                                              .data![index].ISBN
-                                              .toString())))
+                                onTap: () async => {
+                                  s = await FlutterSession().get('token'),
+                                  if (s == "click on the image to login")
+                                    {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookPage(snapshot
+                                                  .data![index].ISBN
+                                                  .toString())))
+                                    }
+                                  else
+                                    {
+                                      await ApiService().hist(
+                                          s.toString(),
+                                          snapshot.data![index].ISBN
+                                              .toString()),
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) => BookPage(snapshot
+                                                  .data![index].ISBN
+                                                  .toString())))
+                                    },
                                 },
                                 child: Card(
                                   elevation: 5,

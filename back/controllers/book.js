@@ -136,6 +136,29 @@ exports.sendaudio = (req, res) => {
   let s=req.query.isbn;
   res.sendFile("C:/Users/user/Downloads/audiual"+s+".mp3");
 }
+exports.gethistory = async (req, res) => {
+  try {
+    let books;
+
+    booksArray = [];
+
+    const email = req.query.email;
+    let user1;
+
+    console.log(req.query.email);
+    user1 = await User.findOne({ Email: email })
+
+
+    for (var i = 0; i < user1.history.length; i++) {
+      books = await book.findOne({ "ISBN": user1.history[i] });
+      console.log(books);
+      booksArray.push(books);
+    }
+    res.json(booksArray);
+  } catch (err) {
+    res.json({ message: err })
+  }
+}
 exports.getliked = async (req, res) => {
   try {
     let books;
