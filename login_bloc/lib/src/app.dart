@@ -24,7 +24,7 @@ class App extends StatelessWidget {
         '/signup': (context) => SignupScreen(),
       },
       title: 'Log in screen',
-      home: Scaffold(
+      home: const Scaffold(
         body: Center(child: HomeP()),
       ),
     );
