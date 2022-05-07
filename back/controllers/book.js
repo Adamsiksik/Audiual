@@ -265,7 +265,7 @@ exports.searchh = async (req, res) => {
 res.json(booksArray);
 }
 
-exports.s = async (req, res) => {
+exports.ser = async (req, res) => {
   try {
   booksArray = [];
 

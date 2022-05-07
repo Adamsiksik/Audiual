@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'dart:convert' show json, utf8;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
+import 'package:login_bloc/src/screens/search.dart';
 import '../compreal/nav.dart';
 import '../data/api/apiser.dart';
 import '../data/books.dart';
@@ -15,10 +16,11 @@ import '../screens/bookpage.dart';
 List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
 
-Future<List<books>> fetchliked(String s) async {
-  print('http://192.168.1.19:3000/books/search?name=${s}');
-  final response = await http
-      .get(Uri.parse('http://192.168.1.19:3000/books/search?Book_Title=${s}'));
+Future<List<books>> fetchseached(String t, String y, String a, String i) async {
+  print(
+      'http://192.168.1.19:3000/books/searchh?Book_Title=$t&Book_Author=$a&YOP=$y&ISBN=$i');
+  final response = await http.get(Uri.parse(
+      'http://192.168.1.19:3000/books/searchh?Book_Title=$t&Book_Author=$a&YOP=$y&ISBN=$i'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -27,28 +29,37 @@ Future<List<books>> fetchliked(String s) async {
   }
 }
 
-class Search extends StatefulWidget {
+class Searchh extends StatefulWidget {
   @override
-  late String something;
-  Search(this.something);
-  late Future<List<books>> liked;
-  _Search createState() => _Search(this.something);
+  late String title;
+  late String year;
+  late String auth;
+  late String isbn;
+  Searchh(this.title, this.year, this.auth, this.isbn);
+
+  late Future<List<books>> seached;
+  _Searchh createState() =>
+      _Searchh(this.title, this.year, this.auth, this.isbn);
 }
 
-class _Search extends State<Search> {
+class _Searchh extends State<Searchh> {
   final padding = EdgeInsets.symmetric(horizontal: 8);
   String s = "ss";
-  late Future<List<books>> liked;
+  late String title;
+  late String year;
+  late String auth;
+  late String isbn;
+  late Future<List<books>> seached;
   late String something;
   final search = TextEditingController();
 
-  _Search(this.something);
+  _Searchh(this.title, this.year, this.auth, this.isbn);
   bool _isVisible = false;
 
   @override
   void initState() {
     super.initState();
-    liked = fetchliked(something);
+    seached = fetchseached(title, year, auth, isbn);
   }
 
   @override
@@ -107,7 +118,7 @@ class _Search extends State<Search> {
           ],
         ),
         body: FutureBuilder<List<books>>(
-          future: liked,
+          future: seached,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData != null &&

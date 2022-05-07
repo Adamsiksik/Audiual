@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:convert' show json, utf8;
 import 'package:flutter/material.dart';
+import 'package:login_bloc/src/screens/s.dart';
 import 'package:login_bloc/src/screens/search.dart';
 
 import '../compreal/gradText.dart';
@@ -69,6 +70,8 @@ class _HomeP extends State<HomeP> {
   final year = TextEditingController();
   final author = TextEditingController();
   final isbn = TextEditingController();
+  final title = TextEditingController();
+
   late Future<List<books>> futurebooks;
   late Future<List<books>> futurehist;
   late Future<List<books>> futuremyst;
@@ -92,7 +95,7 @@ class _HomeP extends State<HomeP> {
     year.dispose();
     isbn.dispose();
     author.dispose();
-
+    search.dispose();
     super.dispose();
   }
 
@@ -185,6 +188,51 @@ class _HomeP extends State<HomeP> {
                                                 Colors.blueGrey,
                                               ]),
                                             ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Expanded(
+                                                child: Container(
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                  margin:
+                                                      EdgeInsets.only(left: 20),
+                                                  child: GradientText(
+                                                    'title :',
+                                                    style: const TextStyle(
+                                                        fontSize: 15),
+                                                    gradient: LinearGradient(
+                                                        colors: const [
+                                                          Colors.black,
+                                                          Colors.blueGrey,
+                                                        ]),
+                                                  ),
+                                                ),
+                                                flex: 1,
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  margin: EdgeInsets.only(
+                                                      left: 10,
+                                                      top: 10,
+                                                      bottom: 20),
+                                                  child: TextField(
+                                                      controller: title,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        border:
+                                                            OutlineInputBorder(),
+                                                        labelText:
+                                                            'Enter title',
+                                                      )),
+                                                ),
+                                                flex: 3,
+                                              ),
+                                            ],
                                           ),
                                           Row(
                                             mainAxisAlignment:
@@ -525,7 +573,18 @@ class _HomeP extends State<HomeP> {
                                             ],
                                           ),
                                           RaisedButton(
-                                            onPressed: () async {},
+                                            onPressed: () async {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => Searchh(
+                                                      title.text,
+                                                      year.text,
+                                                      author.text,
+                                                      isbn.text),
+                                                ),
+                                              );
+                                            },
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(
