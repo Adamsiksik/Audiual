@@ -253,11 +253,13 @@ exports.getaudiobook = (req, res) => {
 exports.searchh = async (req, res) => {
   try {
   booksArray = [];
-
+console.log(req.query.genre);
   books = await book.find( { "Book-Title" : { $regex : new RegExp(req.query.Book_Title, "i") } ,"Book-Author" : { $regex : new RegExp(req.query.Book_Author, "i") }
-  ,"Year-Of-Publication" : req.query.YOP
+  ,"Year-Of-Publication" : req.query.YOP,"catogery" : req.query.genre
   ,"ISBN" : { $regex : new RegExp(req.query.ISBN, "i") } }
  );
+ console.log(books);
+
   Array.prototype.push.apply(booksArray, books);
 } catch (err) {
   res.json({ message: err })
@@ -307,3 +309,68 @@ exports.getsame = async (req, res) => {
 
 }
 
+
+exports.recommend = async (req, res) => {
+    try {
+      let books;
+      num = [];
+      genArray2 = [];
+
+      booksArray = [];
+      genArray = [];
+      const email = req.query.email;
+      let user1;
+      let gen;
+      console.log(req.query.email);
+      user1 = await User.findOne({ Email: email })
+  
+  
+      for (var i = 0; i < user1.history.length; i++) {
+        console.log(user1.history[i]);
+        books = await book.findOne({ ISBN: user1.history[i] });
+        booksArray.push(books);
+      }
+      for(var i = 0; i < booksArray.length; i++){
+        num.push(booksArray[i].catogery);
+      }
+
+      const counts = {};
+      num.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+      console.log(counts)
+      console.log(counts.History);
+      uniqueArray = num.filter(function(elem, pos) {
+        return num.indexOf(elem) == pos;
+    })
+
+    for (var i = 0; i < uniqueArray.length; i++) {
+      if(uniqueArray[i]=="History"){
+        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.History);
+        for(var j = 0; j < gen.length; j++)
+        genArray.push(gen[j]);
+      }
+      if(uniqueArray[i]=="Romance"){
+        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.Romance);
+        for(var j = 0; j < gen.length; j++)
+        genArray.push(gen[j]);
+      }
+      if(uniqueArray[i]=="Crime"){
+        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.Crime);
+        for(var j = 0; j < gen.length; j++)
+        genArray.push(gen[j]);
+      }
+      if(uniqueArray[i]=="Action"){
+        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.Action);
+        for(var j = 0; j < gen.length; j++)
+        genArray.push(gen[j]);
+      }
+      if(uniqueArray[i]=="Adventure"){
+        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.Adventure);
+        for(var j = 0; j < gen.length; j++)
+        genArray.push(gen[j]);
+      }
+      }
+      res.json(genArray);
+    } catch (err) {
+      res.json({ message: err })
+    }
+  }
