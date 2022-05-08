@@ -15,9 +15,9 @@ import '../screens/bookpage.dart';
 List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
 
-Future<List<books>> fetchliked(String s) async {
+Future<List<books>> fetchrec(String s) async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.19:3000/books/rec?email=${s}'));
+      .get(Uri.parse('http://192.168.1.19:3000/books/recom?email=${s}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -30,21 +30,21 @@ class RecB extends StatefulWidget {
   @override
   late String something;
   RecB(this.something);
-  late Future<List<books>> liked;
+  late Future<List<books>> rec;
   _RecB createState() => _RecB(this.something);
 }
 
 class _RecB extends State<RecB> {
   final padding = EdgeInsets.symmetric(horizontal: 8);
 
-  late Future<List<books>> liked;
+  late Future<List<books>> rec;
   late String something;
   String s = "";
   _RecB(this.something);
   @override
   void initState() {
     super.initState();
-    liked = fetchliked(something);
+    rec = fetchrec(something);
   }
 
   @override
@@ -70,7 +70,7 @@ class _RecB extends State<RecB> {
           ],
         ),
         body: FutureBuilder<List<books>>(
-          future: liked,
+          future: rec,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData != null &&

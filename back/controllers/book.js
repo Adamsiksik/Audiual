@@ -151,7 +151,6 @@ exports.gethistory = async (req, res) => {
 
     for (var i = 0; i < user1.history.length; i++) {
       books = await book.findOne({ "ISBN": user1.history[i] });
-      console.log(books);
       booksArray.push(books);
     }
     res.json(booksArray);
@@ -344,27 +343,32 @@ exports.recommend = async (req, res) => {
 
     for (var i = 0; i < uniqueArray.length; i++) {
       if(uniqueArray[i]=="History"){
-        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.History);
+        gen = await book.find({ catogery: uniqueArray[i] }).limit(5*counts.History);
         for(var j = 0; j < gen.length; j++)
         genArray.push(gen[j]);
       }
       if(uniqueArray[i]=="Romance"){
-        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.Romance);
+        gen = await book.find({ catogery: uniqueArray[i] }).limit(5*counts.Romance);
         for(var j = 0; j < gen.length; j++)
         genArray.push(gen[j]);
       }
       if(uniqueArray[i]=="Crime"){
-        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.Crime);
+        gen = await book.find({ catogery: uniqueArray[i] }).limit(5*counts.Crime);
         for(var j = 0; j < gen.length; j++)
         genArray.push(gen[j]);
       }
       if(uniqueArray[i]=="Action"){
-        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.Action);
+        gen = await book.find({ catogery: uniqueArray[i] }).limit(5*counts.Action);
         for(var j = 0; j < gen.length; j++)
         genArray.push(gen[j]);
       }
       if(uniqueArray[i]=="Adventure"){
-        gen = await book.find({ catogery: uniqueArray[i].catogery }).limit(5*counts.Adventure);
+        gen = await book.find({ catogery: uniqueArray[i] }).limit(5*counts.Adventure);
+        for(var j = 0; j < gen.length; j++)
+        genArray.push(gen[j]);
+      }
+      if(uniqueArray[i]=="Mystery"){
+        gen = await book.find({ catogery: uniqueArray[i] }).limit(5*counts.Mystery);
         for(var j = 0; j < gen.length; j++)
         genArray.push(gen[j]);
       }
