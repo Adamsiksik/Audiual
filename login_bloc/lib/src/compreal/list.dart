@@ -57,7 +57,7 @@ class _list extends State<ListV> {
               child: GestureDetector(
                 onTap: () async => {
                   s = await FlutterSession().get('token'),
-                  if (s == "click on the image to login")
+                  if (s == "click on the image to login" || s == null)
                     {
                       Navigator.push(
                           context,

@@ -27,9 +27,10 @@ Future<List<books>> fetchPost(String something) async {
   }
 }
 
-Future<List<books>> getbox() async {
-  final response =
-      await http.get(Uri.parse('http://192.168.1.19:3000/books/all'));
+Future<List<books>> getbox(String something) async {
+  print('http://192.168.1.19:3000/books/same?isbn=${something}');
+  final response = await http
+      .get(Uri.parse('http://192.168.1.19:3000/books/same?isbn=${something}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -62,7 +63,7 @@ class _BookPageState extends State<BookPage> {
   void initState() {
     super.initState();
     futurePost = fetchPost(something);
-    futurebooks = getbox();
+    futurebooks = getbox(something);
   }
 
   @override
@@ -409,7 +410,7 @@ class _BookPageState extends State<BookPage> {
                     Container(
                       alignment: Alignment.topLeft,
                       height: 150.0,
-                      width: 400,
+                      width: MediaQuery.of(context).size.width,
                       child: FutureBuilder<List<books>>(
                         future: futurebooks,
                         builder: (context, snapshot) {

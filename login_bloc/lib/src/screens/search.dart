@@ -120,7 +120,8 @@ class _Search extends State<Search> {
                   child: GestureDetector(
                     onTap: () async => {
                       s = await FlutterSession().get('token'),
-                      if (s == "click on the image to login")
+                      if (s == "click on the image to login" ||
+                          s.toString() == "null")
                         {
                           Navigator.push(
                               context,

@@ -291,3 +291,19 @@ res.json(books);
 
 }
 
+
+exports.getsame = async (req, res) => {
+  try {
+    isbnreq = req.query.isbn;
+
+    const books = await book.findOne({ ISBN: isbnreq });
+    const gen = await book.find({ catogery: books.catogery });
+    console.log(gen);
+
+    res.json(gen);
+  } catch (err) {
+    res.json({ message: err })
+  }
+
+}
+

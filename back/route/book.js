@@ -22,5 +22,6 @@ const router = express.Router();
 
  router.get('/loadAudio', bookController.sendaudio )
  router.get('/gene', bookController.getgene )
+ router.get('/same', bookController.getsame )
 
  module.exports=router;

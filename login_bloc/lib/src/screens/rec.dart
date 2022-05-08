@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, unnecessary_null_comparison
 
+import 'package:flutter_session/flutter_session.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
@@ -7,6 +8,7 @@ import 'dart:convert' show json, utf8;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
 import '../compreal/nav.dart';
+import '../data/api/apiser.dart';
 import '../data/books.dart';
 import '../screens/bookpage.dart';
 
@@ -37,7 +39,7 @@ class _RecB extends State<RecB> {
 
   late Future<List<books>> liked;
   late String something;
-
+  String s = "";
   _RecB(this.something);
   @override
   void initState() {
@@ -79,12 +81,27 @@ class _RecB extends State<RecB> {
                 itemBuilder: (_, index) => Container(
                   height: 150,
                   child: GestureDetector(
-                    onTap: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => BookPage(
-                                  snapshot.data![index].ISBN.toString())))
+                    onTap: () async => {
+                      s = await FlutterSession().get('token'),
+                      if (s == "click on the image to login" ||
+                          s.toString() == "null")
+                        {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => BookPage(
+                                      snapshot.data![index].ISBN.toString())))
+                        }
+                      else
+                        {
+                          await ApiService().hist(s.toString(),
+                              snapshot.data![index].ISBN.toString()),
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => BookPage(
+                                      snapshot.data![index].ISBN.toString())))
+                        },
                     },
                     child: Card(
                       elevation: 5,
