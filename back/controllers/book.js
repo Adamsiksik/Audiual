@@ -254,10 +254,9 @@ exports.searchh = async (req, res) => {
   booksArray = [];
 console.log(req.query.genre);
   books = await book.find( { "Book-Title" : { $regex : new RegExp(req.query.Book_Title, "i") } ,"Book-Author" : { $regex : new RegExp(req.query.Book_Author, "i") }
-  ,"Year-Of-Publication" : req.query.YOP,"catogery" : req.query.genre
+  ,"Year-Of-Publication" :{ $regex : new RegExp(req.query.YOP, "i") },"catogery" :{ $regex : new RegExp(req.query.genre, "i") }
   ,"ISBN" : { $regex : new RegExp(req.query.ISBN, "i") } }
  );
- console.log(books);
 
   Array.prototype.push.apply(booksArray, books);
 } catch (err) {
