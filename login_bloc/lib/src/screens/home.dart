@@ -750,9 +750,10 @@ class _HomeP extends State<HomeP> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => BookPage(snapshot
-                                                  .data![index].ISBN
-                                                  .toString())))
+                                              builder: (_) => BookPage(
+                                                  snapshot.data![index].ISBN
+                                                      .toString(),
+                                                  s)))
                                     }
                                   else
                                     {
@@ -763,9 +764,10 @@ class _HomeP extends State<HomeP> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => BookPage(snapshot
-                                                  .data![index].ISBN
-                                                  .toString())))
+                                              builder: (_) => BookPage(
+                                                  snapshot.data![index].ISBN
+                                                      .toString(),
+                                                  s)))
                                     },
                                 },
                                 child: Card(
@@ -842,9 +844,10 @@ class _HomeP extends State<HomeP> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => BookPage(snapshot2
-                                                  .data![index].ISBN
-                                                  .toString())))
+                                              builder: (_) => BookPage(
+                                                  snapshot2.data![index].ISBN
+                                                      .toString(),
+                                                  s)))
                                     }
                                   else
                                     {
@@ -855,9 +858,10 @@ class _HomeP extends State<HomeP> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => BookPage(snapshot2
-                                                  .data![index].ISBN
-                                                  .toString())))
+                                              builder: (_) => BookPage(
+                                                  snapshot2.data![index].ISBN
+                                                      .toString(),
+                                                  s)))
                                     },
                                 },
                                 child: Card(
@@ -934,9 +938,10 @@ class _HomeP extends State<HomeP> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => BookPage(snapshot2
-                                                  .data![index].ISBN
-                                                  .toString())))
+                                              builder: (_) => BookPage(
+                                                  snapshot2.data![index].ISBN
+                                                      .toString(),
+                                                  s)))
                                     }
                                   else
                                     {
@@ -947,9 +952,10 @@ class _HomeP extends State<HomeP> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => BookPage(snapshot2
-                                                  .data![index].ISBN
-                                                  .toString())))
+                                              builder: (_) => BookPage(
+                                                  snapshot2.data![index].ISBN
+                                                      .toString(),
+                                                  s)))
                                     },
                                 },
                                 child: Card(
@@ -1027,9 +1033,10 @@ class _HomeP extends State<HomeP> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => BookPage(snapshot
-                                                  .data![index].ISBN
-                                                  .toString())))
+                                              builder: (_) => BookPage(
+                                                  snapshot.data![index].ISBN
+                                                      .toString(),
+                                                  s)))
                                     }
                                   else
                                     {
@@ -1040,9 +1047,10 @@ class _HomeP extends State<HomeP> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => BookPage(snapshot
-                                                  .data![index].ISBN
-                                                  .toString())))
+                                              builder: (_) => BookPage(
+                                                  snapshot.data![index].ISBN
+                                                      .toString(),
+                                                  s)))
                                     },
                                 },
                                 child: Card(

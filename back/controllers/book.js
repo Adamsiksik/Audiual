@@ -172,11 +172,35 @@ exports.getliked = async (req, res) => {
 
 
     for (var i = 0; i < user1.liked.length; i++) {
-      books = await book.findOne({ "Book-Title": user1.liked[i] });
+      books = await book.findOne({ ISBN: user1.liked[i] });
       console.log(books);
       booksArray.push(books);
     }
     res.json(booksArray);
+  } catch (err) {
+    res.json({ message: err })
+  }
+}
+
+exports.geticon = async (req, res) => {
+  try {
+    let books;
+    let b=false;
+
+    const email = req.query.email;
+    let user1;
+    const book = req.query.name;
+
+    console.log(book);
+    user1 = await User.findOne({ Email: email })
+
+
+    for (var i = 0; i < user1.liked.length; i++) {
+      if(user1.liked[i]==book){
+        b=true;
+    }
+  }
+    res.json(b);
   } catch (err) {
     res.json({ message: err })
   }

@@ -63,7 +63,7 @@ class _list extends State<ListV> {
                           context,
                           MaterialPageRoute(
                               builder: (_) => BookPage(
-                                  snapshot.data![index].ISBN.toString())))
+                                  snapshot.data![index].ISBN.toString(), s)))
                     }
                   else
                     {
@@ -73,7 +73,7 @@ class _list extends State<ListV> {
                           context,
                           MaterialPageRoute(
                               builder: (_) => BookPage(
-                                  snapshot.data![index].ISBN.toString())))
+                                  snapshot.data![index].ISBN.toString(), s)))
                     },
                 },
                 child: Card(

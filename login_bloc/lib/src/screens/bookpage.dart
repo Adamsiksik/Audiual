@@ -7,11 +7,13 @@ import 'dart:convert';
 import 'dart:convert' show json, utf8;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' as rootBundle;
+import 'package:login_bloc/src/screens/first.dart';
 import 'package:login_bloc/src/screens/pdf.dart';
 import '../data/api/apiser.dart';
 import '../data/books.dart';
 import '../screens/bookpage.dart';
 import 'audio.dart';
+import 'home.dart';
 
 List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
@@ -39,24 +41,40 @@ Future<List<books>> getbox(String something) async {
   }
 }
 
+Future<bool> geticon(String something, String n) async {
+  print('http://192.168.1.19:3000/books/icon?email=${something}&name=${n}');
+  final response = await http.get(Uri.parse(
+      'http://192.168.1.19:3000/books/icon?email=${something}&name=${n}'));
+  if (response.statusCode == 200) {
+    final parsed = json.decode(response.body);
+    return parsed;
+  } else {
+    throw Exception('Failed to load book');
+  }
+}
+
 class BookPage extends StatefulWidget {
   String something;
-
+  String something2;
   late Future<books> futurePost;
   late Future<List<books>> futurebooks;
-  BookPage(this.something);
+  BookPage(this.something, this.something2);
   @override
-  _BookPageState createState() => _BookPageState(this.something);
+  _BookPageState createState() =>
+      _BookPageState(this.something, this.something2);
 }
 
 class _BookPageState extends State<BookPage> {
   late bool ispressed = false;
   late Future<List<books>> futurebooks;
+  late Future<bool> iconget;
 
+  String? tit;
   late Future<List<books>> futurePost;
   late String something;
+  late String something2;
 
-  _BookPageState(this.something);
+  _BookPageState(this.something, this.something2);
   final padding = EdgeInsets.symmetric(horizontal: 8);
 
   @override
@@ -64,6 +82,7 @@ class _BookPageState extends State<BookPage> {
     super.initState();
     futurePost = fetchPost(something);
     futurebooks = getbox(something);
+    iconget = geticon(something2, something);
   }
 
   @override
@@ -79,34 +98,56 @@ class _BookPageState extends State<BookPage> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           print("2" + snapshot.toString());
           if (snapshot.hasData) {
+            tit = snapshot.data![0].BookTitle.toString();
             return Scaffold(
               appBar: AppBar(
+                leading: IconButton(
+                    icon: Icon(
+                      (Icons.arrow_back),
+                      size: 30.0,
+                      color: Color(0xff9A9A9A),
+                    ),
+                    onPressed: () async {
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => HomeP()));
+                    }),
                 titleSpacing: 20,
                 backgroundColor: Colors.blueGrey,
                 title: Text(snapshot.data![0].BookTitle.toString()),
                 actions: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      (Icons.favorite),
-                      size: 30.0,
-                      color:
-                          (ispressed) ? Color(0xff007397) : Color(0xff9A9A9A),
-                    ),
-                    onPressed: () async {
-                      if (!ispressed) {
-                        setState(() {
-                          ispressed = true;
-                        });
-                      } else {
-                        setState(() {
-                          ispressed = false;
-                        });
-                      }
-                      String s = await FlutterSession().get('token');
-                      await ApiService().like(
-                          s.toString(), snapshot.data![0].BookTitle.toString());
-                    },
-                  ),
+                  FutureBuilder<bool>(
+                      future: iconget,
+                      builder: (BuildContext context, AsyncSnapshot snapshot2) {
+                        print("2" + snapshot.toString());
+                        if (snapshot2.hasData) {
+                          if (snapshot2.data) {
+                            ispressed = true;
+                          }
+                        }
+                        return IconButton(
+                          icon: Icon(
+                            (Icons.favorite),
+                            size: 30.0,
+                            color: (ispressed)
+                                ? Color(0xff007397)
+                                : Color(0xff9A9A9A),
+                          ),
+                          onPressed: () async {
+                            if (!ispressed) {
+                              setState(() {
+                                ispressed = true;
+                              });
+                            } else {
+                              setState(() {
+                                ispressed = false;
+                              });
+                            }
+                            String s = await FlutterSession().get('token');
+                            await ApiService().like(s.toString(),
+                                snapshot.data![0].ISBN.toString());
+                          },
+                        );
+                      }),
                   Padding(padding: padding)
                 ],
               ),
@@ -431,9 +472,10 @@ class _BookPageState extends State<BookPage> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (_) => BookPage(snapshot
-                                                  .data![index].ISBN
-                                                  .toString())))
+                                              builder: (_) => BookPage(
+                                                  snapshot.data![index].ISBN
+                                                      .toString(),
+                                                  something2)))
                                     },
                                     child: Card(
                                       elevation: 5,

@@ -14,6 +14,8 @@ const router = express.Router();
  router.get('/history', bookController.gethistory);
 
  router.get('/liked', bookController.getliked);
+ router.get('/icon', bookController.geticon);
+
  router.get('/rec', bookController.getrec);
  router.get('/loadBook', bookController.getloadBook )
  router.get('/someroute', bookController.sendpdf )
