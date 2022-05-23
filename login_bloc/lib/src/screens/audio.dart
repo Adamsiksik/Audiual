@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // Try to load audio from a source and catch any errors.
     try {
       _player
-          .setUrl("http://192.168.1.19:3000/books/loadAudio?isbn=$something");
+          .setUrl("http://192.168.1.106:3000/books/loadAudio?isbn=$something");
     } catch (e) {
       print("Error loading audio source: $e");
     }
@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           width: 480,
                           child: const WebBrowser(
                             initialUrl:
-                                'http://192.168.1.19:3000/books/someroute?isbn=0140067477',
+                                'http://192.168.1.106:3000/books/someroute?isbn=0140067477',
                           ),
                         ),
                         // Display play/pause button and volume/speed sliders.
@@ -142,7 +142,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           height: 480,
                           width: 400,
                           child: SfPdfViewer.network(
-                              'http://192.168.1.19:3000/books/someroute?isbn=$something',
+                              'http://192.168.1.106:3000/books/someroute?isbn=$something',
                               scrollDirection: PdfScrollDirection.horizontal),
                         ),
                         // Display play/pause button and volume/speed sliders.

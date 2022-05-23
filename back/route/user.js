@@ -23,5 +23,6 @@ const router = express.Router();
  router.post('/editoneuser', userController.editoneuser);
  router.post('/deleteone', userController.editoneuser);
  router.post('/history', userController.posthistory);
+ router.post('/likedbook', userController.increaslike);
 
  module.exports=router;

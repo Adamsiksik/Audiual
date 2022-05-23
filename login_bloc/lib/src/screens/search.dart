@@ -16,9 +16,9 @@ List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
 
 Future<List<books>> fetchliked(String s) async {
-  print('http://192.168.1.19:3000/books/search?name=${s}');
+  print('http://192.168.1.106:3000/books/search?name=${s}');
   final response = await http
-      .get(Uri.parse('http://192.168.1.19:3000/books/search?Book_Title=${s}'));
+      .get(Uri.parse('http://192.168.1.106:3000/books/search?Book_Title=${s}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();

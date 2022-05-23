@@ -12,13 +12,14 @@ import '../data/api/apiser.dart';
 import '../data/books.dart';
 import '../screens/bookpage.dart';
 import 'audio.dart';
+import 'home.dart';
 
 List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
 
 Future<List<books>> fetchPost(String something) async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.19:3000/books/book?isbn=${something}'));
+      .get(Uri.parse('http://192.168.1.106:3000/books/book?isbn=${something}'));
   if (response.statusCode == 200) {
     final parsed = json.decode("[" + response.body + "]") as List<dynamic>;
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -28,9 +29,9 @@ Future<List<books>> fetchPost(String something) async {
 }
 
 Future<List<books>> getbox(String something) async {
-  print('http://192.168.1.19:3000/books/same?isbn=${something}');
+  print('http://192.168.1.106:3000/books/same?isbn=${something}');
   final response = await http
-      .get(Uri.parse('http://192.168.1.19:3000/books/same?isbn=${something}'));
+      .get(Uri.parse('http://192.168.1.106:3000/books/same?isbn=${something}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -84,6 +85,13 @@ class _BookPageState extends State<BookPage> {
                 titleSpacing: 20,
                 backgroundColor: Colors.blueGrey,
                 title: Text(snapshot.data![0].BookTitle.toString()),
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeP()));
+                  },
+                ),
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(
@@ -107,6 +115,7 @@ class _BookPageState extends State<BookPage> {
                           s.toString(), snapshot.data![0].BookTitle.toString());
                     },
                   ),
+                  Text(""),
                   Padding(padding: padding)
                 ],
               ),

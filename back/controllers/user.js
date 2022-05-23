@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
+const Book = require('../models/User');
 const recordReset = require('../models/recordReset');
 var rand = require("random-key");
 var nodemailer = require('nodemailer');
@@ -7,6 +8,8 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const { redirect } = require('express/lib/response');
+const request = require('request');
+
 exports.postAddUser = async (req, res) => {
   sess = req.session;
   if (sess.email) {
@@ -37,7 +40,12 @@ exports.postlike = async (req, res) => {
   email = req.query.Email;
   const likedbook = req.query.likedbook;
   user = await User.findOne({ Email: email }).select('liked');
-
+  const requestq = request.get(
+    'http://localhost:3000/users/increaslike?likedbook='+likedbook,
+    {},
+  ).on('error', function(e) {
+    console.log("Got error: " + e.message);
+  }); 
   if (Array.from(user.liked).includes(likedbook)) {
     const update = { $pull: { liked: likedbook } }
     const updated = User.findOneAndUpdate({ Email: email }, update, { upsert: true }, (err) => {
@@ -45,6 +53,7 @@ exports.postlike = async (req, res) => {
       else
         console.log("Successfully removed");
     })
+  
   }
   else {
     const update = { $push: { liked: likedbook } }
@@ -53,8 +62,18 @@ exports.postlike = async (req, res) => {
       else
         console.log("Successfully added");
     })
+
+
   }
 }
+
+exports.increaslike = async (req, res) => {
+  const likedbook = req.query.likedbook;
+  book1 = await Book.findOne({ 'Book-Title': likedbook });
+  console.log(book1);
+
+}
+
 
 exports.posthistory = async (req, res) => {
   console.log("1" + req.query.Email)

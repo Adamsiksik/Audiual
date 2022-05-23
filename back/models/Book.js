@@ -14,6 +14,10 @@ const BookSchema = mongoose.Schema({
     type: String,
 
   },
+  Numberoflike: {
+    type: String,
+
+  },
   "Book-Author": {
     type: String,
   },

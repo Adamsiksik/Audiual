@@ -148,26 +148,26 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 20,
               ),
-              FloatingActionButton.extended(
-                onPressed: () async {
-                  // await googlecontroller.login();
-                  // var name =
-                  //     await googlecontroller.googleAccount.value?.displayName ??
-                  //         '';
-                  // var email =
-                  //     await googlecontroller.googleAccount.value?.email ?? '';
-                  // FlutterSession().set('token', name);
+              // FloatingActionButton.extended(
+              //   onPressed: () async {
+              //     // await googlecontroller.login();
+              //     // var name =
+              //     //     await googlecontroller.googleAccount.value?.displayName ??
+              //     //         '';
+              //     // var email =
+              //     //     await googlecontroller.googleAccount.value?.email ?? '';
+              //     // FlutterSession().set('token', name);
 
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => InfoScreen(email, name)));
-                },
-                icon: Icon(Icons.g_mobiledata),
-                label: Text('Sign in with Google'),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-              ),
+              //     // Navigator.push(
+              //     //     context,
+              //     //     MaterialPageRoute(
+              //     //         builder: (context) => InfoScreen(email, name)));
+              //   },
+              //   icon: Icon(Icons.g_mobiledata),
+              //   label: Text('Sign in with Google'),
+              //   backgroundColor: Colors.white,
+              //   foregroundColor: Colors.black,
+              // ),
               FlatButton(
                 onPressed: () {
                   Navigator.push(context,

@@ -15,7 +15,29 @@ var busboy = require('connect-busboy');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 
+exports.geticon = async (req, res) => {
+  try {
+    let books;
+    let b=false;
 
+    const email = req.query.email;
+    let user1;
+    const book = req.query.name;
+
+    console.log(book);
+    user1 = await User.findOne({ Email: email })
+
+
+    for (var i = 0; i < user1.liked.length; i++) {
+      if(user1.liked[i]==book){
+        b=true;
+    }
+  }
+    res.json(b);
+  } catch (err) {
+    res.json({ message: err })
+  }
+}
 exports.getAll = async (req, res) => {
   try {
     const books = await book.find().limit(40);
@@ -61,6 +83,27 @@ exports.getOne = async (req, res) => {
     res.json({ message: err })
   }
 }
+
+function copyFile(source, target, cb) {
+  var cbCalled = false;
+
+  var rd = fs.createReadStream(source);
+  rd.on("error", function(err) {
+    console.log(err);
+  });
+  var wr = fs.createWriteStream(target);
+  wr.on("error", function(err) {
+    console.log(err);
+  });
+  wr.on("close", function(ex) {
+    console.log(ex);
+  });
+  rd.pipe(wr);
+
+
+}
+
+
 exports.postAddbook  = async (req, res) => {
 
   const books = new book({
@@ -75,6 +118,9 @@ exports.postAddbook  = async (req, res) => {
 
   })
   try {
+
+    await  copyFile(req.query.pdfurl,"C:/Users/ali_q/Documents/GitHub/books1/books"+req.query.ISBN+".pdf")
+
     console.log(books.ISBN)
     const savebook = await books.save();
     
@@ -104,7 +150,7 @@ pdfExtract.extract("C:/Users/user/Downloads/audiual"+s+".pdf", options, (err, da
 }
 exports.sendpdf = (req, res) => {
   let s=req.query.isbn;
-  res.sendFile("C:/Users/user/Downloads/audiual"+s+".pdf");
+  res.sendFile("C:/Users/ali_q/Documents/GitHub/books1/books/"+s+".pdf");
 }
 exports.addbook = (req,res) => {
   console.log(req.file)
@@ -134,7 +180,7 @@ exports.addmp3 = (req, res1) => {
 }
 exports.sendaudio = (req, res) => {
   let s=req.query.isbn;
-  res.sendFile("C:/Users/user/Downloads/audiual"+s+".mp3");
+  res.sendFile("C:/Users/ali_q/Documents/GitHub/books1/books/"+s+".mp3");
 }
 exports.gethistory = async (req, res) => {
   try {
@@ -254,7 +300,8 @@ exports.searchh = async (req, res) => {
   booksArray = [];
 console.log(req.query.genre);
   books = await book.find( { "Book-Title" : { $regex : new RegExp(req.query.Book_Title, "i") } ,"Book-Author" : { $regex : new RegExp(req.query.Book_Author, "i") }
-  ,"Year-Of-Publication" : req.query.YOP,"catogery" : req.query.genre
+  ,"Year-Of-Publication" : { $regex : new RegExp(req.query.YOP, "i") }
+  ,"catogery" : req.query.genre
   ,"ISBN" : { $regex : new RegExp(req.query.ISBN, "i") } }
  );
  console.log(books);
@@ -280,6 +327,7 @@ res.json(booksArray);
 }
 
 exports.getgene = async (req, res) => {
+
   try {
   let books;
 console.log(req.query.name);
@@ -289,6 +337,7 @@ res.json(books);
 } catch (err) {
   res.json({ message: err })
 }
+
 
 }
 
