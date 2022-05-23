@@ -20,7 +20,7 @@ List<books> bookFromJson(String str) =>
 
 Future<List<books>> fetchPost(String something) async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.106:3000/books/book?isbn=${something}'));
+      .get(Uri.parse('http://172.19.186.4:3000/books/book?isbn=${something}'));
   if (response.statusCode == 200) {
     final parsed = json.decode("[" + response.body + "]") as List<dynamic>;
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -30,9 +30,9 @@ Future<List<books>> fetchPost(String something) async {
 }
 
 Future<List<books>> getbox(String something) async {
-  print('http://192.168.1.106:3000/books/same?isbn=${something}');
+  print('http://172.19.186.4:3000/books/same?isbn=${something}');
   final response = await http
-      .get(Uri.parse('http://192.168.1.106:3000/books/same?isbn=${something}'));
+      .get(Uri.parse('http://172.19.186.4:3000/books/same?isbn=${something}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -42,9 +42,9 @@ Future<List<books>> getbox(String something) async {
 }
 
 Future<bool> geticon(String something, String n) async {
-  print('http://192.168.1.19:3000/books/icon?email=${something}&name=${n}');
+  print('http://172.19.186.4:3000/books/icon?email=${something}&name=${n}');
   final response = await http.get(Uri.parse(
-      'http://192.168.1.19:3000/books/icon?email=${something}&name=${n}'));
+      'http://172.19.186.4:3000/books/icon?email=${something}&name=${n}'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body);
     return parsed;
@@ -114,13 +114,6 @@ class _BookPageState extends State<BookPage> {
                 titleSpacing: 20,
                 backgroundColor: Colors.blueGrey,
                 title: Text(snapshot.data![0].BookTitle.toString()),
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeP()));
-                  },
-                ),
                 actions: <Widget>[
                   FutureBuilder<bool>(
                       future: iconget,
@@ -316,70 +309,6 @@ class _BookPageState extends State<BookPage> {
                                                           },
                                                           child: const Text(
                                                             'Audio1',
-                                                            style: TextStyle(
-                                                                fontSize: 24),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                        ),
-                                                        ElevatedButton(
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            primary:
-                                                                Colors.blue,
-                                                            minimumSize: const Size
-                                                                    .fromHeight(
-                                                                50), // NEW
-                                                          ),
-                                                          onPressed: () {
-                                                            Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => MyApp(snapshot
-                                                                          .data![
-                                                                              0]
-                                                                          .ISBN
-                                                                          .toString() +
-                                                                      "B")),
-                                                            );
-                                                          },
-                                                          child: const Text(
-                                                            'Audio2',
-                                                            style: TextStyle(
-                                                                fontSize: 24),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                        ),
-                                                        ElevatedButton(
-                                                          style: ElevatedButton
-                                                              .styleFrom(
-                                                            primary:
-                                                                Colors.blue,
-                                                            minimumSize: const Size
-                                                                    .fromHeight(
-                                                                50), // NEW
-                                                          ),
-                                                          onPressed: () {
-                                                            Navigator.push(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (context) => MyApp(snapshot
-                                                                          .data![
-                                                                              0]
-                                                                          .ISBN
-                                                                          .toString() +
-                                                                      "C")),
-                                                            );
-                                                          },
-                                                          child: const Text(
-                                                            'Audio3',
                                                             style: TextStyle(
                                                                 fontSize: 24),
                                                           ),

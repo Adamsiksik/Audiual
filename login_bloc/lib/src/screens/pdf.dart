@@ -70,10 +70,10 @@ class _HomePageState extends State<HomePage> {
             return kIsWeb
                 ? const WebBrowser(
                     initialUrl:
-                        'http://192.168.1.106:3000/books/someroute?isbn=0140067477',
+                        'http://172.19.186.4:3000/books/someroute?isbn=0140067477',
                   )
                 : SfPdfViewer.network(
-                    'http://192.168.1.106:3000/books/someroute?isbn=${something}A',
+                    'http://172.19.186.4:3000/books/someroute?isbn=${something}A',
                     scrollDirection: PdfScrollDirection.horizontal,
                     onTextSelectionChanged:
                         (PdfTextSelectionChangedDetails details) {

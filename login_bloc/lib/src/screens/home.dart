@@ -18,7 +18,7 @@ import '../screens/bookpage.dart';
 
 Future<List<books>> getbox() async {
   final response =
-      await http.get(Uri.parse('http://192.168.1.106:3000/books/all'));
+      await http.get(Uri.parse('http://172.19.186.4:3000/books/all'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -29,7 +29,7 @@ Future<List<books>> getbox() async {
 
 Future<List<books>> getHist() async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.106:3000/books/gene?name=History'));
+      .get(Uri.parse('http://172.19.186.4:3000/books/gene?name=History'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -40,7 +40,7 @@ Future<List<books>> getHist() async {
 
 Future<List<books>> getActi() async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.106:3000/books/gene?name=Action'));
+      .get(Uri.parse('http://172.19.186.4:3000/books/gene?name=Action'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -51,7 +51,7 @@ Future<List<books>> getActi() async {
 
 Future<List<books>> getMyst() async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.106:3000/books/gene?name=Mystery'));
+      .get(Uri.parse('http://172.19.186.4:3000/books/gene?name=Mystery'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -311,65 +311,30 @@ class _HomeP extends State<HomeP> {
                                                       ),
                                                       Expanded(
                                                         child: RaisedButton(
-                                                          child: Text('Action'),
-                                                          textColor:
-                                                              Colors.white,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        80.0)),
-                                                        padding:
-                                                            EdgeInsets.all(0.0),
-                                                        child: Ink(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  gradient:
-                                                                      LinearGradient(
-                                                                    colors: [
-                                                                      Color(
-                                                                          0xff374ABE),
-                                                                      Color(
-                                                                          0xff64B6FF)
-                                                                    ],
-                                                                    begin: Alignment
-                                                                        .centerLeft,
-                                                                    end: Alignment
-                                                                        .centerRight,
-                                                                  ),
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              30.0)),
-                                                          child: Container(
-                                                            constraints:
-                                                                BoxConstraints(
-                                                                    maxWidth:
-                                                                        250.0,
-                                                                    minHeight:
-                                                                        50.0),
-                                                            alignment: Alignment
-                                                                .center,
-                                                            child: Text(
-                                                              "Submit",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 15),
+                                                            child:
+                                                                Text('Action'),
+                                                            textColor:
+                                                                Colors.white,
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          30.0),
                                                             ),
-                                                          ),
-                                                          color: pressAttention
-                                                              ? Colors.grey
-                                                              : Colors.blue,
-                                                          onPressed: () =>
+                                                            color:
+                                                                pressAttention
+                                                                    ? Colors
+                                                                        .grey
+                                                                    : Colors
+                                                                        .blue,
+                                                            onPressed: () {
                                                               setState(() =>
                                                                   pressAttention =
-                                                                      !pressAttention),
-                                                        ),
+                                                                      !pressAttention);
+                                                              this.setState(
+                                                                  () {});
+                                                            }),
                                                       ),
                                                       Expanded(
                                                         child: RaisedButton(

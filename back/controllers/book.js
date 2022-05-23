@@ -110,6 +110,7 @@ exports.postAddbook  = async (req, res) => {
     'ISBN': req.query.ISBN,
     'Book-Title': req.query.Book_Title,
     'Book-Author': req.query.Book_Author,
+    'catogery': req.query.catogery,
     'Year-Of-Publication': req.query.YOP,
     'Publisher': req.query.Publisher,
     'Image-URL-S': req.query.Image,
@@ -193,12 +194,16 @@ exports.gethistory = async (req, res) => {
 
     console.log(req.query.email);
     user1 = await User.findOne({ Email: email })
+    console.log("hee");
 
 
     for (var i = 0; i < user1.history.length; i++) {
       books = await book.findOne({ "ISBN": user1.history[i] });
       booksArray.push(books);
+
     }
+    console.log(booksArray);
+
     res.json(booksArray);
   } catch (err) {
     res.json({ message: err })
