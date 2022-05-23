@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   final myController = TextEditingController();
   final PassController = TextEditingController();
+  String? s;
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -82,10 +83,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         hintText: 'Enter secure password'),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
+                        s = "";
                         return 'Password Cant be Empty';
-                      }
-                      if (value.length < 6) {
+                      } else if (value.length < 6) {
+                        s = "";
                         return 'Password Cant be less than 6 Characters ';
+                      } else if (s == "no user with such email") {
+                        return 'no user with such email';
+                      } else if (s == "Wrong Password") {
+                        return 'Wrong Password';
                       }
                     }),
               ),
@@ -113,14 +119,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Password: PassController.text));
                       print(result.message.toString());
                       if (result.message.toString() == "bad password") {
-                        print("bad");
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                        s = "Wrong Password";
+                        formkey.currentState!.validate();
                       } else if (result.message.toString() ==
                           "no user with such email") {
-                        print("no user");
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => LoginScreen()));
+                        s = "no user with such email";
+
+                        formkey.currentState!.validate();
                       } else if (result.message.toString() == "Succeful") {
                         await FlutterSession()
                             .set('token', myController.text.toLowerCase());
@@ -148,26 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 20,
               ),
-              // FloatingActionButton.extended(
-              //   onPressed: () async {
-              //     // await googlecontroller.login();
-              //     // var name =
-              //     //     await googlecontroller.googleAccount.value?.displayName ??
-              //     //         '';
-              //     // var email =
-              //     //     await googlecontroller.googleAccount.value?.email ?? '';
-              //     // FlutterSession().set('token', name);
-
-              //     // Navigator.push(
-              //     //     context,
-              //     //     MaterialPageRoute(
-              //     //         builder: (context) => InfoScreen(email, name)));
-              //   },
-              //   icon: Icon(Icons.g_mobiledata),
-              //   label: Text('Sign in with Google'),
-              //   backgroundColor: Colors.white,
-              //   foregroundColor: Colors.black,
-              // ),
               FlatButton(
                 onPressed: () {
                   Navigator.push(context,

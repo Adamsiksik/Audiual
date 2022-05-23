@@ -16,11 +16,12 @@ import '../screens/bookpage.dart';
 List<books> bookFromJson(String str) =>
     List<books>.from(json.decode(str).map((x) => books.fromMap(x)));
 
-Future<List<books>> fetchseached(String t, String y, String a, String i) async {
+Future<List<books>> fetchseached(
+    String g, String t, String y, String a, String i) async {
   print(
-      'http://192.168.1.106:3000/books/searchh?Book_Title=$t&Book_Author=$a&YOP=$y&ISBN=$i');
+      'http://192.168.1.19:3000/books/searchh?Book_Title=$t&Book_Author=$a&YOP=$y&ISBN=$i&genre=$g');
   final response = await http.get(Uri.parse(
-      'http://192.168.1.106:3000/books/searchh?Book_Title=$t&Book_Author=$a&YOP=$y&ISBN=$i'));
+      'http://192.168.1.19:3000/books/searchh?Book_Title=$t&Book_Author=$a&YOP=$y&ISBN=$i&genre=$g'));
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<books>((json) => books.fromMap(json)).toList();
@@ -31,21 +32,25 @@ Future<List<books>> fetchseached(String t, String y, String a, String i) async {
 
 class Searchh extends StatefulWidget {
   @override
+  late String gen;
+
   late String title;
   late String year;
   late String auth;
   late String isbn;
-  Searchh(this.title, this.year, this.auth, this.isbn);
+  Searchh(this.gen, this.title, this.year, this.auth, this.isbn);
 
   late Future<List<books>> seached;
   _Searchh createState() =>
-      _Searchh(this.title, this.year, this.auth, this.isbn);
+      _Searchh(this.gen, this.title, this.year, this.auth, this.isbn);
 }
 
 class _Searchh extends State<Searchh> {
   final padding = EdgeInsets.symmetric(horizontal: 8);
   String s = "ss";
   late String title;
+  late String gen;
+
   late String year;
   late String auth;
   late String isbn;
@@ -53,13 +58,13 @@ class _Searchh extends State<Searchh> {
   late String something;
   final search = TextEditingController();
 
-  _Searchh(this.title, this.year, this.auth, this.isbn);
+  _Searchh(this.gen, this.title, this.year, this.auth, this.isbn);
   bool _isVisible = false;
 
   @override
   void initState() {
     super.initState();
-    seached = fetchseached(title, year, auth, isbn);
+    seached = fetchseached(gen, title, year, auth, isbn);
   }
 
   @override
@@ -131,13 +136,15 @@ class _Searchh extends State<Searchh> {
                   child: GestureDetector(
                     onTap: () async => {
                       s = await FlutterSession().get('token'),
-                      if (s == "click on the image to login" || s == null)
+                      if (s == "click on the image to login" ||
+                          s.toString() == "null")
                         {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => BookPage(
-                                      snapshot.data![index].ISBN.toString())))
+                                      snapshot.data![index].ISBN.toString(),
+                                      s)))
                         }
                       else
                         {
@@ -147,7 +154,8 @@ class _Searchh extends State<Searchh> {
                               context,
                               MaterialPageRoute(
                                   builder: (_) => BookPage(
-                                      snapshot.data![index].ISBN.toString())))
+                                      snapshot.data![index].ISBN.toString(),
+                                      s)))
                         },
                     },
                     child: Card(

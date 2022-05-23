@@ -91,7 +91,8 @@ class _ikedB extends State<LaterB> {
                               context,
                               MaterialPageRoute(
                                   builder: (_) => BookPage(
-                                      snapshot.data![index].ISBN.toString())))
+                                      snapshot.data![index].ISBN.toString(),
+                                      s)))
                         }
                       else
                         {
@@ -101,7 +102,8 @@ class _ikedB extends State<LaterB> {
                               context,
                               MaterialPageRoute(
                                   builder: (_) => BookPage(
-                                      snapshot.data![index].ISBN.toString())))
+                                      snapshot.data![index].ISBN.toString(),
+                                      s)))
                         },
                     },
                     child: Card(
